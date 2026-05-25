@@ -7,11 +7,85 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Platform {
+  FACEBOOK
+  INSTAGRAM
+  YOUTUBE
+  TIKTOK
+  TWITTER
+  LINKEDIN
+  PINTEREST
+  REDDIT
+  THREADS
+}
+
+enum PostStatus {
+  DRAFT
+  NEEDS_REVIEW
+  APPROVED
+  SCHEDULED
+  PUBLISHED
+  FAILED
+}
+
+enum ContentType {
+  TEXT
+  LINK
+  IMAGE
+  CAROUSEL
+  VIDEO
+  PODCAST
+  LANDING_PAGE
+  AD
+}
+
+enum CampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+enum ToneStyle {
+  PROFESSIONAL
+  CASUAL
+  HUMOROUS
+  AUTHORITATIVE
+  INSPIRATIONAL
+  EDUCATIONAL
+}
+
+enum PaymentProvider {
+  STRIPE
+  PAYPAL
+  VENMO
+  CASH_APP
+  ZELLE
+  CRYPTO
+}
+
+enum AIProvider {
+  OPENAI
+  GEMINI
+  CLAUDE
+}
+
+enum ScheduleStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String       @id @default(cuid())
+  email       String       @unique
+  name        String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  workspaces  Workspace[]
+  teamMembers TeamMember[]
 }
 
 model Workspace {
@@ -19,18 +93,292 @@ model Workspace {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  users     User[]
+
+  teamMembers       TeamMember[]
+  brands            BrandKit[]
+  socialAccounts    SocialAccount[]
+  contentProjects   ContentProject[]
+  campaigns         Campaign[]
+  posts             Post[]
+  analyticsMetrics  AnalyticsMetric[]
+  adSpends          AdSpend[]
+  revenueRecords    RevenueRecord[]
+  expenseRecords    ExpenseRecord[]
+  accountingExports AccountingExport[]
+  aiProviders       AIProviderSetting[]
+  researchSources   ResearchSource[]
+  notifications     Notification[]
+  subscriptions     SubscriptionPlan[]
+  paymentMethods    PaymentMethod[]
+}
+
+model TeamMember {
+  id          String   @id @default(cuid())
+  userId      String
+  workspaceId String
+  role        String   @default("MEMBER")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user      User      @relation(fields: [userId], references: [id])
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+
+  @@index([workspaceId])
+  @@index([userId])
+}
+
+model BrandKit {
+  id          String   @id @default(cuid())
+  workspaceId String
+  name        String
+  colors      Json?
+  fonts       Json?
+  voiceRules  String?
+  hashtags    String[]
+  bannedWords String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model SocialAccount {
+  id          String   @id @default(cuid())
+  workspaceId String
+  platform    Platform
+  accountName String
+  accessToken String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model ContentProject {
+  id          String   @id @default(cuid())
+  workspaceId String
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
 }
 
 model Campaign {
-  id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String         @id @default(cuid())
+  workspaceId String
+  name        String
+  status      CampaignStatus @default(DRAFT)
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+  posts     Post[]
+
+  @@index([workspaceId])
+  @@index([status])
 }
 
 model Post {
+  id          String     @id @default(cuid())
+  workspaceId String
+  campaignId  String?
+  content     String
+  status      PostStatus @default(DRAFT)
+  scheduledAt DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  workspace   Workspace     @relation(fields: [workspaceId], references: [id])
+  campaign    Campaign?     @relation(fields: [campaignId], references: [id])
+  variants    PostVariant[]
+  schedules   Schedule[]
+  mediaAssets MediaAsset[]
+
+  @@index([workspaceId])
+  @@index([campaignId])
+  @@index([status])
+  @@index([scheduledAt])
+}
+
+model PostVariant {
+  id          String      @id @default(cuid())
+  postId      String
+  platform    Platform
+  content     String
+  contentType ContentType @default(TEXT)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  post Post @relation(fields: [postId], references: [id])
+
+  @@index([platform])
+}
+
+model MediaAsset {
   id        String   @id @default(cuid())
-  content   String
+  postId    String?
+  url       String
+  type      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  post Post? @relation(fields: [postId], references: [id])
+}
+
+model VideoProject {
+  id          String   @id @default(cuid())
+  workspaceId String
+  title       String
+  script      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PodcastProject {
+  id          String   @id @default(cuid())
+  workspaceId String
+  title       String
+  outline     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model LandingPage {
+  id          String   @id @default(cuid())
+  workspaceId String
+  title       String
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Schedule {
+  id          String         @id @default(cuid())
+  postId      String
+  status      ScheduleStatus @default(PENDING)
+  scheduledAt DateTime
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  post Post @relation(fields: [postId], references: [id])
+}
+
+model AnalyticsMetric {
+  id          String   @id @default(cuid())
+  workspaceId String
+  platform    Platform
+  views       Int      @default(0)
+  likes       Int      @default(0)
+  shares      Int      @default(0)
+  comments    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model AdSpend {
+  id          String   @id @default(cuid())
+  workspaceId String
+  platform    Platform
+  amount      Float
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model RevenueRecord {
+  id          String   @id @default(cuid())
+  workspaceId String
+  source      String
+  amount      Float
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model ExpenseRecord {
+  id          String   @id @default(cuid())
+  workspaceId String
+  category    String
+  amount      Float
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model AccountingExport {
+  id          String   @id @default(cuid())
+  workspaceId String
+  url         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model AIProviderSetting {
+  id          String     @id @default(cuid())
+  workspaceId String
+  provider    AIProvider
+  apiKey      String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model ResearchSource {
+  id          String   @id @default(cuid())
+  workspaceId String
+  name        String
+  url         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  workspaceId String
+  message     String
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model SubscriptionPlan {
+  id          String   @id @default(cuid())
+  workspaceId String
+  name        String
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+model PaymentMethod {
+  id          String          @id @default(cuid())
+  workspaceId String
+  provider    PaymentProvider
+  last4       String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id])
 }
