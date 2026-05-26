@@ -22,8 +22,12 @@ const HashtagsSchema = z.object({
 
 const VideoScriptSchema = z.object({
   hook: z.string(),
-  scenes: z.array(z.object({ description: z.string(), audio: z.string() })),
+  scenes: z.array(z.object({ description: z.string(), voiceover: z.string().optional(), onScreenText: z.string().optional(), bRollSuggestion: z.string().optional() })),
   cta: z.string(),
+  captions: z.string().optional(),
+  hashtags: z.array(z.string()).optional(),
+  thumbnailIdea: z.string().optional(),
+  musicStyle: z.string().optional()
 });
 
 const PodcastOutlineSchema = z.object({

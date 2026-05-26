@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { campaignsRouter } from './routes/campaigns';
 import { postsRouter } from './routes/posts';
+import { videosRouter } from './routes/videos';
 
 export const app = express();
 
@@ -14,5 +15,6 @@ app.get('/health', (req, res) => {
 
 app.use('/campaigns', campaignsRouter);
 app.use('/posts', postsRouter);
+app.use('/video-projects', videosRouter);
 
 export const name = '@contentcommand/api';

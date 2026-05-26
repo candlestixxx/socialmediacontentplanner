@@ -9,6 +9,7 @@ import Dashboard from '../screens/Dashboard';
 import Campaigns from '../screens/Campaigns';
 import Calendar from '../screens/Calendar';
 import QuickCreate from '../screens/QuickCreate';
+import QuickVideo from '../screens/QuickVideo';
 import Analytics from '../screens/Analytics';
 
 const Stack = createNativeStackNavigator();
@@ -30,6 +31,8 @@ function MainTabs() {
             iconName = focused ? 'calendar' : 'calendar-outline';
           } else if (route.name === 'Analytics') {
             iconName = focused ? 'stats-chart' : 'stats-chart-outline';
+          } else if (route.name === 'QuickVideo') {
+            iconName = focused ? 'videocam' : 'videocam-outline';
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -42,6 +45,7 @@ function MainTabs() {
       <Tab.Screen name="QuickCreate" component={QuickCreate} options={{ title: 'Create' }} />
       <Tab.Screen name="Calendar" component={Calendar} />
       <Tab.Screen name="Analytics" component={Analytics} />
+      <Tab.Screen name="QuickVideo" component={QuickVideo} options={{ title: 'Video' }} />
     </Tab.Navigator>
   );
 }
