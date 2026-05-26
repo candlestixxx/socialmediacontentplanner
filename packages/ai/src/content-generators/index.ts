@@ -32,7 +32,16 @@ const VideoScriptSchema = z.object({
 
 const PodcastOutlineSchema = z.object({
   title: z.string(),
+  description: z.string().optional(),
+  introScript: z.string().optional(),
   segments: z.array(z.object({ title: z.string(), talkingPoints: z.array(z.string()) })),
+  guestQuestions: z.array(z.string()).optional(),
+  sponsorRead: z.string().optional(),
+  socialClips: z.array(z.string()).optional(),
+  youtubeDescription: z.string().optional(),
+  seoKeywords: z.array(z.string()).optional(),
+  showNotes: z.string().optional(),
+  newsletterSummary: z.string().optional()
 });
 
 const LandingPageCopySchema = z.object({

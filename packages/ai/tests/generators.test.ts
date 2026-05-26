@@ -18,7 +18,7 @@ class MockAIProvider implements AIProvider {
       return { hook: 'Watch this!', scenes: [{ description: 'Scene 1', voiceover: 'Hello', onScreenText: 'Text', bRollSuggestion: 'BRoll' }], cta: 'Subscribe!', captions: 'Captions', hashtags: ['#tag'], thumbnailIdea: 'Thumb', musicStyle: 'Pop' } as T;
     }
     if (schema.shape.segments) {
-      return { title: 'Podcast Ep 1', segments: [{ title: 'Intro', talkingPoints: ['Welcome'] }] } as T;
+      return { title: 'Podcast Ep 1', description: 'Desc', introScript: 'Intro', segments: [{ title: 'Intro', talkingPoints: ['Welcome'] }], guestQuestions: ['Q1'], sponsorRead: 'Sponsor', socialClips: ['Clip'], youtubeDescription: 'YT', seoKeywords: ['SEO'], showNotes: 'Notes', newsletterSummary: 'News' } as T;
     }
     if (schema.shape.headline && schema.shape.subheadline) {
       return { headline: 'Buy now', subheadline: 'It is good', benefits: ['Fast'], cta: 'Click here' } as T;

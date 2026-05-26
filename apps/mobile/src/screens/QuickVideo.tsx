@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, Activi
 
 export default function QuickVideo() {
   const [topic, setTopic] = useState('');
+  const [tone, setTone] = useState('Energetic');
+  const [duration, setDuration] = useState('30');
   const [loading, setLoading] = useState(false);
   const [script, setScript] = useState<any>(null);
 
@@ -13,7 +15,7 @@ export default function QuickVideo() {
     fetch('http://10.0.2.2:4000/video-projects/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone: 'Energetic', durationSeconds: 30 })
+      body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone, durationSeconds: parseInt(duration) || 30 })
     })
     .then(res => res.json())
     .then(data => { setScript(data.script); setLoading(false); })
@@ -25,6 +27,10 @@ export default function QuickVideo() {
       <Text style={styles.title}>Quick Video</Text>
 
       <View style={styles.form}>
+        <Text style={styles.label}>Tone</Text>
+        <TextInput style={styles.input} placeholder="e.g., Funny" value={tone} onChangeText={setTone} />
+        <Text style={styles.label}>Duration (sec)</Text>
+        <TextInput style={styles.input} placeholder="30" value={duration} onChangeText={setDuration} keyboardType="numeric" />
         <Text style={styles.label}>Topic</Text>
         <TextInput
           style={styles.input}

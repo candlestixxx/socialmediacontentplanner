@@ -3,6 +3,7 @@ import cors from 'cors';
 import { campaignsRouter } from './routes/campaigns';
 import { postsRouter } from './routes/posts';
 import { videosRouter } from './routes/videos';
+import { podcastsRouter } from './routes/podcasts';
 
 export const app = express();
 
@@ -16,5 +17,6 @@ app.get('/health', (req, res) => {
 app.use('/campaigns', campaignsRouter);
 app.use('/posts', postsRouter);
 app.use('/video-projects', videosRouter);
+app.use('/podcasts', podcastsRouter);
 
 export const name = '@contentcommand/api';

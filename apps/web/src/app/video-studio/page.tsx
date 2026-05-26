@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 export default function VideoStudioPage() {
   const [topic, setTopic] = useState("");
   const [tone, setTone] = useState("Energetic");
+  const [platform, setPlatform] = useState("TikTok");
+  const [duration, setDuration] = useState(30);
   const [loading, setLoading] = useState(false);
   const [script, setScript] = useState<any>(null);
 
@@ -20,7 +22,7 @@ export default function VideoStudioPage() {
       const res = await fetch('http://localhost:4000/video-projects/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone, durationSeconds: 30 })
+        body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone, durationSeconds: duration })
       });
       const data = await res.json();
       setScript(data.script);
@@ -64,8 +66,16 @@ export default function VideoStudioPage() {
               </select>
             </div>
             <div className="space-y-2">
+              <label className="text-sm font-medium">Platform</label>
+              <select className="w-full border rounded-md p-2 text-sm" value={platform} onChange={(e) => setPlatform(e.target.value)}>
+                <option>TikTok</option>
+                <option>Instagram Reels</option>
+                <option>YouTube Shorts</option>
+              </select>
+            </div>
+            <div className="space-y-2">
               <label className="text-sm font-medium">Duration (seconds)</label>
-              <Input type="number" defaultValue={30} />
+              <Input type="number" value={duration} onChange={(e) => setDuration(parseInt(e.target.value) || 30)} />
             </div>
             <Button onClick={generateScript} disabled={loading} className="w-full">
               {loading ? "Generating Script..." : "Generate Script"}

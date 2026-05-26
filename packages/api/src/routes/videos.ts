@@ -6,7 +6,7 @@ const router = Router();
 const prisma = new PrismaClient();
 
 // Instantiate with mock provider for now
-const generator = new ContentGenerator(new MockOpenAIProvider());
+const generator = new ContentGenerator(new OpenaiProvider());
 
 router.post('/generate', async (req, res) => {
   const { workspaceId, topic, tone, durationSeconds } = req.body;
