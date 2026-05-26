@@ -15,3 +15,9 @@ apps/mobile/.expo
 apps/web/node_modules
 packages/api/node_modules
 apps/web/.next
+out.txt
+status.txt
+log.txt
+git_status.txt
+package.json.tmp
+web_pkg.txt

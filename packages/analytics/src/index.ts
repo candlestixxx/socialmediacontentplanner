@@ -1,1 +1,1 @@
-export const name = '@contentcommand/analytics';
+export * from './scoring';

@@ -12,7 +12,7 @@
   "dependencies": {
     "@base-ui/react": "^1.5.0",
     "@contentcommand/ai": "*",
-    "@contentcommand/analytics": "^1.0.0",
+    "@contentcommand/analytics": "*",
     "@contentcommand/api": "*",
     "@contentcommand/billing": "*",
     "@contentcommand/database": "*",
