@@ -12,7 +12,7 @@ export default function QuickVideo() {
     if (!topic) return;
     setLoading(true);
 
-    fetch('http://10.0.2.2:4000/video-projects/generate', {
+    fetch('http://10.0.2.2:3001/video-projects/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone, durationSeconds: parseInt(duration) || 30 })
