@@ -5,6 +5,8 @@ import { postsRouter } from './routes/posts';
 import { videosRouter } from './routes/videos';
 import { podcastsRouter } from './routes/podcasts';
 import { brandKitsRouter } from './routes/brand-kits';
+import { landingPagesRouter } from './routes/landing-pages';
+import { billingRouter } from './routes/billing';
 
 export const app = express();
 
@@ -20,5 +22,7 @@ app.use('/posts', postsRouter);
 app.use('/video-projects', videosRouter);
 app.use('/podcasts', podcastsRouter);
 app.use('/brand-kits', brandKitsRouter);
+app.use('/landing-pages', landingPagesRouter);
+app.use('/billing', billingRouter);
 
 export const name = '@contentcommand/api';
