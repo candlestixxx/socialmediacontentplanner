@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { apiClient } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -20,7 +21,7 @@ export default function NotificationsPage() {
 
   const fetchNotifications = async () => {
     try {
-      const res = await fetch('http://localhost:3001/notifications');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/notifications`);
       if (res.ok) {
         setNotifications(await res.json());
       }
@@ -31,7 +32,7 @@ export default function NotificationsPage() {
 
   const markAsRead = async (id: string) => {
     try {
-      await fetch(`http://localhost:3001/notifications/${id}/read`, { method: 'PATCH' });
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/notifications/${id}/read`, { method: 'PATCH' });
       fetchNotifications();
     } catch (error) {
       console.error('Failed to mark read', error);
@@ -40,7 +41,7 @@ export default function NotificationsPage() {
 
   const markAllAsRead = async () => {
     try {
-      await fetch(`http://localhost:3001/notifications/read-all`, { method: 'PATCH' });
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/notifications/read-all`, { method: 'PATCH' });
       fetchNotifications();
     } catch (error) {
       console.error('Failed to mark all read', error);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { apiClient } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,7 +20,7 @@ export default function BrandKitPage() {
 
   const fetchBrandKits = async () => {
     try {
-      const res = await fetch('http://localhost:3001/brand-kits?workspaceId=mock-ws');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/brand-kits?workspaceId=mock-ws`);
       const data = await res.json();
       if (Array.isArray(data)) setBrandKits(data);
     } catch (e) {
@@ -38,7 +39,7 @@ export default function BrandKitPage() {
         bannedWords: bannedWords.split(',').map(s => s.trim()).filter(Boolean),
         voiceRules
       };
-      await fetch('http://localhost:3001/brand-kits', {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/brand-kits`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

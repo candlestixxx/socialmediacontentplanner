@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { apiClient } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -30,7 +31,7 @@ export default function LandingPagesPage() {
 
   const fetchPages = async () => {
     try {
-      const res = await fetch('http://localhost:3001/landing-pages');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/landing-pages`);
       if (res.ok) {
         const data = await res.json();
         setPages(data);
@@ -42,7 +43,7 @@ export default function LandingPagesPage() {
 
   const handleCreate = async () => {
     try {
-      const res = await fetch('http://localhost:3001/landing-pages', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/landing-pages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -61,7 +62,7 @@ export default function LandingPagesPage() {
 
   const handleGenerate = async () => {
     try {
-      const res = await fetch('http://localhost:3001/landing-pages/generate', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/landing-pages/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(aiPrompt),

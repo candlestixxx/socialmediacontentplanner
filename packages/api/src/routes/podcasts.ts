@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import { PrismaClient } from '@contentcommand/database';
-import { ContentGenerator, OpenaiProvider } from '@contentcommand/ai';
+import { ContentGenerator, OpenAIProvider } from '@contentcommand/ai';
 
 const router = Router();
 const prisma = new PrismaClient();
 
 // Use mock provider
-const generator = new ContentGenerator(new OpenaiProvider());
+const generator = new ContentGenerator(new OpenAIProvider());
 
 router.post('/generate', async (req, res) => {
   const { workspaceId, topic, tone, durationMinutes } = req.body;
