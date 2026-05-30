@@ -1,1 +1,1 @@
-export const name = '@contentcommand/billing';
+export * from './stripe/webhook';

@@ -1,1 +1,2 @@
-export const name = '@contentcommand/jobs';
+export * from './queues/social';
+export * from './workers/social';
