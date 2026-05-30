@@ -19,7 +19,7 @@ export default function VideoStudioPage() {
 
     // Simulate API Call for now until full integration
     try {
-      const res = await fetch('http://localhost:4000/video-projects/generate', {
+      const res = await fetch('http://localhost:3001/video-projects/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone, durationSeconds: duration })

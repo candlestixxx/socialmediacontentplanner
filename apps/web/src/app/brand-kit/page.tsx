@@ -19,7 +19,7 @@ export default function BrandKitPage() {
 
   const fetchBrandKits = async () => {
     try {
-      const res = await fetch('http://localhost:4000/brand-kits?workspaceId=mock-ws');
+      const res = await fetch('http://localhost:3001/brand-kits?workspaceId=mock-ws');
       const data = await res.json();
       if (Array.isArray(data)) setBrandKits(data);
     } catch (e) {
@@ -38,7 +38,7 @@ export default function BrandKitPage() {
         bannedWords: bannedWords.split(',').map(s => s.trim()).filter(Boolean),
         voiceRules
       };
-      await fetch('http://localhost:4000/brand-kits', {
+      await fetch('http://localhost:3001/brand-kits', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

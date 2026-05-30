@@ -16,7 +16,7 @@ export default function PodcastStudioPage() {
     if (!topic) return;
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:4000/podcasts/generate', {
+      const res = await fetch('http://localhost:3001/podcasts/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone, durationMinutes: duration })
