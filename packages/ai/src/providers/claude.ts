@@ -36,4 +36,9 @@ export class ClaudeProvider implements AIProvider {
       throw error;
     }
   }
+
+  async generateStructuredResponse<T>(prompt: string, schema: any, systemPrompt?: string): Promise<T> {
+    console.warn('[claude] Mocking structured response.');
+    return {} as T;
+  }
 }

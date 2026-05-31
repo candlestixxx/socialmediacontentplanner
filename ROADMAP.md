@@ -17,7 +17,9 @@ v2.1 Structural Integrations completed:
 v2.2 Structural Integrations completed:
 - Implemented `zustand` in the Next.js `apps/web` client for global state management (Workspaces, active UI context).
 - Fleshed out the backend Prisma querying logic across API endpoints to actually persist generated AI content.
+- Finalized the React Native mobile navigation layout using Bottom Tabs.
 
 ## Future Plans (v2.3)
-- Refactor the React Native mobile app (`apps/mobile`) to construct a robust Bottom Tab + Native Stack navigation hierarchy routing to the scaffolded screens.
-- Enhance the AI Content Studio algorithms with direct RAG injections using `packages/ai/src/research`.
+- Enhance the AI Content Studio algorithms with direct RAG (Retrieval-Augmented Generation) injections using `packages/ai/src/research`.
+- Expose the RAG capabilities via an explicit `/ai/generate` Express route.
+- Re-implement the web dashboard AI Studio UI (`/ai-studio`) to act as the primary interface for content creation.

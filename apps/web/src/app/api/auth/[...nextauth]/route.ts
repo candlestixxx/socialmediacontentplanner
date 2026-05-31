@@ -3,10 +3,9 @@ import GithubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 // Temporary standalone PrismaClient for NextAuth until `@contentcommand/database` is cleanly exported
-import { PrismaClient } from "@prisma/client";
+import { prisma } from '@contentcommand/database';
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
-const prisma = new PrismaClient();
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),

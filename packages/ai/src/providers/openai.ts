@@ -38,4 +38,10 @@ export class OpenAIProvider implements AIProvider {
       throw error;
     }
   }
+
+
+  async generateStructuredResponse<T>(prompt: string, schema: any, systemPrompt?: string): Promise<T> {
+    console.warn('[OpenAIProvider] Mocking structured response due to fallback setup.');
+    return {} as T;
+  }
 }

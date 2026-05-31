@@ -35,4 +35,9 @@ export class GeminiProvider implements AIProvider {
       throw error;
     }
   }
+
+  async generateStructuredResponse<T>(prompt: string, schema: any, systemPrompt?: string): Promise<T> {
+    console.warn('[gemini] Mocking structured response.');
+    return {} as T;
+  }
 }

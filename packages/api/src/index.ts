@@ -9,6 +9,7 @@ import { landingPagesRouter } from './routes/landing-pages';
 import { billingRouter } from './routes/billing';
 import { notificationsRouter } from './routes/notifications';
 import { socialRouter } from './routes/social';
+import { aiRouter } from './routes/ai';
 import { requireAuth, rateLimiter } from './middleware/auth';
 
 export const app = express();
@@ -33,5 +34,6 @@ app.use('/landing-pages', landingPagesRouter);
 app.use('/billing', billingRouter);
 app.use('/notifications', notificationsRouter);
 app.use('/social', socialRouter);
+app.use('/ai', aiRouter);
 
 export const name = '@contentcommand/api';
