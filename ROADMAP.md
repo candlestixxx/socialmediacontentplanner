@@ -19,11 +19,12 @@ v2.2 Structural Integrations completed:
 - Fleshed out the backend Prisma querying logic across API endpoints to actually persist generated AI content.
 - Finalized the React Native mobile navigation layout using Bottom Tabs.
 
-v2.3 and v2.4 Integrations completed:
+v2.3, v2.4, and v2.5 Integrations completed:
 - Implemented live Retrieval-Augmented Generation (RAG) using a lightweight Node.js scraper.
 - Built the live AI Content Studio Web UI routing real parameters to the Express backend.
 - Re-architected the Video Studio UI and Backend to utilize the active `OpenAIProvider` for dynamic script generation.
+- Re-architected the Podcast Studio (`/podcasts/generate`) to utilize the active AI providers, including dynamic host/guest inputs in the Web UI.
 
-## Future Plans (v2.5)
-- Re-architect the Podcast Studio (`/podcasts/generate`) to utilize the active AI providers.
-- Upgrade the Web UI for the Podcast Studio to support dynamic host/guest parameter inputs.
+## Future Plans (v2.6)
+- Enhance the Express API security by implementing a genuine Redis-backed Rate Limiter in `packages/api/src/middleware/auth.ts`, replacing the v1.0 mock.
+- Connect to the `ioredis` instance defined in the docker-compose stack.

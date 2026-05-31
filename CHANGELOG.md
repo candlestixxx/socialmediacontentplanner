@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.5.0] - 2026-05-25
+
+### Added
+- **Podcast Studio:** Completely re-implemented the Next.js UI (`apps/web/src/app/podcast-studio/page.tsx`) and Express API route (`/podcasts/generate`). Stripped out the mock systems and wired it to dynamically generate outlines, segment topics, and guest questions using the live `OpenAIProvider`.
+
 ## [v2.4.0] - 2026-05-25
 
 ### Added
