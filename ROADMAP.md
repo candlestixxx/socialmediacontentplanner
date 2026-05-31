@@ -19,7 +19,11 @@ v2.2 Structural Integrations completed:
 - Fleshed out the backend Prisma querying logic across API endpoints to actually persist generated AI content.
 - Finalized the React Native mobile navigation layout using Bottom Tabs.
 
-## Future Plans (v2.3)
-- Enhance the AI Content Studio algorithms with direct RAG (Retrieval-Augmented Generation) injections using `packages/ai/src/research`.
-- Expose the RAG capabilities via an explicit `/ai/generate` Express route.
-- Re-implement the web dashboard AI Studio UI (`/ai-studio`) to act as the primary interface for content creation.
+v2.3 and v2.4 Integrations completed:
+- Implemented live Retrieval-Augmented Generation (RAG) using a lightweight Node.js scraper.
+- Built the live AI Content Studio Web UI routing real parameters to the Express backend.
+- Re-architected the Video Studio UI and Backend to utilize the active `OpenAIProvider` for dynamic script generation.
+
+## Future Plans (v2.5)
+- Re-architect the Podcast Studio (`/podcasts/generate`) to utilize the active AI providers.
+- Upgrade the Web UI for the Podcast Studio to support dynamic host/guest parameter inputs.

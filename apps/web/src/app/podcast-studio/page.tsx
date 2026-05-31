@@ -1,122 +1,148 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { apiClient } from "@/lib/api";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { apiClient } from '@/lib/api';
 
 export default function PodcastStudioPage() {
-  const [topic, setTopic] = useState("");
-  const [tone, setTone] = useState("Educational");
-  const [duration, setDuration] = useState(30);
-  const [loading, setLoading] = useState(false);
-  const [outline, setOutline] = useState<any>(null);
+  const [topic, setTopic] = useState('');
+  const [tone, setTone] = useState('Conversational');
+  const [durationMinutes, setDurationMinutes] = useState(45);
+  const [hostName, setHostName] = useState('');
+  const [guestName, setGuestName] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedOutline, setGeneratedOutline] = useState('');
 
-  const generateOutline = async () => {
-    if (!topic) return;
-    setLoading(true);
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    setGeneratedOutline('');
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/podcasts/generate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone, durationMinutes: duration })
+      const result = await apiClient.post('/podcasts/generate', {
+        topic,
+        tone,
+        durationMinutes,
+        hostName,
+        guestName
       });
-      const data = await res.json();
-      setOutline(data.outline);
-    } catch(e) {
-      console.error(e);
+      setGeneratedOutline(result.outline);
+    } catch (error) {
+      console.error('Failed to generate podcast outline', error);
+      setGeneratedOutline('Error: Could not generate the podcast outline.');
     } finally {
-      setLoading(false);
+      setIsGenerating(false);
     }
   };
 
   return (
-    <div className="p-8 space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Podcast Studio</h1>
+    <div className="p-8 space-y-8 max-w-5xl mx-auto">
+      <div>
+        <h1 className="text-3xl font-bold">Podcast Studio</h1>
+        <p className="mt-2 text-gray-600">Plan full episodes, write intros, and generate interview questions.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card>
           <CardHeader>
-            <CardTitle>Plan New Episode</CardTitle>
+            <CardTitle>Episode Planner</CardTitle>
+            <CardDescription>Enter parameters to outline your next show.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Topic</label>
+              <label className="text-sm font-medium">Episode Topic</label>
               <Input
-                placeholder="e.g., Future of Remote Work"
+                placeholder="e.g. The evolution of large language models"
                 value={topic}
-                onChange={(e) => setTopic(e.target.value)}
+                onChange={e => setTopic(e.target.value)}
               />
             </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Host Name</label>
+                <Input
+                  placeholder="e.g. Jules"
+                  value={hostName}
+                  onChange={e => setHostName(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Guest Name (Optional)</label>
+                <Input
+                  placeholder="e.g. Sam Altman"
+                  value={guestName}
+                  onChange={e => setGuestName(e.target.value)}
+                />
+              </div>
+            </div>
+
             <div className="space-y-2">
-              <label className="text-sm font-medium">Tone</label>
+              <label className="text-sm font-medium">Show Tone</label>
               <select
-                className="w-full border rounded-md p-2 text-sm"
+                className="flex h-10 w-full rounded-md border border-slate-200 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400"
                 value={tone}
-                onChange={(e) => setTone(e.target.value)}
+                onChange={e => setTone(e.target.value)}
               >
-                <option>Educational</option>
-                <option>Conversational</option>
-                <option>Interview</option>
+                <option value="Conversational">Conversational / Casual</option>
+                <option value="Journalistic">Journalistic / Hard News</option>
+                <option value="Educational">Educational / Deep Dive</option>
+                <option value="Humorous">Humorous / Satirical</option>
               </select>
             </div>
+
             <div className="space-y-2">
-              <label className="text-sm font-medium">Duration (minutes)</label>
+              <label className="text-sm font-medium">Target Duration (minutes)</label>
               <Input
                 type="number"
-                value={duration}
-                onChange={(e) => setDuration(parseInt(e.target.value) || 30)}
+                value={durationMinutes}
+                onChange={e => setDurationMinutes(parseInt(e.target.value))}
               />
             </div>
-            <Button onClick={generateOutline} disabled={loading} className="w-full">
-              {loading ? "Generating Outline..." : "Generate Outline"}
+
+            <Button
+              className="w-full mt-4"
+              onClick={handleGenerate}
+              disabled={isGenerating || !topic}
+            >
+              {isGenerating ? 'Drafting Show Notes...' : 'Generate Episode Outline'}
             </Button>
           </CardContent>
         </Card>
 
-        {outline && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Generated Outline: {outline.title}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6 max-h-[600px] overflow-y-auto">
-              <div>
-                <h3 className="font-semibold text-sm text-gray-500">Episode Description</h3>
-                <p className="mt-1 text-sm">{outline.description}</p>
+        <Card>
+          <CardHeader>
+            <CardTitle>Show Outline</CardTitle>
+            <CardDescription>Review segments, questions, and descriptions.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {isGenerating ? (
+              <div className="flex flex-col items-center justify-center h-64 space-y-4">
+                <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-sm text-gray-500 animate-pulse">Structuring segments...</p>
               </div>
+            ) : (
+              <Textarea
+                className="h-[450px] font-mono text-sm leading-relaxed"
+                value={generatedOutline}
+                onChange={(e) => setGeneratedOutline(e.target.value)}
+                placeholder="Your episode outline, intro scripts, and questions will appear here..."
+              />
+            )}
 
-              <div>
-                <h3 className="font-semibold text-sm text-gray-500">Segments</h3>
-                <div className="mt-2 space-y-4">
-                  {outline.segments?.map((segment: any, i: number) => (
-                    <div key={i} className="p-3 bg-gray-50 rounded-md border text-sm">
-                      <div className="font-bold mb-2">{segment.title}</div>
-                      <ul className="list-disc pl-4 space-y-1">
-                        {segment.talkingPoints?.map((point: string, j: number) => (
-                          <li key={j} className="text-gray-700">{point}</li>
-                        ))}
-                      </ul>
-                      <Button variant="outline" size="sm" className="mt-4 w-full">Turn Segment into Social Post</Button>
-                    </div>
-                  ))}
-                </div>
+            {generatedOutline && !isGenerating && (
+              <div className="mt-4 flex gap-4">
+                <Button variant="outline" className="w-full" onClick={() => alert('Mock: Downloading text file')}>
+                  Download .txt
+                </Button>
+                <Button className="w-full" onClick={() => alert('Mock: Extracting social clips to Calendar')}>
+                  Extract Social Clips
+                </Button>
               </div>
-
-              <div>
-                <h3 className="font-semibold text-sm text-gray-500">Sponsor Read</h3>
-                <p className="mt-1 text-sm">{outline.sponsorRead}</p>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-sm text-gray-500">Show Notes</h3>
-                <p className="mt-1 text-sm whitespace-pre-wrap">{outline.showNotes}</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

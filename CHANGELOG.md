@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.4.0] - 2026-05-25
+
+### Added
+- **RAG Engine:** Replaced mock context strings with a live HTML scraper (`packages/ai/src/research/scraper.ts`) that extracts visible text from user-provided URLs to augment AI generation.
+- **AI Studios:** Completely re-implemented the Next.js UIs and Express API routes for the core Content Studio (`/ai/generate`) and Video Studio (`/video-projects/generate`), ripping out the mock systems and wiring them to the live official `OpenAIProvider`.
+
 ## [v2.2.0] - 2026-05-25
 
 ### Added
