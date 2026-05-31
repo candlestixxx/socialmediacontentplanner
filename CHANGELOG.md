@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.2.0] - 2026-05-25
+
+### Added
+- **Global State Management:** Integrated `zustand` into `apps/web/src/store` and successfully wired a global `<Topbar />` layout component to manage multi-tenant workspace state across the UI.
+- **Database Persistence:** Refactored Express APIs (`packages/api/src/routes/campaigns.ts`) to execute real CRUD operations utilizing the `@contentcommand/database` Prisma client instead of in-memory dummy arrays.
+
 ## [v2.1.1] - 2026-05-25
 
 ### Added
