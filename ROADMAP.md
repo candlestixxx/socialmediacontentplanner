@@ -8,8 +8,13 @@ v2.0 Structural Integrations completed:
 - NextAuth Database authentication established.
 - Web API routing centralized.
 
-## Future Plans (v2.1)
-- Write explicit OAuth 2.0 PKCE connection workflows for the Social Media platforms.
-- Wire up Stripe webhook handlers inside `packages/billing`.
-- Connect BullMQ for background scheduled posting workers in `packages/jobs`.
-- Deploy Postgres & Redis cache layers.
+v2.1 Structural Integrations completed:
+- Explicit OAuth 2.0 PKCE connection workflows for the Social Media platforms.
+- Stripe webhook handlers wired inside `packages/billing` and API endpoints.
+- BullMQ for background scheduled posting workers initialized in `packages/jobs`.
+- Local Postgres & Redis instances provided via `docker-compose.yml`.
+
+## Future Plans (v2.2)
+- Implement `zustand` in the Next.js `apps/web` client for global state management (Workspaces, active UI context).
+- Flesh out the backend Prisma querying logic across API endpoints to actually persist generated AI content.
+- Finalize the React Native mobile navigation layout.

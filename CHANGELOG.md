@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.1.1] - 2026-05-25
+
+### Added
+- **Social Connectors:** Fully implemented the OAuth 2.0 API routes (`/auth-url`, `/callback`) generating secure PKCE states and wiring them into the `apps/web` React frontend.
+
 ## [v2.1.0] - 2026-05-25
 
 ### Added
