@@ -8,6 +8,7 @@ import { brandKitsRouter } from './routes/brand-kits';
 import { landingPagesRouter } from './routes/landing-pages';
 import { billingRouter } from './routes/billing';
 import { notificationsRouter } from './routes/notifications';
+import { socialRouter } from './routes/social';
 import { requireAuth, rateLimiter } from './middleware/auth';
 
 export const app = express();
@@ -31,5 +32,6 @@ app.use('/brand-kits', brandKitsRouter);
 app.use('/landing-pages', landingPagesRouter);
 app.use('/billing', billingRouter);
 app.use('/notifications', notificationsRouter);
+app.use('/social', socialRouter);
 
 export const name = '@contentcommand/api';

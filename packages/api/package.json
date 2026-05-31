@@ -17,7 +17,8 @@
     "express": "^4.21.2",
     "@contentcommand/database": "*",
     "@contentcommand/ai": "*",
-    "@contentcommand/billing": "*"
+    "@contentcommand/billing": "*",
+    "@contentcommand/social": "*"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
