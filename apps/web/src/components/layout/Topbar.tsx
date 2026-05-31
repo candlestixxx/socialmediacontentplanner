@@ -1,58 +1,32 @@
-import { Search, Bell, Plus, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+'use client';
+
+import { useEffect } from 'react';
 import Link from 'next/link';
+import { useAppStore } from '@/store';
 
 export function Topbar() {
+  const { activeWorkspace, setWorkspaces } = useAppStore();
+
+  useEffect(() => {
+    // Mock fetching user's workspaces
+    setWorkspaces([
+      { id: 'ws_1', name: 'My Personal Brand' },
+      { id: 'ws_2', name: 'Agency Client A' }
+    ]);
+  }, [setWorkspaces]);
+
   return (
-    <header className="flex h-16 w-full items-center justify-between border-b bg-white px-6">
-      <div className="flex items-center space-x-4">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex items-center space-x-2">
-              <span>My Workspace</span>
-              <ChevronDown className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>My Workspace</DropdownMenuItem>
-            <DropdownMenuItem>Agency Workspace</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-
-      <div className="flex items-center space-x-4">
-        <div className="relative">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-          <Input
-            type="search"
-            placeholder="Search..."
-            className="w-64 pl-8"
-          />
+    <header className="h-16 border-b bg-white flex items-center justify-between px-6 sticky top-0 z-10">
+      <div className="flex items-center gap-4">
+        <Link href="/" className="font-bold text-xl text-blue-600">ContentCommand</Link>
+        <span className="text-gray-300">|</span>
+        <div className="text-sm font-medium text-gray-700">
+          Workspace: {activeWorkspace ? activeWorkspace.name : 'Loading...'}
         </div>
-
-        <Link href="/content/new">
-          <Button className="flex items-center space-x-2">
-            <Plus className="h-4 w-4" />
-            <span>Create</span>
-          </Button>
-        </Link>
-
-        <Button variant="ghost" size="icon">
-          <Bell className="h-5 w-5" />
-        </Button>
-
-        <Avatar>
-          <AvatarImage src="" alt="User" />
-          <AvatarFallback>U</AvatarFallback>
-        </Avatar>
+      </div>
+      <div className="flex items-center gap-4 text-sm font-medium">
+        <Link href="/dashboard" className="hover:text-blue-600">Dashboard</Link>
+        <Link href="/settings/billing" className="hover:text-blue-600">Billing</Link>
       </div>
     </header>
   );
