@@ -1,37 +1,55 @@
 import { Router } from 'express';
-import { PrismaClient } from '@contentcommand/database';
-import { ContentGenerator, OpenAIProvider } from '@contentcommand/ai';
+import { OpenAIProvider } from '@contentcommand/ai';
 
 const router = Router();
-const prisma = new PrismaClient();
+const aiProvider = new OpenAIProvider();
 
-// Instantiate with mock provider for now
-const generator = new ContentGenerator(new OpenAIProvider());
+// Mock store for video projects
+let mockVideos: any[] = [
+  { id: 'vid_1', title: 'Top 5 SaaS Tools', script: 'Hook: Stop paying for software...\nScene 1: Show logo...', createdAt: new Date().toISOString() }
+];
 
+// GET /video-projects
+router.get('/', (req, res) => {
+  res.json(mockVideos);
+});
+
+// POST /video-projects/generate
 router.post('/generate', async (req, res) => {
-  const { workspaceId, topic, tone, durationSeconds } = req.body;
+  const { topic, tone, durationSeconds } = req.body;
 
-  if (!workspaceId || !topic || !tone || !durationSeconds) {
-    return res.status(400).json({ error: 'Missing required fields' });
+  if (!topic) {
+    return res.status(400).json({ error: 'Topic is required.' });
   }
 
   try {
-    // Generate script using the AI module
-    const generatedScript = await generator.generateShortVideoScript(topic, tone, durationSeconds);
+    const systemPrompt = `You are an expert short-form video producer (TikTok, YouTube Shorts, Instagram Reels).
+Generate a highly engaging, retention-optimized video script.
+Target Tone: ${tone || 'Engaging'}
+Target Duration: ${durationSeconds || 30} seconds.`;
 
-    // Save to database
-    const videoProject = await prisma.videoProject.create({
-      data: {
-        workspaceId,
-        title: `Video: ${topic}`,
-        script: JSON.stringify(generatedScript)
-      }
-    });
+    const userPrompt = `Write a viral short-form video script about: "${topic}".
+Include:
+- A strong Hook (0-3s)
+- Visual / B-Roll suggestions for each scene
+- The actual Voiceover script
+- A clear Call to Action (CTA) at the end
+Keep the format clean and easy to read.`;
 
-    res.json({ project: videoProject, script: generatedScript });
-  } catch (error) {
-    console.error('Video generation error:', error);
-    res.status(500).json({ error: 'Failed to generate video script' });
+    const generatedScript = await aiProvider.generate(userPrompt, systemPrompt);
+
+    const newProject = {
+      id: `vid_${Date.now()}`,
+      title: `${topic} - Video Script`,
+      script: generatedScript,
+      createdAt: new Date().toISOString()
+    };
+
+    mockVideos.unshift(newProject);
+    res.status(201).json(newProject);
+  } catch (error: any) {
+    console.error('[Video Router Error]', error);
+    res.status(500).json({ error: 'Failed to generate video script.' });
   }
 });
 

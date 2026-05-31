@@ -1,118 +1,125 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { apiClient } from "@/lib/api";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { apiClient } from '@/lib/api';
 
 export default function VideoStudioPage() {
-  const [topic, setTopic] = useState("");
-  const [tone, setTone] = useState("Energetic");
-  const [platform, setPlatform] = useState("TikTok");
-  const [duration, setDuration] = useState(30);
-  const [loading, setLoading] = useState(false);
-  const [script, setScript] = useState<any>(null);
+  const [topic, setTopic] = useState('');
+  const [tone, setTone] = useState('Engaging');
+  const [durationSeconds, setDurationSeconds] = useState(30);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedScript, setGeneratedScript] = useState('');
 
-  const generateScript = async () => {
-    if (!topic) return;
-    setLoading(true);
-
-    // Simulate API Call for now until full integration
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    setGeneratedScript('');
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001"}/video-projects/generate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone, durationSeconds: duration })
+      const result = await apiClient.post('/video-projects/generate', {
+        topic,
+        tone,
+        durationSeconds
       });
-      const data = await res.json();
-      setScript(data.script);
-    } catch(e) {
-      console.error(e);
+      setGeneratedScript(result.script);
+    } catch (error) {
+      console.error('Failed to generate video script', error);
+      setGeneratedScript('Error: Could not generate the video script.');
     } finally {
-      setLoading(false);
+      setIsGenerating(false);
     }
   };
 
   return (
-    <div className="p-8 space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Video Studio</h1>
+    <div className="p-8 space-y-8 max-w-5xl mx-auto">
+      <div>
+        <h1 className="text-3xl font-bold">Video Studio</h1>
+        <p className="mt-2 text-gray-600">Plan and generate viral short-form video scripts.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card>
           <CardHeader>
-            <CardTitle>Create New Short Video</CardTitle>
+            <CardTitle>Script Generator</CardTitle>
+            <CardDescription>Enter parameters to write your next TikTok/Reel.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium">Topic</label>
+              <label className="text-sm font-medium">Video Topic</label>
               <Input
-                placeholder="e.g., Top 5 AI tools"
+                placeholder="e.g. 3 Tips for beginner software engineers"
                 value={topic}
-                onChange={(e) => setTopic(e.target.value)}
+                onChange={e => setTopic(e.target.value)}
               />
             </div>
+
             <div className="space-y-2">
-              <label className="text-sm font-medium">Tone</label>
+              <label className="text-sm font-medium">Brand Tone</label>
               <select
-                className="w-full border rounded-md p-2 text-sm"
+                className="flex h-10 w-full rounded-md border border-slate-200 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-400"
                 value={tone}
-                onChange={(e) => setTone(e.target.value)}
+                onChange={e => setTone(e.target.value)}
               >
-                <option>Energetic</option>
-                <option>Professional</option>
-                <option>Humorous</option>
+                <option value="Engaging">Engaging / Fast-paced</option>
+                <option value="Educational">Educational / Calm</option>
+                <option value="Humorous">Humorous / Satirical</option>
+                <option value="Storytelling">Storytelling / Cinematic</option>
               </select>
             </div>
+
             <div className="space-y-2">
-              <label className="text-sm font-medium">Platform</label>
-              <select className="w-full border rounded-md p-2 text-sm" value={platform} onChange={(e) => setPlatform(e.target.value)}>
-                <option>TikTok</option>
-                <option>Instagram Reels</option>
-                <option>YouTube Shorts</option>
-              </select>
+              <label className="text-sm font-medium">Target Duration (seconds)</label>
+              <Input
+                type="number"
+                value={durationSeconds}
+                onChange={e => setDurationSeconds(parseInt(e.target.value))}
+              />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Duration (seconds)</label>
-              <Input type="number" value={duration} onChange={(e) => setDuration(parseInt(e.target.value) || 30)} />
-            </div>
-            <Button onClick={generateScript} disabled={loading} className="w-full">
-              {loading ? "Generating Script..." : "Generate Script"}
+
+            <Button
+              className="w-full mt-4"
+              onClick={handleGenerate}
+              disabled={isGenerating || !topic}
+            >
+              {isGenerating ? 'Generating Script...' : 'Generate Script'}
             </Button>
           </CardContent>
         </Card>
 
-        {script && (
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Generated Script</CardTitle>
-              <Button variant="outline" size="sm" onClick={() => { const link = document.createElement("a"); link.href = "data:text/csv;charset=utf-8,Hook,Scenes,CTA\n" + script.hook + ",1," + script.cta; link.download = "export.csv"; link.click(); }}>Export CSV</Button>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <h3 className="font-semibold text-sm text-gray-500">Hook</h3>
-                <p className="mt-1">{script.hook}</p>
+        <Card>
+          <CardHeader>
+            <CardTitle>Script Editor</CardTitle>
+            <CardDescription>Review voiceover and B-roll directions.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {isGenerating ? (
+              <div className="flex flex-col items-center justify-center h-48 space-y-4">
+                <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-sm text-gray-500 animate-pulse">Writing scene directions...</p>
               </div>
-              <div>
-                <h3 className="font-semibold text-sm text-gray-500">Scenes</h3>
-                <div className="mt-2 space-y-2">
-                  {script.scenes.map((scene: any, i: number) => (
-                    <div key={i} className="p-3 bg-gray-50 rounded-md border text-sm">
-                      <span className="font-medium">Scene {i+1}:</span> {scene.description}
-                      <div className="text-gray-500 text-xs mt-1">Audio: {scene.audio}</div>
-                    </div>
-                  ))}
-                </div>
+            ) : (
+              <Textarea
+                className="h-[350px] font-mono text-sm leading-relaxed"
+                value={generatedScript}
+                onChange={(e) => setGeneratedScript(e.target.value)}
+                placeholder="Your scene-by-scene script will appear here..."
+              />
+            )}
+
+            {generatedScript && !isGenerating && (
+              <div className="mt-4 flex gap-4">
+                <Button variant="outline" className="w-full" onClick={() => alert('Mock: Exporting to PDF')}>
+                  Export PDF
+                </Button>
+                <Button className="w-full" onClick={() => alert('Mock: Sending to Teleprompter app')}>
+                  Send to Teleprompter
+                </Button>
               </div>
-              <div>
-                <h3 className="font-semibold text-sm text-gray-500">Call to Action</h3>
-                <p className="mt-1">{script.cta}</p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

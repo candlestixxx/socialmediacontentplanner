@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { OpenAIProvider } from '@contentcommand/ai';
+import { scrapeUrlText } from '@contentcommand/ai/src/research/scraper';
 
 const router = Router();
 const aiProvider = new OpenAIProvider();
@@ -15,11 +16,17 @@ router.post('/generate', async (req, res) => {
   try {
     let ragContext = '';
 
-    // Simulate RAG (Retrieval-Augmented Generation) if a URL is provided
+    // RAG (Retrieval-Augmented Generation) Context Injection
     if (researchUrl) {
-      console.log(`[RAG] Fetching context from ${researchUrl}...`);
-      // TODO: Actually fetch and chunk the URL content using @contentcommand/ai/research module
-      ragContext = `\n\nExternal Research Context:\n- According to recent data from ${researchUrl}, the key trends involve automation, multi-modal outputs, and scalable distribution.`;
+      console.log(`[RAG] Fetching live context from ${researchUrl}...`);
+      try {
+        const scrapedText = await scrapeUrlText(researchUrl);
+        ragContext = `\n\nExternal Research Context:\nUse the following extracted text from ${researchUrl} to ground your response in facts:\n"""\n${scrapedText}\n"""\n`;
+      } catch (err: any) {
+        console.error(`[RAG] Failed to extract text from ${researchUrl}:`, err.message);
+        // Fallback to minimal context if fetch fails
+        ragContext = `\n\nExternal Research Context:\n- Note: The user requested research from ${researchUrl} but the system could not extract the text. Please generalize.`;
+      }
     }
 
     const systemPrompt = `You are ContentCommand AI, an expert social media manager.
