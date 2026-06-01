@@ -54,14 +54,44 @@ router.delete('/payment-methods/:id', (req, res) => {
   }
 });
 
-// POST /billing/checkout
-router.post('/checkout', (req, res) => {
-  const { planId } = req.body;
-  // This would integrate with Stripe Checkout or PayPal in a real implementation.
-  // It returns a mock checkout URL.
-  res.json({ url: 'https://checkout.stripe.com/mock-url' });
-});
 
+// POST /billing/checkout
+router.post('/checkout', async (req, res) => {
+  const { planId, successUrl, cancelUrl } = req.body;
+
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.warn('[Billing] No Stripe key found. Returning mock URL.');
+    return res.json({ url: 'https://checkout.stripe.com/mock-url' });
+  }
+
+  try {
+    const { stripe } = require('@contentcommand/billing');
+
+    // Map plan IDs to real Stripe Price IDs (ideally from DB)
+    const priceIdMap: Record<string, string> = {
+      'pro-creator': 'price_mock_pro_123',
+      'agency': 'price_mock_agency_456'
+    };
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [
+        {
+          price: priceIdMap[planId] || 'price_mock_default',
+          quantity: 1,
+        },
+      ],
+      mode: 'subscription',
+      success_url: successUrl || 'http://localhost:3000/settings/billing?success=true',
+      cancel_url: cancelUrl || 'http://localhost:3000/settings/billing?canceled=true',
+    });
+
+    res.json({ url: session.url });
+  } catch (error: any) {
+    console.error('[Stripe Checkout Error]', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 // POST /billing/webhook
 router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
   const sig = req.headers['stripe-signature'];
