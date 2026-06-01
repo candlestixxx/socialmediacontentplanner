@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 
 
+
+## [v3.1.0] - 2026-05-25
+
+### Added
+- **Analytics Engine:** Completed the v3.1 integration by migrating the Web Dashboard from static placeholders to a live dynamic component. It now queries the `packages/api/src/routes/analytics.ts` Express endpoint which fetches and aggregates real PostgreSQL analytics metrics via Prisma.
+
 ## [v3.0.0] - 2026-05-25
 
 ### Added

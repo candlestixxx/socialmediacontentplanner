@@ -1,61 +1,47 @@
 import { Router } from 'express';
-import { PrismaClient } from '@contentcommand/database';
+import { prisma } from '@contentcommand/database';
 
 const router = Router();
-const prisma = new PrismaClient();
 
-router.post('/', async (req, res) => {
-  const { workspaceId, campaignId, content } = req.body;
-  try {
-    const post = await prisma.post.create({
-      data: { workspaceId, campaignId, content }
-    });
-    res.json(post);
-  } catch(e) {
-    res.status(500).json({ error: 'Failed to create post' });
-  }
-});
-
+// GET /posts
 router.get('/', async (req, res) => {
-  const { workspaceId } = req.query;
   try {
+    const workspaceId = req.query.workspaceId as string || 'default_ws';
+    const wsId = workspaceId === 'default_ws' ? (await prisma.workspace.findFirst())?.id : workspaceId;
+
+    if (!wsId) return res.json([]);
+
     const posts = await prisma.post.findMany({
-      where: { workspaceId: workspaceId as string }
+      where: { workspaceId: wsId },
+      orderBy: { createdAt: 'desc' },
+      include: { variants: true }
     });
     res.json(posts);
-  } catch(e) {
-    res.status(500).json({ error: 'Failed to fetch posts' });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
 });
 
-router.patch('/:id', async (req, res) => {
-  const { content, status } = req.body;
+// POST /posts
+router.post('/', async (req, res) => {
   try {
-    const post = await prisma.post.update({
-      where: { id: req.params.id },
-      data: { content, status }
-    });
-    res.json(post);
-  } catch(e) {
-    res.status(500).json({ error: 'Failed to update post' });
-  }
-});
+    const { content, status, workspaceId, campaignId } = req.body;
+    const wsId = workspaceId || (await prisma.workspace.findFirst())?.id;
 
-router.post('/:id/schedule', async (req, res) => {
-  const { scheduledAt } = req.body;
-  try {
-    const post = await prisma.post.update({
-      where: { id: req.params.id },
-      data: { scheduledAt: new Date(scheduledAt), status: 'SCHEDULED' }
-    });
-    res.json(post);
-  } catch(e) {
-    res.status(500).json({ error: 'Failed to schedule post' });
-  }
-});
+    if (!wsId) return res.status(400).json({ error: "No workspace available to attach post" });
 
-router.post('/bulk-schedule', async (req, res) => {
-  res.json({ message: 'Mock bulk scheduling posts via Jobs Package...' });
+    const newPost = await prisma.post.create({
+      data: {
+        content,
+        status: status || 'DRAFT',
+        workspaceId: wsId,
+        campaignId: campaignId || null
+      }
+    });
+    res.status(201).json(newPost);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 export const postsRouter = router;

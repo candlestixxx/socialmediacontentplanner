@@ -38,6 +38,12 @@ v3.0 Structural Integrations completed:
 - Replaced dummy API billing endpoint with live Stripe Checkout generator.
 - Connected BullMQ background worker to live-query the Postgres database and publish posts.
 
-## Future Plans (v3.1)
+v3.1 Structural Integrations completed:
+- Refactored the Dashboard Web UI to render live Postgres metrics (total views, likes, shares, and platform breakouts).
+- Wired the Express `/analytics` endpoint to execute live Prisma aggregation queries.
+
+## Future Plans (v3.2)
+- Resolve remaining technical debt from `TODO.md`, specifically addressing NextAuth placeholder logic and implementing missing `/posts` endpoints.
+- Finalize the codebase for project handoff.
 - Expand `packages/social` to implement the specific API endpoints (e.g. `twitter-api-v2`) inside the scaffolding.
 - Expand NextAuth to read workspace data properly.
