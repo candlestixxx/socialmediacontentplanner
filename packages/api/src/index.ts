@@ -10,6 +10,7 @@ import { billingRouter } from './routes/billing';
 import { notificationsRouter } from './routes/notifications';
 import { socialRouter } from './routes/social';
 import { aiRouter } from './routes/ai';
+import { analyticsRouter } from './routes/analytics';
 import { requireAuth, rateLimiter } from './middleware/auth';
 
 export const app = express();
@@ -35,5 +36,6 @@ app.use('/billing', billingRouter);
 app.use('/notifications', notificationsRouter);
 app.use('/social', socialRouter);
 app.use('/ai', aiRouter);
+app.use('/analytics', analyticsRouter);
 
 export const name = '@contentcommand/api';

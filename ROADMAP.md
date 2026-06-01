@@ -34,6 +34,10 @@ v2.7 Structural Integrations completed:
 - Refactored `apps/web/src/app/campaigns/page.tsx` to read dynamic DB data.
 - Centralized API fetching logic for the React Native mobile app inside `apps/mobile/src/lib/api.ts` utilizing `EXPO_PUBLIC_API_URL` and native emulator loopbacks.
 
-## Future Plans (v2.8 -> v3.0)
+v3.0 Structural Integrations completed:
+- Replaced dummy API billing endpoint with live Stripe Checkout generator.
+- Connected BullMQ background worker to live-query the Postgres database and publish posts.
+
+## Future Plans (v3.1)
 - Expand `packages/social` to implement the specific API endpoints (e.g. `twitter-api-v2`) inside the scaffolding.
 - Expand NextAuth to read workspace data properly.

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+
+## [v3.0.0] - 2026-05-25
+
+### Added
+- **Stripe Checkout:** Refactored `packages/api/src/routes/billing.ts` `POST /checkout` endpoint to use the real `stripe.checkout.sessions.create()` API.
+- **Social Job Workers:** Wired `packages/jobs/src/workers/social.ts` to live-query the Prisma database for Post content and publish it via the newly structured `@contentcommand/social` validation adapters.
+
 ## [v2.7.0] - 2026-05-25
 
 ### Added

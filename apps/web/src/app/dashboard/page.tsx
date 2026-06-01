@@ -1,163 +1,93 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { CalendarDays, CheckCircle2, FileEdit, Zap, DollarSign, Target, TrendingUp, Clock } from "lucide-react";
+'use client';
 
-export default function Dashboard() {
+import { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { apiClient } from '@/lib/api';
+
+export default function DashboardPage() {
+  const [metrics, setMetrics] = useState({
+    totalViews: 0,
+    totalLikes: 0,
+    totalShares: 0,
+    platforms: [] as any[]
+  });
+
+  useEffect(() => {
+    fetchMetrics();
+  }, []);
+
+  const fetchMetrics = async () => {
+    try {
+      const data = await apiClient.get('/analytics');
+      setMetrics(data);
+    } catch (error) {
+      console.error('Failed to fetch analytics', error);
+    }
+  };
+
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-8 space-y-8 max-w-6xl mx-auto">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-gray-500 mt-2">Welcome back! Here's an overview of your workspaces.</p>
+        <h1 className="text-3xl font-bold">Workspace Dashboard</h1>
+        <p className="mt-2 text-gray-600">Your high-level performance across all social accounts.</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Scheduled</CardTitle>
-            <CalendarDays className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">42</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Published Posts</CardTitle>
-            <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">128</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Drafts</CardTitle>
-            <FileEdit className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">15</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Campaigns Running</CardTitle>
-            <Zap className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">4</div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">$4,200</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Ad Spend</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">$1,100</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Top Platform</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">Instagram</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Best Posting Time</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">Tue, 7:30 PM</div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <Card className="col-span-4">
           <CardHeader>
-            <CardTitle>Recent Posts</CardTitle>
+            <CardTitle>Total Views</CardTitle>
+            <CardDescription>Across all platforms</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Content</TableHead>
-                  <TableHead>Platform</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Date</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell className="font-medium">Excited to launch...</TableCell>
-                  <TableCell>Twitter</TableCell>
-                  <TableCell>Published</TableCell>
-                  <TableCell>Today</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">Check out our new...</TableCell>
-                  <TableCell>Instagram</TableCell>
-                  <TableCell>Scheduled</TableCell>
-                  <TableCell>Tomorrow</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell className="font-medium">5 Tips for better...</TableCell>
-                  <TableCell>LinkedIn</TableCell>
-                  <TableCell>Draft</TableCell>
-                  <TableCell>-</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <p className="text-4xl font-extrabold text-blue-600">{metrics.totalViews.toLocaleString()}</p>
           </CardContent>
         </Card>
 
-        <Card className="col-span-3">
+        <Card>
           <CardHeader>
-            <CardTitle>Campaign Performance</CardTitle>
+            <CardTitle>Total Likes</CardTitle>
+            <CardDescription>Engagement metric</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-8">
-              <div className="flex items-center">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">Summer Launch</p>
-                  <p className="text-sm text-muted-foreground">Active</p>
-                </div>
-                <div className="ml-auto font-medium">+$1,200</div>
-              </div>
-              <div className="flex items-center">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">Q3 Retargeting</p>
-                  <p className="text-sm text-muted-foreground">Active</p>
-                </div>
-                <div className="ml-auto font-medium">+$850</div>
-              </div>
-              <div className="flex items-center">
-                <div className="space-y-1">
-                  <p className="text-sm font-medium leading-none">Brand Awareness</p>
-                  <p className="text-sm text-muted-foreground">Paused</p>
-                </div>
-                <div className="ml-auto font-medium">+$300</div>
-              </div>
-            </div>
+            <p className="text-4xl font-extrabold text-green-600">{metrics.totalLikes.toLocaleString()}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Total Shares</CardTitle>
+            <CardDescription>Viral reach metric</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <p className="text-4xl font-extrabold text-purple-600">{metrics.totalShares.toLocaleString()}</p>
           </CardContent>
         </Card>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Platform Breakdown</CardTitle>
+          <CardDescription>Detailed engagement per network.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {metrics.platforms.length === 0 ? (
+            <p className="text-sm text-gray-500">No analytics data yet. Publish some posts!</p>
+          ) : (
+            <ul className="space-y-4">
+              {metrics.platforms.map((p, i) => (
+                <li key={i} className="flex justify-between items-center p-4 border rounded">
+                  <span className="font-bold text-lg">{p.platform}</span>
+                  <div className="flex gap-4 text-sm text-gray-600">
+                    <span>Views: {p.views}</span>
+                    <span>Likes: {p.likes}</span>
+                    <span>Shares: {p.shares}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }
