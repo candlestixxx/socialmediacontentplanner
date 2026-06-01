@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v3.2.0] - 2026-05-25
+
+### Added
+- **Database Persistence:** Overhauled the Express `/posts` router to utilize real Prisma queries, allowing the Next.js Campaigns and Quick Create dashboards to save data dynamically.
+- **Authentication:** Hardened the NextAuth proxy logic by binding the JWT generation loop directly to the Prisma `User` table.
+
 ## [v3.1.0] - 2026-05-25
 
 ### Added

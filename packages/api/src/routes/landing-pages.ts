@@ -1,81 +1,49 @@
 import { Router } from 'express';
+import { prisma } from '@contentcommand/database';
+import { OpenAIProvider } from '@contentcommand/ai';
 
 const router = Router();
+const aiProvider = new OpenAIProvider();
 
-// Mock in-memory store for landing pages
-const mockLandingPages: any[] = [];
+router.get('/', async (req, res) => {
+  const workspaceId = req.query.workspaceId as string;
+  const wsId = workspaceId || (await prisma.workspace.findFirst())?.id;
+  if (!wsId) return res.json([]);
 
-// GET /landing-pages
-router.get('/', (req, res) => {
-  res.json(mockLandingPages);
+  const pages = await prisma.landingPage.findMany({ where: { workspaceId: wsId } });
+  res.json(pages);
 });
 
-// GET /landing-pages/:id
-router.get('/:id', (req, res) => {
-  const landingPage = mockLandingPages.find((p) => p.id === req.params.id);
-  if (!landingPage) {
-    return res.status(404).json({ error: 'Landing page not found' });
-  }
-  res.json(landingPage);
+router.post('/', async (req, res) => {
+  const wsId = req.body.workspaceId || (await prisma.workspace.findFirst())?.id;
+  if (!wsId) return res.status(400).json({error: 'Workspace required'});
+
+  const newPage = await prisma.landingPage.create({
+    data: { ...req.body, workspaceId: wsId }
+  });
+  res.json(newPage);
 });
 
-// POST /landing-pages
-router.post('/', (req, res) => {
-  const newLandingPage = {
-    id: `lp-${Date.now()}`,
-    ...req.body,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
-  mockLandingPages.push(newLandingPage);
-  res.status(201).json(newLandingPage);
-});
-
-// PATCH /landing-pages/:id
-router.patch('/:id', (req, res) => {
-  const index = mockLandingPages.findIndex((p) => p.id === req.params.id);
-  if (index === -1) {
-    return res.status(404).json({ error: 'Landing page not found' });
-  }
-
-  mockLandingPages[index] = {
-    ...mockLandingPages[index],
-    ...req.body,
-    updatedAt: new Date().toISOString(),
-  };
-  res.json(mockLandingPages[index]);
-});
-
-// DELETE /landing-pages/:id
-router.delete('/:id', (req, res) => {
-  const index = mockLandingPages.findIndex((p) => p.id === req.params.id);
-  if (index === -1) {
-    return res.status(404).json({ error: 'Landing page not found' });
-  }
-
-  const deleted = mockLandingPages.splice(index, 1);
-  res.json(deleted[0]);
-});
-
-// POST /landing-pages/generate
-router.post('/generate', (req, res) => {
+router.post('/generate', async (req, res) => {
   const { topic, goal, audience } = req.body;
-  // Mock AI generation
-  const generatedPage = {
-    id: `lp-${Date.now()}`,
-    title: `${topic} Landing Page`,
-    headline: `Unlock the Power of ${topic}`,
-    subheadline: `Reach your ${audience} goals today.`,
-    benefits: ['Benefit 1', 'Benefit 2', 'Benefit 3'],
-    cta: 'Get Started Now',
-    content: `Generated content for ${goal}`,
-    seoTitle: `${topic} - Top Solution`,
-    metaDescription: `Discover the best solution for ${topic} tailored to ${audience}.`,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
-  mockLandingPages.push(generatedPage);
-  res.status(201).json(generatedPage);
-});
+  const wsId = (await prisma.workspace.findFirst())?.id;
+  if (!wsId) return res.status(400).json({error: 'Workspace required'});
 
+  const prompt = `Generate landing page copy for ${topic} targeting ${audience} with the goal of ${goal}. Return exactly valid JSON with keys: title, headline, subheadline, offer, benefits (array), cta, seoTitle, metaDescription.`;
+
+  try {
+    const raw = await aiProvider.generate(prompt);
+    // Rough parse of JSON output for MVP
+    const start = raw.indexOf('{');
+    const end = raw.lastIndexOf('}');
+    const parsed = JSON.parse(raw.substring(start, end + 1));
+
+    const page = await prisma.landingPage.create({
+      data: { ...parsed, workspaceId: wsId }
+    });
+    res.json(page);
+  } catch(e) {
+    res.status(500).json({error: 'Failed generation'});
+  }
+});
 export const landingPagesRouter = router;

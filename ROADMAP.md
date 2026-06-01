@@ -42,7 +42,12 @@ v3.1 Structural Integrations completed:
 - Refactored the Dashboard Web UI to render live Postgres metrics (total views, likes, shares, and platform breakouts).
 - Wired the Express `/analytics` endpoint to execute live Prisma aggregation queries.
 
-## Future Plans (v3.2)
+v3.2 Structural Integrations completed:
+- Re-architected NextAuth JWT callbacks to actively query the database for User existence upon mock login.
+- Overhauled the `/posts` API endpoint to utilize the live Prisma connection, enabling the Web Dashboard to persist campaign drafts to PostgreSQL.
+
+## Future Plans (v4.0)
+- Overhaul the React Native mobile app (`apps/mobile`) UI. Replace the static boilerplate screens with natively styled layouts utilizing the newly configured `apiClient`.
 - Resolve remaining technical debt from `TODO.md`, specifically addressing NextAuth placeholder logic and implementing missing `/posts` endpoints.
 - Finalize the codebase for project handoff.
 - Expand `packages/social` to implement the specific API endpoints (e.g. `twitter-api-v2`) inside the scaffolding.

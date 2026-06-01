@@ -1,34 +1,51 @@
-import { API_BASE_URL } from '../lib/api';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { API_BASE_URL, apiClient } from '../lib/api';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 
-export default function Dashboard() {
+export default function DashboardScreen() {
+  const [metrics, setMetrics] = useState({ totalViews: 0, totalLikes: 0, totalShares: 0 });
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchMetrics = async () => {
+    try {
+      const data = await apiClient.get('/analytics');
+      if (data) setMetrics(data);
+    } catch (e) {
+      console.warn('Dashboard fetch failed', e);
+    }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchMetrics();
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    fetchMetrics();
+  }, []);
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Dashboard</Text>
+    <ScrollView
+      style={styles.container}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    >
+      <Text style={styles.header}>Workspace Snapshot</Text>
 
-      <View style={styles.cardContainer}>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Total Scheduled</Text>
-          <Text style={styles.cardValue}>42</Text>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Published</Text>
-          <Text style={styles.cardValue}>128</Text>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Drafts</Text>
-          <Text style={styles.cardValue}>15</Text>
-        </View>
+      <View style={styles.card}>
+        <Text style={styles.cardTitle}>Total Views</Text>
+        <Text style={styles.cardValue}>{metrics.totalViews.toLocaleString()}</Text>
       </View>
 
-      <Text style={styles.sectionTitle}>Upcoming Posts</Text>
-      <View style={styles.listItem}>
-        <Text style={styles.itemTitle}>Launch Announcement</Text>
-        <Text style={styles.itemSubtitle}>Twitter • Tomorrow, 10:00 AM</Text>
-      </View>
-      <View style={styles.listItem}>
-        <Text style={styles.itemTitle}>Weekly Tips</Text>
-        <Text style={styles.itemSubtitle}>Instagram • Wed, 2:00 PM</Text>
+      <View style={styles.row}>
+        <View style={[styles.card, styles.halfCard]}>
+          <Text style={styles.cardTitle}>Likes</Text>
+          <Text style={[styles.cardValue, { color: '#16a34a' }]}>{metrics.totalLikes.toLocaleString()}</Text>
+        </View>
+        <View style={[styles.card, styles.halfCard]}>
+          <Text style={styles.cardTitle}>Shares</Text>
+          <Text style={[styles.cardValue, { color: '#9333ea' }]}>{metrics.totalShares.toLocaleString()}</Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -37,65 +54,42 @@ export default function Dashboard() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#fff',
+    backgroundColor: '#f9fafb',
+    padding: 16,
   },
-  title: {
-    fontSize: 28,
+  header: {
+    fontSize: 24,
     fontWeight: 'bold',
+    color: '#111827',
     marginBottom: 20,
-    marginTop: 40,
   },
-  cardContainer: {
+  row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 30,
   },
   card: {
-    flex: 1,
-    padding: 15,
-    marginHorizontal: 5,
-    backgroundColor: '#f8f9fa',
-    borderRadius: 10,
-    alignItems: 'center',
+    backgroundColor: '#ffffff',
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 16,
     shadowColor: '#000',
+    shadowOpacity: 0.05,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
   },
+  halfCard: {
+    width: '48%',
+  },
   cardTitle: {
-    fontSize: 12,
+    fontSize: 14,
+    color: '#6b7280',
     fontWeight: '600',
-    color: '#6c757d',
-    textAlign: 'center',
+    marginBottom: 8,
   },
   cardValue: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
-    marginTop: 5,
-    color: '#212529',
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 15,
-  },
-  listItem: {
-    padding: 15,
-    borderWidth: 1,
-    borderColor: '#e9ecef',
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  itemTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#212529',
-  },
-  itemSubtitle: {
-    fontSize: 14,
-    color: '#6c757d',
-    marginTop: 4,
-  },
+    color: '#2563eb',
+  }
 });
