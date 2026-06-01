@@ -1,23 +1,14 @@
 # TODO
 
-- Phase 1: Foundation Build (Done)
-- Phase 2: Database Schema (Done)
-- Phase 3: Web App Dashboard (Done)
-- Phase 4: Mobile App (Done)
-- Phase 5: AI Content Generator (Done)
-- Phase 6: News and Web Research Module (Done)
-- Phase 7: Content Planner and Calendar (Done)
-- Phase 8: Social Media Platform Integrations (Done)
-- Phase 9: Short Video/Reel Generator (Done)
-- Phase 10: Podcast Generator (Done)
-- Phase 11: Brand Kit (Done)
-- Phase 12: Analytics Engine (Done)
-- Phase 13: Revenue, Ad Spend, and Accounting Reports (Done)
-- Phase 14: Landing Page Builder (Done)
-- Phase 15: Payments and Subscription Settings (Done)
-- Phase 16: Notification System (Done)
-- Phase 17: Security and Compliance (Done)
-- Phase 18: Testing (Done)
-- Phase 19: Final MVP Assembly (Done)
+## High Priority
+- Replace `test@example.com` NextAuth mock logic in `apps/web/src/app/api/auth/[...nextauth]/route.ts` with a fully configured JWT or Database session adapter payload reading from real UI login.
+- Connect `packages/jobs/src/workers/social.ts` to execute the publish commands from `packages/social/src/providers/*` when a scheduled job pops off the Redis queue.
 
-**ALL PHASES COMPLETED.**
+## Medium Priority
+- Connect the frontend Dashboard to the `GET /analytics` module.
+- Swap out the Prisma `default_ws` placeholder queries in `packages/api/src/routes` to use the `req.user.workspaceId` once the Auth middleware JWT validation is finalized.
+- Connect the mock checkout button in `apps/web/src/app/settings/billing` to generate a real Stripe Checkout Session via `stripe.checkout.sessions.create()`.
+
+## Low Priority
+- Update `apps/mobile` UI layouts and styling with proper Tailwind or native StyleSheet bindings.
+- Enhance the AI RAG web scraper to handle Javascript-rendered HTML (consider a lightweight playwright layer if required in the future, though node `https` is currently used).

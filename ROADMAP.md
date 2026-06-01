@@ -2,6 +2,7 @@
 
 ## Current State
 Phase 19: Final MVP Assembly completed.
+
 v2.0 Structural Integrations completed:
 - Core AI Generation engines (OpenAI, Claude, Gemini SDKs) implemented.
 - Core Social Media posting providers (Twitter, LinkedIn, Meta adapters) architected.
@@ -28,6 +29,11 @@ v2.3, v2.4, and v2.5 Integrations completed:
 v2.6 Structural Integrations completed:
 - Enhanced the Express API security by implementing a genuine Redis-backed Rate Limiter in `packages/api/src/middleware/auth.ts`, replacing the v1.0 mock.
 
-## Future Plans (v2.7)
-- Build the "Quick Create" content module at `apps/web/src/app/content/new/page.tsx`.
-- Centralize API fetching logic for the React Native mobile app inside `apps/mobile/src/lib/api.ts`, similar to the Web implementation, using `EXPO_PUBLIC_API_URL`.
+v2.7 Structural Integrations completed:
+- Built the "Quick Create" content module at `apps/web/src/app/content/new/page.tsx` for immediate posting/drafting.
+- Refactored `apps/web/src/app/campaigns/page.tsx` to read dynamic DB data.
+- Centralized API fetching logic for the React Native mobile app inside `apps/mobile/src/lib/api.ts` utilizing `EXPO_PUBLIC_API_URL` and native emulator loopbacks.
+
+## Future Plans (v2.8 -> v3.0)
+- Expand `packages/social` to implement the specific API endpoints (e.g. `twitter-api-v2`) inside the scaffolding.
+- Expand NextAuth to read workspace data properly.

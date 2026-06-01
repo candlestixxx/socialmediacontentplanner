@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.7.0] - 2026-05-25
+
+### Added
+- **Mobile Integration:** Empowered the React Native app to make API calls to the backend via a centralized `apps/mobile/src/lib/api.ts` module handling `EXPO_PUBLIC_API_URL` and native localhost/10.0.2.2 emulator loops.
+- **Web UI Overhauls:** Built the missing `Quick Create` interface to allow saving posts as drafts, and connected the static Campaigns calendar view directly to the Prisma database backend.
+
 ## [v2.6.0] - 2026-05-25
 
 ### Added
