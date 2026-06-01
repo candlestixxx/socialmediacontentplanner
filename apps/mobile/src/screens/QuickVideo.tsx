@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../lib/api';
 import { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 
@@ -12,7 +13,7 @@ export default function QuickVideo() {
     if (!topic) return;
     setLoading(true);
 
-    fetch('http://10.0.2.2:3001/video-projects/generate', {
+    fetch('${API_BASE_URL}/video-projects/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ workspaceId: 'mock-ws', topic, tone, durationSeconds: parseInt(duration) || 30 })

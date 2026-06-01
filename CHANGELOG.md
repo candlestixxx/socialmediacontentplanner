@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v2.6.0] - 2026-05-25
+
+### Added
+- **Security:** Integrated `express-rate-limit`, `rate-limit-redis`, and `ioredis` into the Express API (`packages/api`). Replaced the v1.0 mock rate limiter with a production-ready implementation backed by a standalone Redis connection.
+
 ## [v2.5.0] - 2026-05-25
 
 ### Added

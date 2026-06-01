@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../lib/api';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 export default function Dashboard() {

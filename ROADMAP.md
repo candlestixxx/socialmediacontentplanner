@@ -25,6 +25,9 @@ v2.3, v2.4, and v2.5 Integrations completed:
 - Re-architected the Video Studio UI and Backend to utilize the active `OpenAIProvider` for dynamic script generation.
 - Re-architected the Podcast Studio (`/podcasts/generate`) to utilize the active AI providers, including dynamic host/guest inputs in the Web UI.
 
-## Future Plans (v2.6)
-- Enhance the Express API security by implementing a genuine Redis-backed Rate Limiter in `packages/api/src/middleware/auth.ts`, replacing the v1.0 mock.
-- Connect to the `ioredis` instance defined in the docker-compose stack.
+v2.6 Structural Integrations completed:
+- Enhanced the Express API security by implementing a genuine Redis-backed Rate Limiter in `packages/api/src/middleware/auth.ts`, replacing the v1.0 mock.
+
+## Future Plans (v2.7)
+- Build the "Quick Create" content module at `apps/web/src/app/content/new/page.tsx`.
+- Centralize API fetching logic for the React Native mobile app inside `apps/mobile/src/lib/api.ts`, similar to the Web implementation, using `EXPO_PUBLIC_API_URL`.
