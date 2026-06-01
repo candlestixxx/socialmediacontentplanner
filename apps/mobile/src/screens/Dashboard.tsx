@@ -11,6 +11,7 @@ export default function DashboardScreen() {
       const data = await apiClient.get('/analytics');
       if (data) setMetrics(data);
     } catch (e) {
+      setMetrics({ totalViews: 0, totalLikes: 0, totalShares: 0 }); // Reset to prevent undefined crashes
       console.warn('Dashboard fetch failed', e);
     }
   };
