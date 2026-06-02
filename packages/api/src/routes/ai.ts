@@ -49,4 +49,26 @@ ${ragContext}`;
   }
 });
 
+
+import { ContentCommandParser } from '@contentcommand/ai';
+
+const parser = new ContentCommandParser();
+
+// POST /ai/parse-command
+router.post('/parse-command', async (req, res) => {
+  const { rawText } = req.body;
+
+  if (!rawText) {
+    return res.status(400).json({ error: 'rawText is required.' });
+  }
+
+  try {
+    const parsedCommand = await parser.parseCommand(rawText);
+    res.json({ success: true, parsedCommand });
+  } catch (err: any) {
+    console.error('[AI Router - Parse Command Error]', err);
+    res.status(500).json({ error: 'Failed to parse natural language command.' });
+  }
+});
+
 export const aiRouter = router;
