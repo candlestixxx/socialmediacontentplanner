@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { OpenAIProvider } from '@contentcommand/ai';
+import { OpenAIProvider, ContentCommandParser } from '@contentcommand/ai';
 import { scrapeUrlText } from '@contentcommand/ai/src/research/scraper';
 
 const router = Router();
@@ -50,7 +50,6 @@ ${ragContext}`;
 });
 
 
-import { ContentCommandParser } from '@contentcommand/ai';
 
 const parser = new ContentCommandParser();
 

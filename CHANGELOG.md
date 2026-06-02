@@ -6,6 +6,19 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v4.2.0] - 2026-05-25
+
+### Added
+- **AI Command Parser:** Built the `ContentCommandParser` utilizing `zod` schemas (`CommandSchema`) to map unstructured user NLP prompts (e.g. "Write a funny tweet") into strict JSON parameters (topic, tone, platforms, contentType).
+- **AI Parser Endpoint:** Exposed the parsing class through a new Express route `POST /ai/parse-command` inside `packages/api`.
+
+## [v4.1.0] - 2026-05-25
+
+### Added
+- **Mobile Auth Flows:** Refactored `apps/mobile/src/screens/Welcome.tsx` to handle OAuth routing and Mock Demo logins, mirroring the NextAuth configurations.
+- **Native Campaigns UI:** Completely rewrote `apps/mobile/src/screens/Campaigns.tsx` (Calendar) from static text to a dynamic Native View, pulling PostgreSQL campaigns via the `apiClient` with Pull-to-Refresh controls.
+
 ## [v4.0.0] - 2026-05-25
 
 ### Added
