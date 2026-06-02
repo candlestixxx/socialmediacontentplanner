@@ -1,34 +1,77 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { API_BASE_URL, apiClient } from '../lib/api';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
 
-const MOCK_CAMPAIGNS = [
-  { id: '1', name: 'Summer Launch', status: 'Active', posts: 12 },
-  { id: '2', name: 'Q3 Retargeting', status: 'Draft', posts: 0 },
-];
+export default function CampaignsScreen() {
+  const [campaigns, setCampaigns] = useState<any[]>([]);
+  const [refreshing, setRefreshing] = useState(false);
 
-export default function Campaigns() {
+  const fetchCampaigns = async () => {
+    try {
+      const data = await apiClient.get('/campaigns');
+      if (Array.isArray(data)) setCampaigns(data);
+    } catch (e) {
+      console.warn('Campaign fetch failed', e);
+      setCampaigns([]);
+    }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchCampaigns();
+    setRefreshing(false);
+  };
+
+  useEffect(() => {
+    fetchCampaigns();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Campaigns</Text>
-      <FlatList
-        data={MOCK_CAMPAIGNS}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card}>
-            <View>
-              <Text style={styles.cardTitle}>{item.name}</Text>
-              <Text style={styles.cardSubtitle}>{item.posts} posts • {item.status}</Text>
+    <ScrollView
+      style={styles.container}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+    >
+      <Text style={styles.header}>Active Campaigns</Text>
+
+      {campaigns.length === 0 ? (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyStateText}>No campaigns found.</Text>
+        </View>
+      ) : (
+        campaigns.map(c => (
+          <View key={c.id} style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>{c.name}</Text>
+              <View style={[styles.badge, c.status === 'ACTIVE' ? styles.badgeActive : styles.badgeDraft]}>
+                <Text style={[styles.badgeText, c.status === 'ACTIVE' ? styles.badgeTextActive : styles.badgeTextDraft]}>
+                  {c.status}
+                </Text>
+              </View>
             </View>
-          </TouchableOpacity>
-        )}
-      />
-    </View>
+            <Text style={styles.dateText}>
+              {c.startDate ? new Date(c.startDate).toLocaleDateString() : 'TBD'} -
+              {c.endDate ? new Date(c.endDate).toLocaleDateString() : ' TBD'}
+            </Text>
+          </View>
+        ))
+      )}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 20 },
-  title: { fontSize: 28, fontWeight: 'bold', marginTop: 40, marginBottom: 20 },
-  card: { padding: 15, borderWidth: 1, borderColor: '#e0e0e0', borderRadius: 8, marginBottom: 10, backgroundColor: '#f9f9f9' },
-  cardTitle: { fontSize: 18, fontWeight: '600' },
-  cardSubtitle: { fontSize: 14, color: '#666', marginTop: 4 },
+  container: { flex: 1, backgroundColor: '#f9fafb', padding: 16 },
+  header: { fontSize: 24, fontWeight: 'bold', color: '#111827', marginBottom: 20 },
+  emptyState: { padding: 40, alignItems: 'center' },
+  emptyStateText: { color: '#6b7280', fontSize: 16 },
+  card: { backgroundColor: '#ffffff', padding: 16, borderRadius: 12, marginBottom: 16, shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 4, shadowOffset: { width: 0, height: 2 }, elevation: 2 },
+  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
+  cardTitle: { fontSize: 18, fontWeight: 'bold', color: '#1f2937' },
+  dateText: { fontSize: 14, color: '#6b7280' },
+  badge: { paddingHorizontal: 8, paddingVertical: 4, borderRadius: 12 },
+  badgeActive: { backgroundColor: '#dcfce7' },
+  badgeDraft: { backgroundColor: '#f3f4f6' },
+  badgeText: { fontSize: 12, fontWeight: 'bold' },
+  badgeTextActive: { color: '#166534' },
+  badgeTextDraft: { color: '#374151' }
 });

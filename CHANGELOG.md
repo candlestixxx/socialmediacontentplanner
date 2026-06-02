@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [v4.0.0] - 2026-05-25
+
+### Added
+- **Mobile UI Overhaul:** Initiated the v4 UI roadmap. Ripped out the static MVP boilerplate from `apps/mobile` (specifically Dashboard and QuickVideo screens) and rebuilt them using robust Native StyleSheets.
+- **Mobile Graceful Degradation:** Rewired all mobile fetch parameters to use the `apiClient` (`EXPO_PUBLIC_API_URL`), adding try/catch states to ensure the app does not crash when the backend is offline.
+
 ## [v3.2.0] - 2026-05-25
 
 ### Added
