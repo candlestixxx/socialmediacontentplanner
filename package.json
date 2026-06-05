@@ -18,6 +18,7 @@
     "test:api": "turbo run test --filter=api"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/jest": "^29.5.14",
     "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
@@ -26,5 +27,8 @@
     "ts-jest": "^29.2.5",
     "turbo": "^2.0.0",
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0"
   }
 }

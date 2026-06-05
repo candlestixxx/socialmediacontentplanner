@@ -8,9 +8,32 @@ import http from 'http';
  */
 export async function scrapeUrlText(url: string): Promise<string> {
   return new Promise((resolve, reject) => {
-    const client = url.startsWith('https') ? https : http;
+    let parsedUrl: URL;
+    try {
+      parsedUrl = new URL(url);
+    } catch (e) {
+      return reject(new Error('Invalid URL format'));
+    }
 
-    client.get(url, (res) => {
+    // SSRF protection: reject local and private IPs/hosts
+    const hostname = parsedUrl.hostname.toLowerCase();
+    if (
+      hostname === 'localhost' ||
+      hostname.endsWith('.local') ||
+      hostname === '127.0.0.1' ||
+      hostname === '0.0.0.0' ||
+      hostname === '169.254.169.254' ||
+      hostname.startsWith('10.') ||
+      hostname.startsWith('192.168.') ||
+      hostname.match(/^172\.(1[6-9]|2[0-9]|3[0-1])\./) ||
+      parsedUrl.protocol !== 'http:' && parsedUrl.protocol !== 'https:'
+    ) {
+      return reject(new Error('Invalid or restricted URL'));
+    }
+
+    const client = parsedUrl.protocol === 'https:' ? https : http;
+
+    client.get(parsedUrl, (res) => {
       if (res.statusCode !== 200) {
         return reject(new Error(`Failed to fetch URL. Status code: ${res.statusCode}`));
       }
