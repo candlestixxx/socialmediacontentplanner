@@ -1,28 +1,23 @@
-# dependencies
 node_modules
-.pnp
-.pnp.js
-
-# testing
-coverage
-
-# next.js
-.next/
-out/
-
-# production
-build
+.next
+.expo
 dist
-
-# misc
-.DS_Store
-*.pem
+build
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-node_modules\n.next\ndist\nbuild\ncoverage\n
+.DS_Store
+coverage
+*.log
+.turbo
+*.tsbuildinfo
+apps/mobile/.expo
+.claude
+apps/mobile/.expo
+apps/web/node_modules
+packages/api/node_modules
+apps/web/.next
+out.txt
+status.txt
+log.txt
+git_status.txt
+package.json.tmp
+web_pkg.txt

@@ -1,8 +1,0 @@
-On branch jules-11917896674798314449-5f22639f
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	new file:   out.txt
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	git_status.txt

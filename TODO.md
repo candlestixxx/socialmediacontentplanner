@@ -1,12 +1,7 @@
-# TODO
+# TODO.md: Immediate Granular Fixes & Minor Features
 
-## High Priority
-- Finish styling the React Native app components (`apps/mobile`) utilizing Nativewind or standard StyleSheet configurations.
-- Hook up the NextAuth Session Provider into the React tree (`apps/web/src/app/layout.tsx`) so protected routes block unauthorized access appropriately.
-
-## Medium Priority
-- Create the `apps/web/src/app/brand-kit` page matching the completed API schema.
-- Implement the `docker-compose.yml` deployment scripts for AWS ECS.
-
-## Low Priority
-- Fine tune the RAG Web Scraper (`packages/ai`) to chunk massive articles using LangChain text splitters to avoid hitting OpenAI maximum token limits.
+- [ ] **Job Queue Realization:** Connect `packages/jobs/workers` to actual platform APIs (Facebook, Twitter) instead of simply logging "Mock publish successful".
+- [ ] **Billing Webhooks:** The `packages/billing` webhook currently stubs out Stripe. Need to connect the real Stripe CLI and map the `invoice.payment_succeeded` event to the `SubscriptionPlan` model.
+- [ ] **React Native Rehydration:** Ensure Zustand state in `apps/mobile` correctly rehydrates from `AsyncStorage` upon app restart to prevent login loops.
+- [ ] **API Endpoint Coverage:** `packages/api/tests` currently only covers the `/ai/parse-command` and `/campaigns` routes. We need to add tests for `/social`, `/finance`, and `/brand-kits`.
+- [ ] **NextAuth JWT Expiry:** Implement logic in `apps/web` to handle silent token refresh when the user's JWT expires.

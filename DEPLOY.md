@@ -1,43 +1,32 @@
-# Deployment Instructions for ContentCommand AI
+# DEPLOY.md: Environment & Deployment Instructions
 
-## Local Development (Docker)
+**Prerequisites:**
+-   Node.js v18+
+-   PostgreSQL v14+
+-   Redis Server
+-   API Keys (OpenAI, Claude, Gemini, Stripe, NextAuth Secret)
 
-To spin up the required local infrastructure (PostgreSQL and Redis), ensure Docker is running, then execute:
+**Local Development Setup:**
+1.  **Clone & Install:**
+    `git clone <repo_url>`
+    `cd contentcommand-ai`
+    `npm install`
+2.  **Environment Variables:**
+    Copy all `.env.example` files to `.env` across the monorepo root and within specific packages (`packages/database`, `apps/web`). Populate `DATABASE_URL` and `REDIS_URL`.
+3.  **Database Migration & Seeding:**
+    `cd packages/database`
+    `npx prisma migrate dev --name init`
+    `npx prisma generate`
+    `npx prisma db seed`
+4.  **Start Services:**
+    `npm run dev &` (Run the Next.js frontend and Express API concurrently)
 
-```bash
-docker-compose up -d
-```
+**Production Deployment Target Architecture (Vercel + Render + Supabase):**
+-   **Frontend (apps/web):** Deploy to Vercel. Set standard Node environment. Vercel automatically detects Next.js.
+-   **Backend (packages/api & packages/jobs):** Deploy Express/Node server to Render or a DigitalOcean droplet. The Job Workers must be constantly running background processes.
+-   **Database:** Supabase Postgres or AWS RDS.
+-   **Redis:** Upstash or AWS ElastiCache.
 
-### Environment Variables
-Copy the `.env.example` file to `.env` in the `packages/database` folder.
-Ensure the Prisma connection string matches the local Docker config:
-`DATABASE_URL="postgresql://postgres:password@localhost:5432/contentcommand?schema=public"`
-
-Ensure the Redis URL in your root `.env` or `packages/jobs/.env` matches:
-`REDIS_URL="redis://127.0.0.1:6379"`
-
-### Bootstrapping the Database
-Once the Postgres container is running, push the Prisma schema:
-```bash
-cd packages/database
-npx prisma db push
-```
-
-## Production Deployment
-
-### Database (PostgreSQL)
-- We recommend managed PostgreSQL instances such as AWS RDS, Supabase, or Vercel Postgres.
-- Ensure the connection pool string is provided in the production environment variables.
-
-### Cache & Queues (Redis)
-- We recommend Upstash or AWS ElastiCache for production Redis.
-- Used by BullMQ for scheduled social media posting.
-
-### Web Client (Next.js)
-- The Next.js client (`apps/web`) is optimized for deployment on **Vercel**.
-- Connect the GitHub repository directly to Vercel, set the Root Directory to `apps/web`.
-- Make sure to populate `NEXT_PUBLIC_API_URL` to point to your live Express backend.
-
-### Backend API (Express)
-- The Express server (`packages/api`) can be deployed to AWS Elastic Beanstalk, Heroku, or Render.
-- Set `PORT` to the provider's requirement (default is 3001).
+**Critical Deployment Notes:**
+-   Ensure the `.env` loaded into the production backend has SSRF protections enabled and `NODE_ENV` set to `production`.
+-   Run `npx prisma migrate deploy` during the CI/CD pipeline, *not* `migrate dev`.
