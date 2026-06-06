@@ -1,0 +1,15 @@
+On branch feature/v5-0-security-patch
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   .env
+	modified:   .gitignore
+	new file:   apps/mobile/.claude/settings.json
+	new file:   git_status.txt
+	new file:   log.txt
+	new file:   package.json.tmp
+	new file:   packages/database/.env
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   git_status.txt
