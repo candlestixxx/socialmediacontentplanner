@@ -19,3 +19,6 @@ In this autonomous "autopilot" session, we synced the repository with origin bra
 1. Tackle styling optimizations for the React Native mobile app.
 2. Build containerization/deployment scripts in `docker-compose.yml` for AWS ECS.
 3. Review `TODO.md` and `ROADMAP.md` for immediate next items.
+## Next Actionable Steps for Successor Model
+1. Implement the `docker-compose.yml` deployment scripts for AWS ECS.
+2. Fine tune the RAG Web Scraper (`packages/ai`) to chunk massive articles using LangChain text splitters to avoid hitting OpenAI maximum token limits.
