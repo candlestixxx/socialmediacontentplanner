@@ -1,3 +1,16 @@
+
+## [v4.5.0] - 2026-07-02
+
+### Added
+- **AWS ECS Deployment:** Added AWS ECS orchestration settings to the `docker-compose.yml` file including the API container configuration and x-aws configuration parameters.
+- **Langchain Text Chunking:** Refactored the `packages/ai` Web Scraper to utilize LangChain's `RecursiveCharacterTextSplitter` to chunk massive articles efficiently to avoid AI model token limits.
+
+
+## [v4.4.0] - 2026-07-01
+
+### Added
+- **Mobile Screens Styled:** Completed the UI implementation for the mobile application screens including Analytics, Login, Notifications, QuickCreate, and Settings, utilizing standard StyleSheet configurations.
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
