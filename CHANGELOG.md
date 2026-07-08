@@ -1,4 +1,10 @@
 
+## [v4.6.0] - 2026-07-08
+
+### Added
+- **Analytics Web UI:** Refactored the Next.js Analytics dashboard (`apps/web/src/app/analytics/page.tsx`) to fetch and display dynamic metric data from the Express backend via `apiClient`, replacing the placeholder mock data.
+
+
 ## [v4.5.0] - 2026-07-02
 
 ### Added
