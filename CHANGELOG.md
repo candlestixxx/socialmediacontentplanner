@@ -1,4 +1,10 @@
 
+## [v4.7.0] - 2026-07-09
+
+### Added
+- **Mobile Native Previews:** Implemented the IDEAS.md request for a Mobile Native Preview Renderer. The `PostReview.tsx` screen now features an interactive tab layout that renders high-fidelity styled mockups of Twitter and LinkedIn post cards so users can see exactly how their AI-generated content will look before scheduling.
+
+
 ## [v4.6.0] - 2026-07-08
 
 ### Added
