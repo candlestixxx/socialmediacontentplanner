@@ -16,9 +16,34 @@ type Campaign = {
 
 export default function CampaignsPage() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [liveJobs, setLiveJobs] = useState(0);
 
   useEffect(() => {
     fetchCampaigns();
+
+    // Setup WebSocket connection to API server
+    const wsUrl = process.env.NEXT_PUBLIC_API_URL
+      ? process.env.NEXT_PUBLIC_API_URL.replace(/^http/, 'ws')
+      : 'ws://localhost:3031';
+
+    const ws = new WebSocket(wsUrl);
+
+    ws.onopen = () => console.log('[WebSocket] Connected for live updates');
+
+    ws.onmessage = (event) => {
+      try {
+        const payload = JSON.parse(event.data);
+        if (payload.type === 'publishing_status') {
+          setLiveJobs(payload.data.activeJobs);
+        }
+      } catch (e) {
+        console.error('Failed to parse WS message', e);
+      }
+    };
+
+    return () => {
+      ws.close();
+    };
   }, []);
 
   const fetchCampaigns = async () => {
@@ -34,7 +59,14 @@ export default function CampaignsPage() {
     <div className="p-8 space-y-8 max-w-6xl mx-auto">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Campaigns & Calendar</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-3xl font-bold">Campaigns & Calendar</h1>
+            {liveJobs > 0 && (
+              <span className="px-3 py-1 bg-green-100 text-green-800 text-xs font-bold rounded-full animate-pulse border border-green-200">
+                Live Sync: {liveJobs} jobs processing
+              </span>
+            )}
+          </div>
           <p className="mt-2 text-gray-600">Plan and schedule your content drops.</p>
         </div>
         <Button onClick={() => alert('Mock: Opening New Campaign Modal')}>+ New Campaign</Button>

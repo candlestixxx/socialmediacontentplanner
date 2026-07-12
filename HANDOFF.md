@@ -1,16 +1,14 @@
 # HANDOFF MEMORY & SESSION LOG
 
 ## Session Context
-In this autonomous "autopilot" session, we pulled an aggressive pivot from `IDEAS.md` to build out the "Mobile Native Preview Renderer". The project's primary `TODO.md` backlog has now been completely emptied.
+In this autonomous "autopilot" session, we pulled the "WebSocket Live Updates" initiative from the IDEAS backlog and successfully launched Phase 23 (v5.0.0).
 
 ## Completed Milestones
-- **Mobile Native Previews:** Upgraded `apps/mobile/src/screens/PostReview.tsx` from a simple boilerplate text element into a high-fidelity rendering engine. It currently supports interactive tabs to swap between pixel-perfect styled CSS approximations of Twitter/X cards and LinkedIn posts.
-- **Backlog Zero:** Successfully processed and cleared all granular requirements present in `TODO.md`.
+- **Live WebSocket Sync:** Attached a native `ws` WebSocketServer directly to the Express `app.listen` server instance. The server now tracks active clients and broadcasts a mock payload representing active background jobs every 5 seconds.
+- **Frontend Real-time Listening:** Integrated the standard Web API `WebSocket` into the Next.js `apps/web/src/app/campaigns/page.tsx` hook loop. The UI safely opens the connection on mount, cleans it up on unmount, and renders a dynamic, pulsing "Live Sync" badge when active background jobs are detected.
 
 ## Technical Discoveries & Workspace Rules
-- **Mock DB Singleton:** `MockPrismaClient` proxy must be maintained as a singleton for test reliability.
-- **Expo Previews:** The native preview component uses deeply nested `StyleSheet` attributes (e.g. `borderWidth`, `shadowOpacity`) rather than web-based CSS, meaning it degrades perfectly on Android/iOS emulators.
+- **WebSocket Protocol Parsing:** `process.env.NEXT_PUBLIC_API_URL.replace(/^http/, 'ws')` is used to gracefully convert standard http REST URLs to websocket endpoints dynamically across environments.
 
 ## Next Actionable Steps for Successor Model
-1. Consult `IDEAS.md` for major architectural pivots (e.g., SQLite testing migration or WebSocket integration).
-2. Begin planning Phase 23 / v5.0 features in `ROADMAP.md` as the core MVP and v4 polish cycles are fully concluded.
+1. Consult `IDEAS.md` for major architectural pivots. The next highly requested feature is formally migrating the Prisma test frameworks from the mock singleton to a true SQLite in-memory instance (Prisma SQLite Transition).

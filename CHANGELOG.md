@@ -1,4 +1,10 @@
 
+## [v5.0.0] - 2026-07-12
+
+### Added
+- **Live WebSocket Sync:** Successfully launched Phase 23 (v5.0.0). The Express backend now features a native `ws` WebSocket server simulating real-time job processing from the queue. The `Campaigns` UI in the Next.js client connects to this socket on load and displays a dynamic, pulsing `Live Sync` indicator representing the immediate backend processing state.
+
+
 ## [v4.7.0] - 2026-07-09
 
 ### Added
