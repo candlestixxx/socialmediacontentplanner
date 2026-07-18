@@ -1,4 +1,10 @@
 
+## [v5.1.0] - 2026-07-18
+
+### Added
+- **Multimodal AI Scraper:** Successfully launched Phase 24 (v5.1.0). The web scraping engine inside `packages/ai` now natively intercepts and parses `<img>` tags to extract visual context (source URLs and Alt texts). This metadata is compiled into a structured block and appended to the LangChain token chunker, enabling the core RAG processor to 'see' and describe images during content generation.
+
+
 ## [v5.0.0] - 2026-07-12
 
 ### Added

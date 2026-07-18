@@ -68,5 +68,8 @@ Phase 23 Structural Integrations completed (v5.0.0):
 - Integrated a native WebSocket server into the Express backend to broadcast live queue updates.
 - Refactored the Next.js `Campaigns` page to act as a WebSocket listener rendering real-time 'Live Sync' badges.
 
-## Future Plans (v5.1)
+Phase 24 Structural Integrations completed (v5.1.0):
+- Upgraded the LangChain-enabled AI Web Scraper to act multimodally, detecting `<img>` elements before sanitization and passing structural descriptions of the images directly into the RAG context pipeline.
+
+## Future Plans (v5.2)
 - Formally migrate local testing frameworks to standard SQLite instances.

@@ -10,6 +10,7 @@ coverage
 .turbo
 *.tsbuildinfo
 apps/mobile/.expo
+.claude
 apps/mobile/.expo
 apps/web/node_modules
 packages/api/node_modules
