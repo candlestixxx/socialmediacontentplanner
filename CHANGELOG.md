@@ -1,3 +1,12 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [v5.2.0] - 2026-07-19
+
+### Added
+- **Web Settings UI:** Completed Phase 25 (v5.2.0). Replaced the placeholder `/settings` page in the Next.js frontend with a fully interactive layout utilizing robust ShadCN components for updating Profile, Preferences, and Security details.
+- **Testing Framework Finalization:** Deprecated the SQLite database migration idea due to technical blockers (Prisma Enum constraints), certifying the robust MockPrismaClient proxy as the permanent testing architecture.
 
 ## [v5.1.0] - 2026-07-18
 
@@ -34,15 +43,6 @@
 
 ### Added
 - **Mobile Screens Styled:** Completed the UI implementation for the mobile application screens including Analytics, Login, Notifications, QuickCreate, and Settings, utilizing standard StyleSheet configurations.
-
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-
-
-
-
 
 ## [v4.3.0] - 2026-06-05
 

@@ -71,5 +71,9 @@ Phase 23 Structural Integrations completed (v5.0.0):
 Phase 24 Structural Integrations completed (v5.1.0):
 - Upgraded the LangChain-enabled AI Web Scraper to act multimodally, detecting `<img>` elements before sanitization and passing structural descriptions of the images directly into the RAG context pipeline.
 
-## Future Plans (v5.2)
-- Formally migrate local testing frameworks to standard SQLite instances.
+Phase 25 Structural Integrations completed (v5.2.0):
+- Overhauled the Next.js `apps/web/src/app/settings/page.tsx` UI to finalize the web client MVP styling path, adding full forms for Profile, Preferences, and Security.
+- Formally deprecated the SQLite testing migration track due to irreconcilable enum conflicts within the Prisma SQLite provider, establishing the custom Singleton MockProxy as the permanent integration testing standard.
+
+## Future Plans (v6.0)
+- Launch the public beta!

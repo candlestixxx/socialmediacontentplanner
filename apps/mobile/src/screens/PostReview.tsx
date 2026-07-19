@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 
 export default function PostReview() {
   const [activePlatform, setActivePlatform] = useState<'TWITTER' | 'LINKEDIN'>('TWITTER');
