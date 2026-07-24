@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v6.0.0] - 2026-07-25
+
+### Added
+- **Public Beta Launch:** Officially launched the v6.0.0 Public Beta. Transitioned out of the MVP architecture phases.
+- **Documentation Overhaul:** Updated `README.md` and `VISION.md` to reflect the live Public Beta status and completed the `IDEAS.md` backlog cleanups.
+
 ## [v5.2.0] - 2026-07-19
 
 ### Added
