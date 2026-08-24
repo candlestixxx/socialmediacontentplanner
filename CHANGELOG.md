@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v6.0.1] - 2026-07-26
+
+### Added
+- **Public Beta Web Polish:** Updated the Next.js root landing page (`apps/web/src/app/page.tsx`) to proudly display the live v6.0 Public Beta badge and updated copy, completing the active autonomous session tasks.
+
 ## [v6.0.0] - 2026-07-25
 
 ### Added
