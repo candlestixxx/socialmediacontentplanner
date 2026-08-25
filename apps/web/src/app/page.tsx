@@ -3,11 +3,14 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-8 text-center space-y-8">
-      <div className="max-w-3xl space-y-4">
+      <div className="max-w-3xl space-y-4 flex flex-col items-center">
+        <span className="px-4 py-1.5 rounded-full bg-blue-100 text-blue-800 text-sm font-bold border border-blue-200 shadow-sm animate-pulse">
+          v6.0 Public Beta Live
+        </span>
         <h1 className="text-6xl font-extrabold tracking-tight text-gray-900">ContentCommand AI</h1>
         <p className="text-xl text-gray-600">Create. Schedule. Publish. Track. Profit.</p>
         <p className="text-md text-gray-500 max-w-xl mx-auto">
-          The ultimate all-in-one AI hub. From automated social scheduling and AI content generation
+          The ultimate all-in-one AI hub is officially in beta. From automated social scheduling and AI content generation
           to full landing page building, analytics, and billing management.
         </p>
       </div>
