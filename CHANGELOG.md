@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [v6.0.2] - 2026-07-26
+
+### Added
+- **AWS ECS Background Workers:** Fully orchestrated the `docker-compose.yml` deployment framework to include the `jobs` workspace. This separates the long-running BullMQ social publishing background workers into their own scalable container isolated from the primary HTTP API.
+- **Dockerfiles:** Added explicit `Dockerfile` context definitions for both the `packages/api` and `packages/jobs` workspaces to satisfy the AWS cloud deployment context requirements.
+
 ## [v6.0.1] - 2026-07-26
 
 ### Added
