@@ -1,3 +1,18 @@
+
+## [v6.1.0] - 2026-09-22
+
+### Merged — Legacy One Universal Content Platform (realestateprototype)
+This release merges the ealestateprototype project into ContentCommand AI, creating a unified content studio with universal business-type support. See MERGE_GUIDE.md for integration details.
+
+### Added (from Legacy One)
+- **Universal Business-Type Switching** — dynamic UI, prompts, and templates for Real Estate, E-Commerce, Restaurant, General Business
+- **AI Persona Customization** — brand_voice analysis from past successful posts, injected into all AI generation
+- **Canva Integration** — deep links in draft review and content library
+- **Twitter SDK Real Publishing** — conditional 	witter-api-v2 integration
+- **Drag-to-Select Calendar** — multi-date selection with bounding box
+- **AI Draft Review** — intercept and edit AI content before scheduling
+- **Content Library Filters** — category filtering (all, listing, report, social) + chronological sort
+- **Cross-platform Scripts** — build.bat/sh, start.bat/sh
 # Changelog
 
 All notable changes to this project will be documented in this file.
