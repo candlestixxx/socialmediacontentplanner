@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { OpenAIProvider } from '@contentcommand/ai';
+import { prisma } from '@contentcommand/database';
 
 const router = Router();
 const aiProvider = new OpenAIProvider();
@@ -16,17 +17,29 @@ router.get('/', (req, res) => {
 
 // POST /video-projects/generate
 router.post('/generate', async (req, res) => {
-  const { workspaceId, topic, tone, durationSeconds } = req.body;
+  const { workspaceId, topic, tone, durationSeconds, businessType } = req.body;
 
   if (!workspaceId || !topic || !tone) {
     return res.status(400).json({ error: 'WorkspaceId, topic, and tone are required.' });
   }
 
   try {
+    // Fetch brand voice from BrandKit
+    let brandVoice = '';
+    try {
+      const brandKit = await prisma.brandKit.findFirst({ where: { workspaceId } });
+      if (brandKit?.voiceRules) brandVoice = brandKit.voiceRules;
+    } catch (e) {
+      console.warn('[Video] Could not load brand kit:', e);
+    }
+
+    const brandBlock = brandVoice ? `\nBrand Voice Guidelines (MUST follow):\n${brandVoice}\n` : '';
+    const businessBlock = businessType ? `\nBusiness Context: Content is for a ${businessType.replace('_', ' ')} business.\n` : '';
+
     const systemPrompt = `You are an expert short-form video producer (TikTok, YouTube Shorts, Instagram Reels).
 Generate a highly engaging, retention-optimized video script.
 Target Tone: ${tone || 'Engaging'}
-Target Duration: ${durationSeconds || 30} seconds.`;
+Target Duration: ${durationSeconds || 30} seconds.${brandBlock}${businessBlock}`;
 
     const userPrompt = `Write a viral short-form video script about: "${topic}".
 Include:
@@ -55,7 +68,7 @@ Keep the format clean and easy to read.`;
     };
 
     mockVideos.unshift({ ...newProject, script: structuredScript });
-    res.status(200).json({ project: newProject, script: structuredScript });
+    res.status(200).json({ project: newProject, script: structuredScript, usedBrandVoice: !!brandVoice });
   } catch (error: any) {
     console.error('[Video Router Error]', error);
     res.status(500).json({ error: 'Failed to generate video script.' });

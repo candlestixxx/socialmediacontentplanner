@@ -1,19 +1,32 @@
 import { Router } from 'express';
 import { OpenAIProvider, ContentCommandParser } from '@contentcommand/ai';
 import { scrapeUrlText } from '@contentcommand/ai/src/research/scraper';
+import { prisma } from '@contentcommand/database';
 
 const router = Router();
 const aiProvider = new OpenAIProvider();
 
 // POST /ai/generate
 router.post('/generate', async (req, res) => {
-  const { topic, platforms, tone, researchUrl } = req.body;
+  const { topic, platforms, tone, researchUrl, workspaceId, businessType } = req.body;
 
   if (!topic) {
     return res.status(400).json({ error: 'Topic is required.' });
   }
 
   try {
+    // Fetch brand voice from BrandKit
+    let brandVoice = '';
+    try {
+      const wsId = workspaceId || (await prisma.workspace.findFirst())?.id;
+      if (wsId) {
+        const brandKit = await prisma.brandKit.findFirst({ where: { workspaceId: wsId } });
+        if (brandKit?.voiceRules) brandVoice = brandKit.voiceRules;
+      }
+    } catch (e) {
+      console.warn('[AI] Could not load brand kit:', e);
+    }
+
     let ragContext = '';
 
     // RAG (Retrieval-Augmented Generation) Context Injection
@@ -24,15 +37,17 @@ router.post('/generate', async (req, res) => {
         ragContext = `\n\nExternal Research Context:\nUse the following extracted text from ${researchUrl} to ground your response in facts:\n"""\n${scrapedText}\n"""\n`;
       } catch (err: any) {
         console.error(`[RAG] Failed to extract text from ${researchUrl}:`, err.message);
-        // Fallback to minimal context if fetch fails
         ragContext = `\n\nExternal Research Context:\n- Note: The user requested research from ${researchUrl} but the system could not extract the text. Please generalize.`;
       }
     }
 
+    const brandBlock = brandVoice ? `\nBrand Voice Guidelines (MUST follow):\n${brandVoice}\n` : '';
+    const businessBlock = businessType ? `\nBusiness Context: Content is for a ${businessType.replace('_', ' ')} business. Tailor terminology, examples, and calls-to-action accordingly.\n` : '';
+
     const systemPrompt = `You are ContentCommand AI, an expert social media manager.
 Your goal is to generate platform-specific content for the user.
 Tone: ${tone || 'Professional'}
-Target Platforms: ${(platforms || ['LinkedIn', 'Twitter']).join(', ')}
+Target Platforms: ${(platforms || ['LinkedIn', 'Twitter']).join(', ')}${brandBlock}${businessBlock}
 ${ragContext}`;
 
     const userPrompt = `Please write a batch of social media posts about: "${topic}". Format the output cleanly with the platform name as a header.`;
@@ -41,7 +56,9 @@ ${ragContext}`;
 
     res.json({
       success: true,
-      content: generatedContent
+      content: generatedContent,
+      usedBrandVoice: !!brandVoice,
+      businessType: businessType || null
     });
   } catch (err: any) {
     console.error('[AI Router Error]', err);

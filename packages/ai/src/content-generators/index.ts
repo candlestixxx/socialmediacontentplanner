@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import { AIProvider } from '../providers';
-import { SYSTEM_PROMPT_RULES, buildContentPrompt } from '../prompts/templates';
+import { SYSTEM_PROMPT_RULES, buildContentPrompt, buildBrandVoiceBlock, buildBusinessTypeBlock } from '../prompts/templates';
+
+export interface ContentContext {
+  brandVoice?: string;
+  businessType?: string;
+}
 
 const PostIdeasSchema = z.object({
   ideas: z.array(z.string()),
@@ -56,10 +61,12 @@ const CampaignPlanSchema = z.object({
 });
 
 export class ContentGenerator {
-  constructor(private provider: AIProvider) {}
+  constructor(private provider: AIProvider, private context: ContentContext = {}) {}
 
   private async generate<T>(prompt: string, schema: z.ZodSchema<T>): Promise<T> {
-    const fullPrompt = `${SYSTEM_PROMPT_RULES}\n\n${prompt}`;
+    const brandBlock = buildBrandVoiceBlock(this.context.brandVoice);
+    const businessBlock = buildBusinessTypeBlock(this.context.businessType);
+    const fullPrompt = `${SYSTEM_PROMPT_RULES}${brandBlock}${businessBlock}\n\n${prompt}`;
     const response = await this.provider.generateStructuredResponse<T>(fullPrompt, schema);
     return schema.parse(response);
   }

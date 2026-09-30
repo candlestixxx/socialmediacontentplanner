@@ -14,7 +14,7 @@
 
 ## Integration Points
 
-### 1. Universal Business-Type Switching (KEY UNIQUE FEATURE)
+### 1. Universal Business-Type Switching (KEY UNIQUE FEATURE) ✅ DONE (2026-09-29)
 **Source:** `realestateprototype/client-next/src/constants.ts` → `packages/config/business-types/business-types.ts`
 
 The prototype's `businessTypes` configuration object dynamically adjusts UI, content templates, and AI prompts based on selected industry:
@@ -29,7 +29,15 @@ The prototype's `businessTypes` configuration object dynamically adjusts UI, con
 - Customizes analytics dashboards
 - Adapts the content calendar categories
 
-### 2. AI Persona Customization (brand_voice)
+**Wired:**
+- `Workspace.businessType` field added to Prisma schema (`real_estate` | `ecommerce` | `restaurant` | `general`)
+- `packages/config/business-types/business-types.ts` — `getBusinessPromptContext()`, `getContentCategories()`, `getCalendarCategories()` helpers
+- `packages/ai/src/prompts/templates.ts` — `buildBusinessTypeBlock()` injects industry context into every AI prompt
+- `packages/ai/src/content-generators/index.ts` — `ContentGenerator` accepts `ContentContext { brandVoice, businessType }`
+- `packages/api/src/routes/workspace.ts` — GET/PATCH workspace settings for businessType selection
+- AI, Video, and Podcast generation routes all accept and inject `businessType`
+
+### 2. AI Persona Customization (brand_voice) ✅ DONE (2026-09-29)
 **Source:** `realestateprototype/client-next/src/services/openai/index.ts` → `apps/web/src/lib/ai-persona-prompt.ts`
 
 Users define a persistent `brand_voice` that gets injected into every AI prompt. Can also analyze past successful posts to establish brand tone.
@@ -38,6 +46,15 @@ Users define a persistent `brand_voice` that gets injected into every AI prompt.
 - Add "Analyze Past Posts" feature to extract brand voice
 - Inject `brand_voice` into all AI generation calls (Content Studio, Video, Podcast)
 - Store per-workspace in database
+
+**Wired:**
+- `BrandKit.voiceRules` is fetched from DB and injected into all AI generation system prompts
+- `packages/ai/src/prompts/templates.ts` — `buildBrandVoiceBlock()` wraps voice rules as mandatory guidelines
+- `packages/api/src/routes/ai.ts` — `/ai/generate` fetches BrandKit and injects `voiceRules`
+- `packages/api/src/routes/videos.ts` — `/video-projects/generate` injects `voiceRules`
+- `packages/api/src/routes/podcasts.ts` — `/podcasts/generate` injects `voiceRules`
+- Response includes `usedBrandVoice: boolean` flag
+- **Remaining:** "Analyze Past Posts" feature to auto-extract brand voice from successful content
 
 ### 3. Canva Integration Deep Links
 **Source:** `realestateprototype/client-next/src/components/ReviewModal.tsx` → `apps/web/src/components/draft-review-modal.tsx`

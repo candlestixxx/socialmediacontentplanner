@@ -78,3 +78,27 @@ export const businessTypes = {
 };
 
 export type BusinessTypeKey = keyof typeof businessTypes;
+
+export function getBusinessPromptContext(key: BusinessTypeKey): string {
+  const map: Record<BusinessTypeKey, string> = {
+    real_estate: 'You are creating content for a REAL ESTATE business. Focus on property listings, market reports, open houses, neighborhood highlights, buyer/seller tips, and home-buying education. Use real-estate terminology naturally.',
+    ecommerce: 'You are creating content for an E-COMMERCE business. Focus on product highlights, promotions, sales events, customer reviews, unboxings, and lifestyle imagery. Emphasize benefits and urgency where appropriate.',
+    restaurant: 'You are creating content for a RESTAURANT/FOOD business. Focus on daily specials, menu highlights, chef spotlights, events, behind-the-scenes kitchen content, and food photography descriptions. Make it appetizing and inviting.',
+    general: 'You are creating content for a GENERAL BUSINESS. Focus on services, team highlights, industry news, thought leadership, and community engagement. Maintain a professional but approachable presence.',
+  };
+  return map[key] || map.general;
+}
+
+export function getContentCategories(key: BusinessTypeKey): string[] {
+  const map: Record<BusinessTypeKey, string[]> = {
+    real_estate: ['listing', 'market-report', 'open-house', 'tip', 'testimonial', 'neighborhood'],
+    ecommerce: ['product', 'promotion', 'sale', 'review', 'lifestyle', 'announcement'],
+    restaurant: ['daily-special', 'menu', 'event', 'behind-the-scenes', 'chef-spotlight', 'review'],
+    general: ['service', 'team', 'industry-news', 'announcement', 'tip', 'testimonial'],
+  };
+  return map[key] || map.general;
+}
+
+export function getCalendarCategories(key: BusinessTypeKey): string[] {
+  return getContentCategories(key);
+}

@@ -91,6 +91,7 @@ model User {
 model Workspace {
   id        String   @id @default(cuid())
   name      String
+  businessType String @default("general") // real_estate | ecommerce | restaurant | general
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   users     User[]
