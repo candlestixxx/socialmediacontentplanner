@@ -185,6 +185,9 @@ export default function ContentHubPage() {
                              {post.scheduledAt && (
                                <span className="text-xs text-blue-600 font-medium">Scheduled for {new Date(post.scheduledAt).toLocaleString()}</span>
                              )}
+                             <a href="https://www.canva.com/design" target="_blank" rel="noreferrer" className="text-xs text-purple-600 font-medium hover:underline ml-auto">
+                               🎨 Design with Canva
+                             </a>
                           </div>
                         </div>
                       </CardContent>

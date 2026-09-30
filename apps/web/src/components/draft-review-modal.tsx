@@ -1,7 +1,17 @@
 import React from "react";
 "use client";
 import { X, Save, Edit3, Image } from 'lucide-react';
-import { type CalendarEvent } from '../App';
+
+interface CalendarEvent {
+  id: string;
+  title: string;
+  content?: string;
+  type: string;
+  month: number;
+  day: number;
+  year: number;
+  time: string;
+}
 
 interface ReviewModalProps {
   draftEvents: CalendarEvent[];

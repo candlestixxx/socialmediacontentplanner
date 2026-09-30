@@ -6,6 +6,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { apiClient } from '@/lib/api';
+import { ReviewModal } from '@/components/draft-review-modal';
+
+interface CalendarEvent {
+  id: string;
+  title: string;
+  content?: string;
+  type: string;
+  month: number;
+  day: number;
+  year: number;
+  time: string;
+}
 
 export default function AIStudioPage() {
   const [topic, setTopic] = useState('');
@@ -13,6 +25,8 @@ export default function AIStudioPage() {
   const [tone, setTone] = useState('Professional');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedContent, setGeneratedContent] = useState('');
+  const [draftEvents, setDraftEvents] = useState<CalendarEvent[]>([]);
+  const [showReview, setShowReview] = useState(false);
 
   const handleGenerate = async () => {
     setIsGenerating(true);
@@ -25,12 +39,49 @@ export default function AIStudioPage() {
         platforms: ['LinkedIn', 'Twitter']
       });
       setGeneratedContent(result.content);
+
+      // Create draft events from generated content for review
+      const now = new Date();
+      const events: CalendarEvent[] = [{
+        id: `draft_${Date.now()}`,
+        title: topic,
+        content: result.content,
+        type: 'social',
+        month: now.getMonth(),
+        day: now.getDate(),
+        year: now.getFullYear(),
+        time: '12:00',
+      }];
+      setDraftEvents(events);
+      setShowReview(true);
     } catch (error) {
       console.error('Failed to generate AI content', error);
       setGeneratedContent('Error: Could not reach the AI generation service.');
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleApproveDrafts = async () => {
+    try {
+      for (const event of draftEvents) {
+        await apiClient.post('/posts', {
+          content: event.content,
+          status: 'DRAFT',
+        });
+      }
+      setShowReview(false);
+      setDraftEvents([]);
+      alert('Drafts approved and saved to content library!');
+    } catch (err) {
+      console.error('Failed to save drafts:', err);
+      alert('Failed to save drafts.');
+    }
+  };
+
+  const handleCancelReview = () => {
+    setShowReview(false);
+    setDraftEvents([]);
   };
 
   return (
@@ -123,6 +174,16 @@ export default function AIStudioPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Draft Review Modal — intercept before scheduling/publishing */}
+      {showReview && (
+        <ReviewModal
+          draftEvents={draftEvents}
+          setDraftEvents={setDraftEvents}
+          onApprove={handleApproveDrafts}
+          onCancel={handleCancelReview}
+        />
+      )}
     </div>
   );
 }
