@@ -1,111 +1,67 @@
-import { Router } from 'express';
-import express from 'express';
-import { handleStripeWebhook } from '@contentcommand/billing';
+import { Router, raw } from 'express';
+import { handleStripeWebhook, createCheckoutSession } from '../billing/src/stripe/webhook';
 
 const router = Router();
 
-// Mock store for payment methods and subscriptions
-let currentSubscription = {
-  id: 'sub_123',
-  planName: 'Pro Creator',
-  status: 'active',
-  billingCycle: 'monthly',
-  amount: 29.99,
-  nextBillingDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+const PLAN_PRICES: Record<string, string> = {
+  STARTER: process.env.STRIPE_PRICE_STARTER || 'price_starter_monthly',
+  PROFESSIONAL: process.env.STRIPE_PRICE_PROFESSIONAL || 'price_professional_monthly',
+  ENTERPRISE: process.env.STRIPE_PRICE_ENTERPRISE || 'price_enterprise_monthly',
 };
 
-const mockPaymentMethods = [
-  { id: 'pm_1', provider: 'STRIPE', last4: '4242', isDefault: true },
-  { id: 'pm_2', provider: 'PAYPAL', email: 'user@example.com', isDefault: false }
-];
-
-// GET /billing/subscription
-router.get('/subscription', (req, res) => {
-  res.json(currentSubscription);
-});
-
-// GET /billing/payment-methods
-router.get('/payment-methods', (req, res) => {
-  res.json(mockPaymentMethods);
-});
-
-// POST /billing/payment-methods
-router.post('/payment-methods', (req, res) => {
-  const { provider, last4, email } = req.body;
-  const newMethod = {
-    id: `pm_${Date.now()}`,
-    provider,
-    last4,
-    email,
-    isDefault: mockPaymentMethods.length === 0,
-  };
-  mockPaymentMethods.push(newMethod);
-  res.status(201).json(newMethod);
-});
-
-// DELETE /billing/payment-methods/:id
-router.delete('/payment-methods/:id', (req, res) => {
-  const index = mockPaymentMethods.findIndex(p => p.id === req.params.id);
-  if (index !== -1) {
-    mockPaymentMethods.splice(index, 1);
-    res.json({ success: true });
-  } else {
-    res.status(404).json({ error: 'Payment method not found' });
-  }
-});
-
-
-// POST /billing/checkout
+// POST /billing/checkout — create Stripe Checkout session
 router.post('/checkout', async (req, res) => {
-  const { planId, successUrl, cancelUrl } = req.body;
-
-  if (!process.env.STRIPE_SECRET_KEY) {
-    console.warn('[Billing] No Stripe key found. Returning mock URL.');
-    return res.json({ url: 'https://checkout.stripe.com/mock-url' });
-  }
-
   try {
-    const { stripe } = require('@contentcommand/billing');
+    const { organizationId, plan, successUrl, cancelUrl } = req.body;
+    if (!organizationId || !plan) {
+      return res.status(400).json({ error: 'organizationId and plan required' });
+    }
 
-    // Map plan IDs to real Stripe Price IDs (ideally from DB)
-    const priceIdMap: Record<string, string> = {
-      'pro-creator': 'price_mock_pro_123',
-      'agency': 'price_mock_agency_456'
-    };
+    const priceId = PLAN_PRICES[plan];
+    if (!priceId) {
+      return res.status(400).json({ error: 'Unknown plan: ' + plan });
+    }
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price: priceIdMap[planId] || 'price_mock_default',
-          quantity: 1,
-        },
-      ],
-      mode: 'subscription',
-      success_url: successUrl || 'http://localhost:3000/settings/billing?success=true',
-      cancel_url: cancelUrl || 'http://localhost:3000/settings/billing?canceled=true',
+    const url = await createCheckoutSession({
+      organizationId,
+      plan,
+      priceId,
+      successUrl: successUrl || (process.env.APP_URL || 'http://localhost:3000') + '/billing?success=true',
+      cancelUrl: cancelUrl || (process.env.APP_URL || 'http://localhost:3000') + '/billing?canceled=true',
     });
 
-    res.json({ url: session.url });
-  } catch (error: any) {
-    console.error('[Stripe Checkout Error]', error);
-    res.status(500).json({ error: error.message });
-  }
-});
-// POST /billing/webhook
-router.post('/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
-  const sig = req.headers['stripe-signature'];
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_test';
-
-  if (!sig) return res.status(400).send('Missing Stripe signature');
-
-  try {
-    const result = await handleStripeWebhook(req.body, sig as string, webhookSecret);
-    res.json(result);
+    return res.json({ url });
   } catch (err: any) {
-    console.error(`Webhook Error: ${err.message}`);
-    res.status(400).send(`Webhook Error: ${err.message}`);
+    console.error('Checkout error:', err.message);
+    return res.status(500).json({ error: err.message });
   }
 });
 
-export const billingRouter = router;
+// POST /billing/webhook — Stripe webhook receiver
+router.post('/webhook', raw({ type: 'application/json' }), async (req, res) => {
+  try {
+    const signature = req.headers['stripe-signature'] as string;
+    const result = await handleStripeWebhook(req.body, signature, process.env.STRIPE_WEBHOOK_SECRET || '');
+    return res.json(result);
+  } catch (err: any) {
+    console.error('Webhook error:', err.message);
+    return res.status(400).json({ error: err.message });
+  }
+});
+
+// GET /billing/subscription
+router.get('/subscription', async (req, res) => {
+  try {
+    const { prisma } = await import('@contentcommand/database');
+    const orgId = (req as any).organizationId || 'default';
+    const org = await prisma.organization.findUnique({ where: { id: orgId } }).catch(() => null);
+    return res.json({
+      plan: org?.plan || 'FREE',
+      status: org?.subscriptionStatus || 'inactive',
+    });
+  } catch (err: any) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+export default router;
