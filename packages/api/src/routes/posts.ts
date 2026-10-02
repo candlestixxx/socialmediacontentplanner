@@ -6,7 +6,7 @@ const router = Router();
 // GET /posts
 router.get('/', async (req, res) => {
   try {
-    const workspaceId = req.query.workspaceId as string || 'default_ws';
+    const workspaceId = req.query['workspaceId'] as string || 'default_ws';
     const wsId = workspaceId === 'default_ws' ? (await prisma.workspace.findFirst())?.id : workspaceId;
 
     if (!wsId) return res.json([]);
@@ -16,9 +16,9 @@ router.get('/', async (req, res) => {
       orderBy: { createdAt: 'desc' },
       include: { variants: true }
     });
-    res.json(posts);
+    return res.json(posts);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -53,9 +53,9 @@ router.post('/', async (req, res) => {
       }
     }
 
-    res.status(201).json(newPost);
+    return res.status(201).json(newPost);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 

@@ -22,8 +22,8 @@ export default function CampaignsPage() {
     fetchCampaigns();
 
     // Setup WebSocket connection to API server
-    const wsUrl = process.env.NEXT_PUBLIC_API_URL
-      ? process.env.NEXT_PUBLIC_API_URL.replace(/^http/, 'ws')
+    const wsUrl = process.env['NEXT_PUBLIC_API_URL']
+      ? process.env['NEXT_PUBLIC_API_URL'].replace(/^http/, 'ws')
       : 'ws://localhost:3031';
 
     const ws = new WebSocket(wsUrl);

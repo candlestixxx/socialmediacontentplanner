@@ -21,7 +21,7 @@ export class TwitterProvider implements SocialProvider {
     return { success: true, providerPostId: `tw_post_${Date.now()}` };
   }
 
-  async getAnalytics(accountId: string, providerPostId: string) {
+  async getAnalytics(_accountId: string, _providerPostId: string) {
     return { likes: Math.floor(Math.random() * 100), retweets: Math.floor(Math.random() * 20) };
   }
 }

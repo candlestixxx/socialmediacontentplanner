@@ -1,0 +1,44 @@
+﻿
+> contentcommand-ai@1.0.0 build
+> turbo run build
+
+node.exe : • turbo 2.10.12
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\hyper\AppData\Roaming\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (• turbo 2.10.12:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+   • Packages in scope: @contentcommand/ai, @contentcommand/analytics, @contentcommand/api, @contentcommand/billing, @contentcommand/database, @contentcommand/jobs, @contentcommand/shared, @contentcommand/social, mobile, web
+   • Running build in 10 packages
+   • Remote caching disabled
+
+@contentcommand/api:build: cache miss, executing d793ff7a7a144bce
+@contentcommand/api:build: 
+@contentcommand/api:build: > @contentcommand/api@1.0.0 build
+@contentcommand/api:build: > tsc
+@contentcommand/api:build: 
+@contentcommand/api:build: src/routes/billing.ts(57,30): error TS2339: Property 'organization' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+@contentcommand/api:build: ../billing/src/stripe/webhook.ts(26,24): error TS2339: Property 'organization' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+@contentcommand/api:build: ../billing/src/stripe/webhook.ts(50,24): error TS2339: Property 'organization' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+@contentcommand/api:build: ../billing/src/stripe/webhook.ts(71,24): error TS2339: Property 'organization' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+@contentcommand/api:build: ../billing/src/stripe/webhook.ts(88,24): error TS2339: Property 'organization' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+@contentcommand/api:build: ../billing/src/stripe/webhook.ts(119,30): error TS2339: Property 'organization' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+@contentcommand/api:build: ../billing/src/stripe/webhook.ts(128,20): error TS2339: Property 'organization' does not exist on type 'PrismaClient<PrismaClientOptions, never, DefaultArgs>'.
+@contentcommand/api:build: npm error Lifecycle script `build` failed with error:
+@contentcommand/api:build: npm error code 2
+@contentcommand/api:build: npm error path C:\Users\hyper\workspace\realestatecrm\apps\contentplanner\packages\api
+@contentcommand/api:build: npm error workspace @contentcommand/api@1.0.0
+@contentcommand/api:build: npm error location C:\Users\hyper\workspace\realestatecrm\apps\contentplanner\packages\api
+@contentcommand/api:build: npm error command failed
+@contentcommand/api:build: npm error command C:\WINDOWS\system32\cmd.exe /d /s /c tsc
+@contentcommand/api#build:  ERROR  command (C:\Users\hyper\workspace\realestatecrm\apps\contentplanner\packages\api) 
+C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js run build exited (2)
+
+ Tasks:    0 successful, 1 total
+Cached:    0 cached, 1 total
+  Time:    6.288s 
+Failed:    @contentcommand/api#build
+
+ ERROR  run failed: command  exited (2)

@@ -20,7 +20,7 @@ export class LinkedInProvider implements SocialProvider {
     return { success: true, providerPostId: `li_post_${Date.now()}` };
   }
 
-  async getAnalytics(accountId: string, providerPostId: string) {
+  async getAnalytics(_accountId: string, _providerPostId: string) {
     return { likes: Math.floor(Math.random() * 50), shares: Math.floor(Math.random() * 5) };
   }
 }

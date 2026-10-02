@@ -1,0 +1,47 @@
+﻿
+> contentcommand-ai@1.0.0 build
+> turbo run build
+
+node.exe : • turbo 2.10.12
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\hyper\AppData\Roaming\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (• turbo 2.10.12:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+   • Packages in scope: @contentcommand/ai, @contentcommand/analytics, @contentcommand/api, @contentcommand/billing, @contentcommand/database, @contentcommand/jobs, @contentcommand/shared, @contentcommand/social, mobile, web
+   • Running build in 10 packages
+   • Remote caching disabled
+
+@contentcommand/api:build: cache hit, replaying logs 60d076690e19b476
+@contentcommand/api:build: 
+@contentcommand/api:build: > @contentcommand/api@1.0.0 build
+@contentcommand/api:build: > tsc
+@contentcommand/api:build: 
+web:build: cache miss, executing 409be1750b9f93e0
+web:build: 
+web:build: > web@0.1.0 build
+web:build: > next build
+web:build: 
+web:build:  ⚠ Found lockfile missing swc dependencies, patching...
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.

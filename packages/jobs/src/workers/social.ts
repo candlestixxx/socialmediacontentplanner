@@ -3,7 +3,7 @@ import IORedis from 'ioredis';
 import { prisma } from '@contentcommand/database';
 import { TwitterProvider, LinkedInProvider, MetaProvider, SocialProvider } from '@contentcommand/social';
 
-const connection = new IORedis(process.env.REDIS_URL || 'redis://127.0.0.1:6379', {
+const connection = new IORedis(process.env['REDIS_URL'] || 'redis://127.0.0.1:6379', {
   maxRetriesPerRequest: null
 });
 

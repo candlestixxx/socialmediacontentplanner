@@ -1,20 +1,19 @@
 import { Router } from 'express';
 import { prisma } from '@contentcommand/database';
-import { AIProvider } from '@contentcommand/ai';
 
 const router = Router();
 
 // GET /campaigns
 router.get('/', async (req, res) => {
   try {
-    const workspaceId = req.query.workspaceId as string || 'default_ws';
+    const workspaceId = req.query['workspaceId'] as string || 'default_ws';
     const campaigns = await prisma.campaign.findMany({
       where: { workspaceId },
       orderBy: { createdAt: 'desc' }
     });
-    res.json(campaigns);
+    return res.json(campaigns);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -28,9 +27,9 @@ router.get('/:id', async (req, res) => {
     if (!campaign) {
       return res.status(404).json({ error: 'Campaign not found' });
     }
-    res.json(campaign);
+    return res.json(campaign);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -55,9 +54,9 @@ router.post('/', async (req, res) => {
         endDate: endDate ? new Date(endDate) : null,
       }
     });
-    res.status(201).json(newCampaign);
+    return res.status(201).json(newCampaign);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -68,9 +67,9 @@ router.patch('/:id', async (req, res) => {
       where: { id: req.params.id },
       data: req.body
     });
-    res.json(updated);
+    return res.json(updated);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 
@@ -80,9 +79,9 @@ router.delete('/:id', async (req, res) => {
     const deleted = await prisma.campaign.delete({
       where: { id: req.params.id }
     });
-    res.json(deleted);
+    return res.json(deleted);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    return res.status(400).json({ error: error.message });
   }
 });
 

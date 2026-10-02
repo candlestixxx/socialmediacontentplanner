@@ -18,7 +18,7 @@ export function calculateBestPostingTimes(
 ): string[] {
   if (!postMetrics || postMetrics.length === 0) return [];
   const sorted = [...postMetrics].sort((a, b) => b.engagementRate - a.engagementRate);
-  return sorted.slice(0, 3).map((p) => p.time);
+  return sorted.slice(0, 3).map((p: any) => p.time);
 }
 
 export function recommendPostBoost(

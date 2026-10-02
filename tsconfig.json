@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "es2022",
     "module": "esnext",
-    "lib": ["es2022", "dom", "dom.iterable"],
+    "lib": [
+      "es2022",
+      "dom",
+      "dom.iterable"
+    ],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -20,7 +24,18 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "ioredis": [
+        "./node_modules/ioredis"
+      ],
+      "ioredis/*": [
+        "./node_modules/ioredis/*"
+      ]
+    }
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

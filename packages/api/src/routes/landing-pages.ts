@@ -6,16 +6,16 @@ const router = Router();
 const aiProvider = new OpenAIProvider();
 
 router.get('/', async (req, res) => {
-  const workspaceId = req.query.workspaceId as string;
+  const workspaceId = req.query['workspaceId'] as string;
   const wsId = workspaceId || (await prisma.workspace.findFirst())?.id;
   if (!wsId) return res.json([]);
 
   const pages = await prisma.landingPage.findMany({ where: { workspaceId: wsId } });
-  res.json(pages);
+  return res.json(pages);
 });
 
 router.post('/', async (req, res) => {
-  const wsId = req.body.workspaceId || (await prisma.workspace.findFirst())?.id;
+  const wsId = req.body['workspaceId'] || (await prisma.workspace.findFirst())?.id;
   if (!wsId) return res.status(400).json({error: 'Workspace required'});
 
   const { title, headline, subheadline, heroImage, heroVideo, offer, cta, socialProof, faq, content, seoTitle, metaDescription, utmTracking } = req.body;
@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
       title, headline, subheadline, heroImage, heroVideo, offer, cta, socialProof, faq, content, seoTitle, metaDescription, utmTracking
     }
   });
-  res.json(newPage);
+  return res.json(newPage);
 });
 
 router.post('/generate', async (req, res) => {
@@ -46,9 +46,9 @@ router.post('/generate', async (req, res) => {
     const page = await prisma.landingPage.create({
       data: { ...parsed, workspaceId: wsId }
     });
-    res.json(page);
+    return res.json(page);
   } catch(e) {
-    res.status(500).json({error: 'Failed generation'});
+    return res.status(500).json({error: 'Failed generation'});
   }
 });
 export const landingPagesRouter = router;

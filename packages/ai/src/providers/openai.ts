@@ -6,8 +6,8 @@ export class OpenAIProvider implements AIProvider {
   private client: OpenAI | null = null;
 
   constructor(apiKey?: string) {
-    // If not provided, it falls back to process.env.OPENAI_API_KEY inside the SDK
-    const key = apiKey || process.env.OPENAI_API_KEY;
+    // If not provided, it falls back to process.env['OPENAI_API_KEY'] inside the SDK
+    const key = apiKey || process.env['OPENAI_API_KEY'];
     if (key) {
       this.client = new OpenAI({ apiKey: key });
     }
@@ -52,7 +52,7 @@ export class OpenAIProvider implements AIProvider {
   }
 
 
-  async generateStructuredResponse<T>(prompt: string, schema: any, systemPrompt?: string): Promise<T> {
+  async generateStructuredResponse<T>(_prompt: string, _schema: any, _systemPrompt?: string): Promise<T> {
     console.warn('[OpenAIProvider] Mocking structured response due to fallback setup.');
     return {
       topic: 'AI integration',

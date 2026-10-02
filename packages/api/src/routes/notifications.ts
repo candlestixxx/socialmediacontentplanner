@@ -10,8 +10,8 @@ let mockNotifications = [
 ];
 
 // GET /notifications
-router.get('/', (req, res) => {
-  res.json(mockNotifications);
+router.get('/', (_req, res) => {
+  return res.json(mockNotifications);
 });
 
 // POST /notifications (Internal / Webhook use)
@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
     createdAt: new Date().toISOString()
   };
   mockNotifications.unshift(newNotif);
-  res.status(201).json(newNotif);
+  return res.status(201).json(newNotif);
 });
 
 // PATCH /notifications/:id/read
@@ -32,13 +32,13 @@ router.patch('/:id/read', (req, res) => {
   const notif = mockNotifications.find(n => n.id === req.params.id);
   if (!notif) return res.status(404).json({ error: 'Notification not found' });
   notif.read = true;
-  res.json(notif);
+  return res.json(notif);
 });
 
 // PATCH /notifications/read-all
-router.patch('/read-all', (req, res) => {
+router.patch('/read-all', (_req, res) => {
   mockNotifications.forEach(n => n.read = true);
-  res.json({ success: true });
+  return res.json({ success: true });
 });
 
 export const notificationsRouter = router;

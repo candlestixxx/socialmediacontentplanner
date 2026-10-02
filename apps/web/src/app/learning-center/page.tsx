@@ -1,19 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { 
-  BookOpen, 
-  Sparkles, 
-  Mic, 
-  Video, 
-  Palette, 
-  Layout, 
-  TrendingUp, 
-  HelpCircle,
-  Play,
-  CheckCircle,
-  ChevronRight
-} from 'lucide-react';
+import { BookOpen, Sparkles, Mic, Video, Palette, Layout, HelpCircle, Play, CheckCircle, ChevronRight } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -122,7 +110,7 @@ const tutorials: Tutorial[] = [
 ];
 
 export default function LearningCenter() {
-  const [activeTutorial, setActiveTutorial] = useState<Tutorial>(tutorials[0]);
+  const [activeTutorial, setActiveTutorial] = useState<Tutorial>(tutorials[0]!);
   const [completedTours, setCompletedTours] = useState<Record<string, boolean>>({});
 
   const toggleCompleted = (id: string) => {

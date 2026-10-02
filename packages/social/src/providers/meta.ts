@@ -20,7 +20,7 @@ export class MetaProvider implements SocialProvider {
     return { success: true, providerPostId: `meta_post_${Date.now()}` };
   }
 
-  async getAnalytics(accountId: string, providerPostId: string) {
+  async getAnalytics(_accountId: string, _providerPostId: string) {
     return { likes: Math.floor(Math.random() * 200), comments: Math.floor(Math.random() * 50) };
   }
 }

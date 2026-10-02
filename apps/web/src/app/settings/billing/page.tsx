@@ -1,10 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { apiClient } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 
 type Subscription = {
   planName: string;
@@ -31,10 +29,10 @@ export default function BillingPage() {
 
   const fetchBillingData = async () => {
     try {
-      const subRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3031"}/billing/subscription`);
+      const subRes = await fetch(`${process.env['NEXT_PUBLIC_API_URL'] || "http://localhost:3031"}/billing/subscription`);
       if (subRes.ok) setSubscription(await subRes.json());
 
-      const pmRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3031"}/billing/payment-methods`);
+      const pmRes = await fetch(`${process.env['NEXT_PUBLIC_API_URL'] || "http://localhost:3031"}/billing/payment-methods`);
       if (pmRes.ok) setPaymentMethods(await pmRes.json());
     } catch (error) {
       console.error('Error fetching billing data', error);
@@ -43,7 +41,7 @@ export default function BillingPage() {
 
   const handleCheckout = async (planId: string) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3031"}/billing/checkout`, {
+      const res = await fetch(`${process.env['NEXT_PUBLIC_API_URL'] || "http://localhost:3031"}/billing/checkout`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ planId })
@@ -59,7 +57,7 @@ export default function BillingPage() {
 
   const handleDeletePM = async (id: string) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3031"}/billing/payment-methods/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${process.env['NEXT_PUBLIC_API_URL'] || "http://localhost:3031"}/billing/payment-methods/${id}`, { method: 'DELETE' });
       if (res.ok) fetchBillingData();
     } catch (error) {
       console.error('Error deleting payment method', error);

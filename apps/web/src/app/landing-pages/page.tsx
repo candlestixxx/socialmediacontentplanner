@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { apiClient } from '@/lib/api';
 
 export default function LandingPagesPage() {
-  const [pages, setPages] = useState<any[]>([]);
+  const [_pages, setPages] = useState<any[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [formData, setFormData] = useState({
     title: '', headline: '', subheadline: '', heroImage: '', heroVideo: '', offer: '', cta: '', socialProof: '', faq: '', utmTracking: ''

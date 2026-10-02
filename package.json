@@ -18,6 +18,7 @@
     "test:api": "turbo run test --filter=api"
   },
   "devDependencies": {
+    "@next/swc-win32-x64-msvc": "^15.2.1",
     "@types/jest": "^29.5.14",
     "@types/supertest": "^6.0.2",
     "jest": "^29.7.0",
@@ -32,6 +33,17 @@
   "overrides": {
     "react-native": "0.76.7",
     "metro": "0.81.5",
-    "metro-config": "0.81.5"
+    "metro-config": "0.81.5",
+    "ioredis": "5.11.1",
+    "bullmq": {
+      "ioredis": "5.11.1"
+    }
+  },
+  "optionalDependencies": {
+    "@next/swc-win32-x64-msvc": "15.2.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "prisma": "^5.22.0"
   }
 }

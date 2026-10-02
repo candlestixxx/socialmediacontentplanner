@@ -11,8 +11,8 @@ let mockPodcasts: any[] = [
 ];
 
 // GET /podcasts
-router.get('/', (req, res) => {
-  res.json(mockPodcasts);
+router.get('/', (_req, res) => {
+  return res.json(mockPodcasts);
 });
 
 // POST /podcasts/generate
@@ -63,10 +63,10 @@ Format cleanly so a host can read it directly.`;
     };
 
     mockPodcasts.unshift(newProject);
-    res.status(200).json({ project: newProject, outline: generatedOutline, usedBrandVoice: !!brandVoice });
+    return res.status(200).json({ project: newProject, outline: generatedOutline, usedBrandVoice: !!brandVoice });
   } catch (error: any) {
     console.error('[Podcast Router Error]', error);
-    res.status(500).json({ error: 'Failed to generate podcast outline.' });
+    return res.status(500).json({ error: 'Failed to generate podcast outline.' });
   }
 });
 

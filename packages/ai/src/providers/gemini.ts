@@ -6,7 +6,7 @@ export class GeminiProvider implements AIProvider {
   private client: GoogleGenerativeAI | null = null;
 
   constructor(apiKey?: string) {
-    const key = apiKey || process.env.GEMINI_API_KEY;
+    const key = apiKey || process.env['GEMINI_API_KEY'];
     if (key) {
       this.client = new GoogleGenerativeAI(key);
     }
@@ -36,7 +36,7 @@ export class GeminiProvider implements AIProvider {
     }
   }
 
-  async generateStructuredResponse<T>(prompt: string, schema: any, systemPrompt?: string): Promise<T> {
+  async generateStructuredResponse<T>(_prompt: string, _schema: any, _systemPrompt?: string): Promise<T> {
     console.warn('[gemini] Mocking structured response.');
     return {} as T;
   }

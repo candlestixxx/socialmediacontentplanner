@@ -92,6 +92,13 @@ model Workspace {
   id        String   @id @default(cuid())
   name      String
   businessType String @default("general") // real_estate | ecommerce | restaurant | general
+  // Billing state written by the Stripe webhook (packages/billing). The
+  // webhook originally targeted a nonexistent Organization model; Workspace
+  // is the account entity, so the fields live here.
+  plan               String  @default("FREE")
+  subscriptionStatus String  @default("active") // active | trialing | past_due | canceled
+  // Stripe customer id, written when a Checkout session is created.
+  stripeCustomerId   String? @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   users     User[]

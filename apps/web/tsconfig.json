@@ -13,7 +13,15 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@prisma/client": [
+        "./node_modules/@prisma/client"
+      ],
+      "@prisma/client/*": [
+        "./node_modules/@prisma/client/*"
+      ]
     }
   },
   "include": [
@@ -23,6 +31,12 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/components/calendar-reference.tsx",
+    "src/components/content-library-reference.tsx",
+    "src/components/legacy-settings-reference.tsx",
+    "src/store/legacy-app-provider.tsx",
+    "src/store/legacy-reducer.ts",
+    "src/lib/ai-persona-prompt.ts"
   ]
 }

@@ -1,0 +1,268 @@
+﻿
+> contentcommand-ai@1.0.0 build
+> turbo run build
+
+node.exe : • turbo 2.10.12
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\hyper\AppData\Roaming\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (• turbo 2.10.12:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+   • Packages in scope: @contentcommand/ai, @contentcommand/analytics, @contentcommand/api, @contentcommand/billing, @contentcommand/database, @contentcommand/jobs, @contentcommand/shared, @contentcommand/social, mobile, web
+   • Running build in 10 packages
+   • Remote caching disabled
+
+@contentcommand/api:build: cache miss, executing 6d94f2a37d049194
+@contentcommand/api:build: 
+@contentcommand/api:build: > @contentcommand/api@1.0.0 build
+@contentcommand/api:build: > tsc
+@contentcommand/api:build: 
+web:build: cache miss, executing 1b8d2d316ef8241d
+web:build: 
+web:build: > web@0.1.0 build
+web:build: > next build
+web:build: 
+web:build:  ⚠ Found lockfile missing swc dependencies, patching...
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build:  ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+web:build: Error: Failed to get registry from "yarn".
+web:build:     at Array.map (<anonymous>) {
+web:build:   [cause]: Error: Command failed: yarn config get registry 
+web:build:   error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build:   
+web:build:   Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build:   Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build:   
+web:build:       at Array.map (<anonymous>) {
+web:build:     status: 1,
+web:build:     signal: null,
+web:build:     output: [
+web:build:       null,
+web:build:       <Buffer >,
+web:build:       <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+web:build:     ],
+web:build:     pid: 27792,
+web:build:     stdout: <Buffer >,
+web:build:     stderr: <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+web:build:   }
+web:build: }
+web:build:    ▲ Next.js 15.2.1
+web:build: 
+web:build:    Creating an optimized production build ...
+web:build:  ⚠ Found lockfile missing swc dependencies, patching...
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build:  ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+web:build: Error: Failed to get registry from "yarn".
+web:build:     at Array.map (<anonymous>) {
+web:build:   [cause]: Error: Command failed: yarn config get registry 
+web:build:   error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build:   
+web:build:   Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build:   Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build:   
+web:build:       at Array.map (<anonymous>) {
+web:build:     status: 1,
+web:build:     signal: null,
+web:build:     output: [
+web:build:       null,
+web:build:       <Buffer >,
+web:build:       <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+web:build:     ],
+web:build:     pid: 21336,
+web:build:     stdout: <Buffer >,
+web:build:     stderr: <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+web:build:   }
+web:build: }
+web:build:  ⚠ Found lockfile missing swc dependencies, patching...
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build:  ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+web:build: Error: Failed to get registry from "yarn".
+web:build:     at Array.map (<anonymous>) {
+web:build:   [cause]: Error: Command failed: yarn config get registry 
+web:build:   error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build:   
+web:build:   Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build:   Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build:   
+web:build:       at Array.map (<anonymous>) {
+web:build:     status: 1,
+web:build:     signal: null,
+web:build:     output: [
+web:build:       null,
+web:build:       <Buffer >,
+web:build:       <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+web:build:     ],
+web:build:     pid: 49488,
+web:build:     stdout: <Buffer >,
+web:build:     stderr: <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+web:build:   }
+web:build: }
+web:build:  ⚠ Found lockfile missing swc dependencies, patching...
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build: error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build: 
+web:build: Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build: Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build:  ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+web:build: Error: Failed to get registry from "yarn".
+web:build:     at Array.map (<anonymous>) {
+web:build:   [cause]: Error: Command failed: yarn config get registry 
+web:build:   error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of Yarn is 1.22.22.
+web:build:   
+web:build:   Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included by default with all official Node.js distributions starting from 16.9 and 14.19.
+web:build:   Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out https://yarnpkg.com/corepack.
+web:build:   
+web:build:       at Array.map (<anonymous>) {
+web:build:     status: 1,
+web:build:     signal: null,
+web:build:     output: [
+web:build:       null,
+web:build:       <Buffer >,
+web:build:       <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+web:build:     ],
+web:build:     pid: 30500,
+web:build:     stdout: <Buffer >,
+web:build:     stderr: <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+web:build:   }
+web:build: }
+web:build:  ✓ Compiled successfully
+web:build:    Skipping linting
+web:build:    Checking validity of types ...
+web:build:    Collecting page data ...
+web:build:    Generating static pages (0/24) ...
+web:build:    Generating static pages (6/24) 
+web:build:    Generating static pages (12/24) 
+web:build:    Generating static pages (18/24) 
+web:build:  ✓ Generating static pages (24/24)
+web:build:    Finalizing page optimization ...
+web:build:    Collecting build traces ...
+web:build: 
+web:build: Route (app)                                 Size  First Load JS
+web:build: ┌ ○ /                                      174 B         104 kB
+web:build: ├ ○ /_not-found                            975 B         102 kB
+web:build: ├ ○ /ai-studio                           5.46 kB         121 kB
+web:build: ├ ○ /analytics                           3.42 kB         113 kB
+web:build: ├ ƒ /api/auth/[...nextauth]                138 B         101 kB
+web:build: ├ ○ /brand-kit                           3.42 kB         119 kB
+web:build: ├ ○ /calendar                            4.58 kB         118 kB
+web:build: ├ ○ /campaigns                           2.98 kB         116 kB
+web:build: ├ ○ /content                             5.89 kB         121 kB
+web:build: ├ ○ /content/new                         2.67 kB         116 kB
+web:build: ├ ○ /dashboard                           1.82 kB         111 kB
+web:build: ├ ○ /finance                             2.55 kB         118 kB
+web:build: ├ ○ /landing-pages                       4.05 kB         119 kB
+web:build: ├ ○ /learning-center                     6.36 kB         120 kB
+web:build: ├ ○ /login                               1.92 kB         124 kB
+web:build: ├ ○ /notifications                       2.25 kB         115 kB
+web:build: ├ ○ /podcast-studio                      3.41 kB         119 kB
+web:build: ├ ○ /reports                               138 B         101 kB
+web:build: ├ ○ /settings                            2.61 kB         118 kB
+web:build: ├ ○ /settings/billing                    2.87 kB         116 kB
+web:build: ├ ○ /social-accounts                     2.68 kB         116 kB
+web:build: └ ○ /video-studio                        3.28 kB         119 kB
+web:build: + First Load JS shared by all             101 kB
+web:build:   ├ chunks/315-08c192ec487b1852.js       45.6 kB
+web:build:   ├ chunks/87c73c54-f17ff34b3790f3b8.js  53.3 kB
+web:build:   └ other shared chunks (total)          1.98 kB
+web:build: 
+web:build: 
+web:build: ƒ Middleware                             57.6 kB
+web:build: 
+web:build: ○  (Static)   prerendered as static content
+web:build: ƒ  (Dynamic)  server-rendered on demand
+web:build: 
+
+ Tasks:    2 successful, 2 total
+Cached:    0 cached, 2 total
+  Time:    51.705s 
+

@@ -20,8 +20,8 @@ app.use(cors());
 app.use(express.json());
 app.use(rateLimiter);
 
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok' });
+app.get('/health', (_req, res) => {
+  return res.status(200).json({ status: 'ok' });
 });
 
 // Protect all functional routes with Auth middleware placeholder

@@ -7,7 +7,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 import { app } from './index';
 import { WebSocketServer, WebSocket } from 'ws';
 
-const port = process.env.PORT || 3031;
+const port = process.env['PORT'] || 3031;
 
 const server = app.listen(port, () => {
   console.log(`ContentCommand API is running on http://localhost:${port}`);

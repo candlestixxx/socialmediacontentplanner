@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 
-const stripeSecret = process.env.STRIPE_SECRET_KEY || 'sk_test_mock';
+const stripeSecret = process.env['STRIPE_SECRET_KEY'] || 'sk_test_mock';
 export const stripe = new Stripe(stripeSecret, {
   apiVersion: '2024-10-28.acacia' as any,
 });
@@ -17,13 +17,13 @@ export const handleStripeWebhook = async (rawBody: string | Buffer, signature: s
   switch (event.type) {
     case 'checkout.session.completed': {
       const session = event.data.object as Stripe.Checkout.Session;
-      const organizationId = session.metadata?.organizationId || session.client_reference_id;
-      const plan = session.metadata?.plan || 'PROFESSIONAL';
+      const organizationId = session.metadata?.['organizationId'] || session.client_reference_id;
+      const plan = session.metadata?.['plan'] || 'PROFESSIONAL';
 
       if (organizationId) {
         try {
           const { prisma } = await import('@contentcommand/database');
-          await prisma.organization.update({
+          await prisma.workspace.update({
             where: { id: organizationId },
             data: {
               plan,
@@ -41,16 +41,16 @@ export const handleStripeWebhook = async (rawBody: string | Buffer, signature: s
 
     case 'customer.subscription.updated': {
       const subscription = event.data.object as Stripe.Subscription;
-      const organizationId = subscription.metadata?.organizationId;
+      const organizationId = subscription.metadata?.['organizationId'];
 
       if (organizationId) {
         try {
           const { prisma } = await import('@contentcommand/database');
           const isActive = subscription.status === 'active' || subscription.status === 'trialing';
-          await prisma.organization.update({
+          await prisma.workspace.update({
             where: { id: organizationId },
             data: {
-              plan: isActive ? subscription.metadata?.plan || 'PROFESSIONAL' : 'FREE',
+              plan: isActive ? subscription.metadata?.['plan'] || 'PROFESSIONAL' : 'FREE',
               subscriptionStatus: subscription.status,
             },
           });
@@ -63,12 +63,12 @@ export const handleStripeWebhook = async (rawBody: string | Buffer, signature: s
 
     case 'customer.subscription.deleted': {
       const subscription = event.data.object as Stripe.Subscription;
-      const organizationId = subscription.metadata?.organizationId;
+      const organizationId = subscription.metadata?.['organizationId'];
 
       if (organizationId) {
         try {
           const { prisma } = await import('@contentcommand/database');
-          await prisma.organization.update({
+          await prisma.workspace.update({
             where: { id: organizationId },
             data: { plan: 'FREE', subscriptionStatus: 'canceled' },
           });
@@ -81,11 +81,11 @@ export const handleStripeWebhook = async (rawBody: string | Buffer, signature: s
 
     case 'invoice.payment_failed': {
       const invoice = event.data.object as Stripe.Invoice;
-      const organizationId = invoice.metadata?.organizationId;
+      const organizationId = invoice.metadata?.['organizationId'];
       if (organizationId) {
         try {
           const { prisma } = await import('@contentcommand/database');
-          await prisma.organization.update({
+          await prisma.workspace.update({
             where: { id: organizationId },
             data: { subscriptionStatus: 'past_due' },
           });
@@ -116,7 +116,7 @@ export async function createCheckoutSession(params: {
   let customerId: string;
   try {
     const { prisma } = await import('@contentcommand/database');
-    const org = await prisma.organization.findUnique({ where: { id: organizationId } });
+    const org = await prisma.workspace.findUnique({ where: { id: organizationId } });
     if (!org) throw new Error('Organization not found');
 
     customerId = org.stripeCustomerId || '';
@@ -125,7 +125,7 @@ export async function createCheckoutSession(params: {
         metadata: { organizationId },
       });
       customerId = customer.id;
-      await prisma.organization.update({
+      await prisma.workspace.update({
         where: { id: organizationId },
         data: { stripeCustomerId: customerId },
       });

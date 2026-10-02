@@ -30,7 +30,9 @@ Ensure all extracted platforms are properly capitalized. Infer the 'contentType'
 
     if (this.provider.generateStructuredResponse) {
       // Use the native structured generation if the provider supports it
-      return this.provider.generateStructuredResponse<ParsedCommand>(rawText, CommandSchema, systemPrompt);
+      // Interface takes (text, schema); fold the system prompt into the text
+      // so the provider still receives the instructions (API-shape drift fix).
+      return this.provider.generateStructuredResponse<ParsedCommand>(`${systemPrompt}\n\nUser Command: ${rawText}`, CommandSchema);
     }
 
     // Fallback if structured generation is mocked or unavailable
@@ -43,7 +45,9 @@ Ensure all extracted platforms are properly capitalized. Infer the 'contentType'
   "urgency": boolean
 }`;
 
-    const rawResponse = await this.provider.generate(fallbackPrompt);
+    // AIProvider interface omits `generate`, but every concrete provider
+    // implements it. Cast to reach it without widening the shared interface.
+    const rawResponse = await (this.provider as any).generate(fallbackPrompt);
 
     try {
       const start = rawResponse.indexOf('{');

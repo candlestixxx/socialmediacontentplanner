@@ -8,14 +8,14 @@ const mockStateStore: Record<string, string> = {};
 
 // GET /social/auth-url?provider=twitter
 router.get('/auth-url', (req, res) => {
-  const provider = req.query.provider as string;
+  const provider = req.query['provider'] as string;
   if (!provider) return res.status(400).json({ error: 'Provider is required' });
 
   const { codeVerifier, codeChallenge, state } = generatePKCE();
   mockStateStore[state] = codeVerifier; // Save for callback verification
 
   let authUrl = '';
-  const redirectUri = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/social/callback`;
+  const redirectUri = `${process.env['NEXT_PUBLIC_API_URL'] || 'http://localhost:3001'}/social/callback`;
 
   switch (provider.toLowerCase()) {
     case 'twitter':
@@ -32,7 +32,7 @@ router.get('/auth-url', (req, res) => {
       return res.status(400).json({ error: 'Unsupported provider' });
   }
 
-  res.json({ authUrl });
+  return res.json({ authUrl });
 });
 
 // GET /social/callback
@@ -54,14 +54,14 @@ router.get('/callback', (req, res) => {
   delete mockStateStore[state as string];
 
   // Redirect the user back to the web dashboard UI
-  const frontendUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
-  res.redirect(`${frontendUrl}/social-accounts?success=true`);
+  const frontendUrl = process.env['NEXT_PUBLIC_APP_URL'] || 'http://localhost:3000';
+  return res.redirect(`${frontendUrl}/social-accounts?success=true`);
 });
 
 // GET /social/accounts
-router.get('/accounts', (req, res) => {
+router.get('/accounts', (_req, res) => {
   // Return mocked connected accounts for the dashboard
-  res.json([
+  return res.json([
     { id: 'acc_1', platform: 'TWITTER', accountName: '@MockBrand', status: 'CONNECTED' },
     { id: 'acc_2', platform: 'LINKEDIN', accountName: 'Mock Company Page', status: 'EXPIRED' }
   ]);

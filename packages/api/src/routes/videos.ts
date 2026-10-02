@@ -11,8 +11,8 @@ let mockVideos: any[] = [
 ];
 
 // GET /video-projects
-router.get('/', (req, res) => {
-  res.json(mockVideos);
+router.get('/', (_req, res) => {
+  return res.json(mockVideos);
 });
 
 // POST /video-projects/generate
@@ -68,10 +68,10 @@ Keep the format clean and easy to read.`;
     };
 
     mockVideos.unshift({ ...newProject, script: structuredScript });
-    res.status(200).json({ project: newProject, script: structuredScript, usedBrandVoice: !!brandVoice });
+    return res.status(200).json({ project: newProject, script: structuredScript, usedBrandVoice: !!brandVoice });
   } catch (error: any) {
     console.error('[Video Router Error]', error);
-    res.status(500).json({ error: 'Failed to generate video script.' });
+    return res.status(500).json({ error: 'Failed to generate video script.' });
   }
 });
 

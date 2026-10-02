@@ -1,0 +1,396 @@
+﻿
+> web@0.1.0 build
+> next build
+
+node.exe :  ⚠ Found lockfile missing swc dependencies, patching...
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Users\hyper\AppData\Roaming\ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ( ⚠ Found lockfi...es, patching...:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+ ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+Error: Failed to get registry from "yarn".
+    at Array.map (<anonymous>) {
+  [cause]: Error: Command failed: yarn config get registry 
+  error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+  
+  Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+  Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+  
+      at Array.map (<anonymous>) {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      <Buffer >,
+      <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 
+65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+    ],
+    pid: 26168,
+    stdout: <Buffer >,
+    stderr: <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 
+20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+  }
+}
+   ▲ Next.js 15.2.1
+
+   Creating an optimized production build ...
+ ⚠ Found lockfile missing swc dependencies, patching...
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+ ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+Error: Failed to get registry from "yarn".
+    at Array.map (<anonymous>) {
+  [cause]: Error: Command failed: yarn config get registry 
+  error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+  
+  Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+  Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+  
+      at Array.map (<anonymous>) {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      <Buffer >,
+      <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 
+65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+    ],
+    pid: 19048,
+    stdout: <Buffer >,
+    stderr: <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 
+20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+  }
+}
+ ⚠ Found lockfile missing swc dependencies, patching...
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+ ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+Error: Failed to get registry from "yarn".
+    at Array.map (<anonymous>) {
+  [cause]: Error: Command failed: yarn config get registry 
+  error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+  
+  Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+  Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+  
+      at Array.map (<anonymous>) {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      <Buffer >,
+      <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 
+65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+    ],
+    pid: 47364,
+    stdout: <Buffer >,
+    stderr: <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 
+20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+  }
+}
+ ⚠ Found lockfile missing swc dependencies, patching...
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+
+Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+ ⨯ Failed to patch lockfile, please try uninstalling and reinstalling next in this workspace
+Error: Failed to get registry from "yarn".
+    at Array.map (<anonymous>) {
+  [cause]: Error: Command failed: yarn config get registry 
+  error This project's package.json defines "packageManager": "yarn@npm@10.5.0". However the current global version of 
+Yarn is 1.22.22.
+  
+  Presence of the "packageManager" field indicates that the project is meant to be used with Corepack, a tool included 
+by default with all official Node.js distributions starting from 16.9 and 14.19.
+  Corepack must currently be enabled by running corepack enable in your terminal. For more information, check out 
+https://yarnpkg.com/corepack.
+  
+      at Array.map (<anonymous>) {
+    status: 1,
+    signal: null,
+    output: [
+      null,
+      <Buffer >,
+      <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 20 64 
+65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+    ],
+    pid: 25868,
+    stdout: <Buffer >,
+    stderr: <Buffer 65 72 72 6f 72 20 54 68 69 73 20 70 72 6f 6a 65 63 74 27 73 20 70 61 63 6b 61 67 65 2e 6a 73 6f 6e 
+20 64 65 66 69 6e 65 73 20 22 70 61 63 6b 61 67 65 ... 425 more bytes>
+  }
+}
+
+
+Retrying 1/3...
+
+
+Retrying 1/3...
+
+
+Retrying 1/3...
+ ✓ Compiled successfully
+   Linting and checking validity of types ...
+
+Failed to compile.
+
+./src/app/brand-kit/page.tsx
+120:84  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+120:101  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/calendar/page.tsx
+4:52  Error: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+12:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/content/new/page.tsx
+38:26  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+
+./src/app/content/page.tsx
+4:52  Error: 'CardDescription' is defined but never used.  @typescript-eslint/no-unused-vars
+13:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+42:14  Error: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/dashboard/page.tsx
+12:22  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/landing-pages/page.tsx
+10:10  Error: 'pages' is assigned a value but never used.  @typescript-eslint/no-unused-vars
+10:38  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+20:14  Error: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+47:14  Error: 'e' is defined but never used.  @typescript-eslint/no-unused-vars
+158:20  Warning: Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from 
+`next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from 
+your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+158:20  Warning: img elements must have an alt prop, either with meaningful text, or an empty string for decorative 
+images.  jsx-a11y/alt-text
+187:24  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+187:47  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+
+./src/app/learning-center/page.tsx
+11:3  Error: 'TrendingUp' is defined but never used.  @typescript-eslint/no-unused-vars
+23:29  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/app/notifications/page.tsx
+4:10  Error: 'apiClient' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/app/settings/billing/page.tsx
+4:10  Error: 'apiClient' is defined but never used.  @typescript-eslint/no-unused-vars
+7:10  Error: 'Input' is defined but never used.  @typescript-eslint/no-unused-vars
+
+./src/components/calendar-reference.tsx
+2:1  Error: Expected an assignment or function call and instead saw an expression.  
+@typescript-eslint/no-unused-expressions
+
+./src/components/content-library-reference.tsx
+2:1  Error: Expected an assignment or function call and instead saw an expression.  
+@typescript-eslint/no-unused-expressions
+135:19  Warning: Image elements must have an alt prop, either with meaningful text, or an empty string for decorative 
+images.  jsx-a11y/alt-text
+
+./src/components/draft-review-modal.tsx
+77:21  Warning: Image elements must have an alt prop, either with meaningful text, or an empty string for decorative 
+images.  jsx-a11y/alt-text
+
+./src/components/legacy-settings-reference.tsx
+2:1  Error: Expected an assignment or function call and instead saw an expression.  
+@typescript-eslint/no-unused-expressions
+
+./src/components/ui/tabs.tsx
+7:76  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+19:46  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+27:79  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+31:44  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+38:89  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+51:74  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/components/ui/textarea.tsx
+4:18  Error: An interface declaring no members is equivalent to its supertype.  @typescript-eslint/no-empty-object-type
+
+./src/lib/api.ts
+16:40  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+30:42  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+./src/lib/auth.ts
+33:36  Error: '_req' is defined but never used.  @typescript-eslint/no-unused-vars
+63:26  Error: Unexpected any. Specify a different type.  @typescript-eslint/no-explicit-any
+
+info  - Need to disable some ESLint rules? Learn more here: 
+https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path C:\Users\hyper\workspace\realestatecrm\apps\contentplanner\apps\web
+npm error workspace web@0.1.0
+npm error location C:\Users\hyper\workspace\realestatecrm\apps\contentplanner\apps\web
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c next build

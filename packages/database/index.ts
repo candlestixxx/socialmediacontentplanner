@@ -23,7 +23,7 @@ class MockPrismaClient {
 
   constructor() {
     // Generate some mock data initially
-    this.store.analyticsMetric = [
+    this.store['analyticsMetric'] = [
       { id: '1', workspaceId: 'test-ws-id', platform: 'TWITTER', views: 100, likes: 10, shares: 5, comments: 2, createdAt: new Date() },
       { id: '2', workspaceId: 'test-ws-id', platform: 'LINKEDIN', views: 200, likes: 20, shares: 10, comments: 5, createdAt: new Date() }
     ];
@@ -38,7 +38,7 @@ class MockPrismaClient {
   }
 
   // Helper to dynamically get or create a mock model handler
-  private getModelHandler(modelName: string) {
+  getModelHandler(modelName: string) {
     const pluralName = modelName.charAt(0).toLowerCase() + modelName.slice(1);
     if (!this.store[pluralName]) {
       this.store[pluralName] = [];
@@ -104,14 +104,14 @@ class MockPrismaClient {
         const deleted = list.splice(index, 1)[0];
         return Promise.resolve(deleted);
       },
-      groupBy: async (args: any) => {
+      groupBy: async (_args: any) => {
         // Return simple mock for aggregation tests
         return Promise.resolve([
           { platform: 'TWITTER', _sum: { views: 100, likes: 10, shares: 5 } },
           { platform: 'LINKEDIN', _sum: { views: 200, likes: 20, shares: 10 } }
         ]);
       },
-      aggregate: async (args: any) => {
+      aggregate: async (_args: any) => {
         return Promise.resolve({
           _sum: { views: 300, likes: 30, shares: 15 }
         });
@@ -124,8 +124,8 @@ let globalMockClient: any = null;
 
 // Proxy constructor to return mock or real client
 const createClientProxy = () => {
-  const isTest = process.env.NODE_ENV === 'test';
-  const useMock = process.env.USE_MOCK_DB === 'true' || isTest;
+  const isTest = process.env['NODE_ENV'] === 'test';
+  const useMock = process.env['USE_MOCK_DB'] === 'true' || isTest;
   
   if (useMock) {
     if (!globalMockClient) {
@@ -163,11 +163,6 @@ const createClientProxy = () => {
                    return mockHandler[prop](...args);
                 }
                 // If the prop is a model name, the mock handler itself is the object
-                const mockModel = globalMockClient.getModelHandler(prop);
-                // This logic is slightly complex for a proxy, so let's simplify:
-                // Just return the mock client's version of the call if we can.
-                // For MVP, we'll just throw the error but log the hint.
-                // Better yet, let's just use the mock if the env says so.
               }
               throw err;
             });

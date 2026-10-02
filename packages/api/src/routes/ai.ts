@@ -54,7 +54,7 @@ ${ragContext}`;
 
     const generatedContent = await aiProvider.generate(userPrompt, systemPrompt);
 
-    res.json({
+    return res.json({
       success: true,
       content: generatedContent,
       usedBrandVoice: !!brandVoice,
@@ -62,7 +62,7 @@ ${ragContext}`;
     });
   } catch (err: any) {
     console.error('[AI Router Error]', err);
-    res.status(500).json({ error: 'Failed to generate AI content.' });
+    return res.status(500).json({ error: 'Failed to generate AI content.' });
   }
 });
 
@@ -80,10 +80,10 @@ router.post('/parse-command', async (req, res) => {
 
   try {
     const parsedCommand = await parser.parseCommand(rawText);
-    res.json({ success: true, parsedCommand });
+    return res.json({ success: true, parsedCommand });
   } catch (err: any) {
     console.error('[AI Router - Parse Command Error]', err);
-    res.status(500).json({ error: 'Failed to parse natural language command.' });
+    return res.status(500).json({ error: 'Failed to parse natural language command.' });
   }
 });
 
