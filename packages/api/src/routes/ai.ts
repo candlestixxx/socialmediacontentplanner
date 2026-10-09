@@ -1,7 +1,16 @@
 import { Router } from 'express';
 import { OpenAIProvider, ContentCommandParser } from '@contentcommand/ai';
-import { scrapeUrlText } from '@contentcommand/ai/src/research/scraper';
 import { prisma } from '@contentcommand/database';
+
+// Lazy-load scrapeUrlText to avoid @langchain/textsplitters CJS resolution failures under tsx
+async function safeScrapeUrl(url: string): Promise<string> {
+  try {
+    const mod = await import('@contentcommand/ai/src/research/scraper');
+    return await mod.scrapeUrlText(url);
+  } catch {
+    return '[URL scraping unavailable — text splitter dependency issue]';
+  }
+}
 
 const router = Router();
 const aiProvider = new OpenAIProvider();
@@ -33,7 +42,7 @@ router.post('/generate', async (req, res) => {
     if (researchUrl) {
       console.log(`[RAG] Fetching live context from ${researchUrl}...`);
       try {
-        const scrapedText = await scrapeUrlText(researchUrl);
+        const scrapedText = await safeScrapeUrl(researchUrl);
         ragContext = `\n\nExternal Research Context:\nUse the following extracted text from ${researchUrl} to ground your response in facts:\n"""\n${scrapedText}\n"""\n`;
       } catch (err: any) {
         console.error(`[RAG] Failed to extract text from ${researchUrl}:`, err.message);

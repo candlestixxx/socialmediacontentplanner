@@ -1,6 +1,23 @@
 import https from 'https';
 import http from 'http';
-import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
+
+/**
+ * Simple text chunker that mimics RecursiveCharacterTextSplitter behavior.
+ * Avoids @langchain/textsplitters dependency which has broken CJS exports-map
+ * resolution under tsx on Node 26.
+ */
+function chunkText(text: string, chunkSize = 2000, chunkOverlap = 200): string[] {
+  const chunks: string[] = [];
+  let start = 0;
+  while (start < text.length) {
+    const end = Math.min(start + chunkSize, text.length);
+    chunks.push(text.slice(start, end));
+    if (end >= text.length) break;
+    start = end - chunkOverlap;
+    if (start < 0) start = 0;
+  }
+  return chunks;
+}
 
 /**
  * A lightweight HTML text extractor for RAG context.
@@ -48,14 +65,9 @@ export async function scrapeUrlText(url: string): Promise<string> {
 
         (async () => {
           try {
-            const splitter = new RecursiveCharacterTextSplitter({
-              chunkSize: 2000,
-              chunkOverlap: 200,
-            });
-
-            const chunks = await splitter.createDocuments([text]);
+            const chunks = chunkText(text, 2000, 200);
             // Return up to 5 chunks joined together, which is roughly ~10,000 characters
-            const resultText = chunks.slice(0, 5).map(doc => doc.pageContent).join('\n\n...\n\n');
+            const resultText = chunks.slice(0, 5).join('\n\n...\n\n');
 
             resolve(resultText || text.substring(0, 10000));
           } catch (e) {
