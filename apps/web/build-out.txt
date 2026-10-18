@@ -1,0 +1,55 @@
+
+> web@0.1.0 build
+> next build
+
+   ▲ Next.js 15.2.1
+
+   Creating an optimized production build ...
+(node:23528) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ ✓ Compiled successfully
+   Skipping linting
+   Checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/24) ...
+   Generating static pages (6/24) 
+   Generating static pages (12/24) 
+   Generating static pages (18/24) 
+ ✓ Generating static pages (24/24)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      172 B         104 kB
+├ ○ /_not-found                            975 B         102 kB
+├ ○ /ai-studio                           5.46 kB         121 kB
+├ ○ /analytics                           3.42 kB         113 kB
+├ ƒ /api/auth/[...nextauth]                138 B         101 kB
+├ ○ /brand-kit                           3.42 kB         119 kB
+├ ○ /calendar                            4.58 kB         118 kB
+├ ○ /campaigns                           2.98 kB         116 kB
+├ ○ /content                             5.89 kB         121 kB
+├ ○ /content/new                         2.67 kB         116 kB
+├ ○ /dashboard                           2.15 kB         112 kB
+├ ○ /finance                             2.55 kB         118 kB
+├ ○ /landing-pages                       4.05 kB         119 kB
+├ ○ /learning-center                     6.36 kB         120 kB
+├ ○ /login                               1.92 kB         124 kB
+├ ○ /notifications                       2.25 kB         115 kB
+├ ○ /podcast-studio                      3.41 kB         119 kB
+├ ○ /reports                               138 B         101 kB
+├ ○ /settings                            2.61 kB         118 kB
+├ ○ /settings/billing                    2.87 kB         116 kB
+├ ○ /social-accounts                     2.68 kB         116 kB
+└ ○ /video-studio                        3.28 kB         119 kB
++ First Load JS shared by all             101 kB
+  ├ chunks/315-08c192ec487b1852.js       45.6 kB
+  ├ chunks/87c73c54-f17ff34b3790f3b8.js  53.3 kB
+  └ other shared chunks (total)          1.98 kB
+
+
+ƒ Middleware                               59 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

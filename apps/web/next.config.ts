@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Standalone output enables clean tarball deploys to Hetzner
+  output: 'standalone',
   eslint: {
     // Why: this app was never lint-clean and `next/typescript` +
     // `react/no-unescaped-entities` surface dozens of cosmetic findings

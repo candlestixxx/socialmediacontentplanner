@@ -1,0 +1,81 @@
+
+> contentcommand-ai@1.0.0 build
+> turbo run build
+
+• turbo 2.10.12
+
+   • Packages in scope: @contentcommand/ai, @contentcommand/analytics, @contentcommand/api, @contentcommand/billing, @contentcommand/database, @contentcommand/jobs, @contentcommand/shared, @contentcommand/social, mobile, web
+   • Running build in 10 packages
+   • Remote caching disabled
+
+@contentcommand/api:build: cache hit, replaying logs 96f759c15b012c9c
+@contentcommand/api:build: 
+@contentcommand/api:build: > @contentcommand/api@1.0.0 build
+@contentcommand/api:build: > tsc
+@contentcommand/api:build: 
+@contentcommand/api:build: npm notice
+@contentcommand/api:build: npm notice New major version of npm available! 11.19.0 -> 12.2.0
+@contentcommand/api:build: npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+@contentcommand/api:build: npm notice To update run: npm install -g npm@12.2.0
+@contentcommand/api:build: npm notice
+web:build: cache miss, executing 6242b7572d333541
+web:build: 
+web:build: > web@0.1.0 build
+web:build: > next build
+web:build: 
+web:build:    ▲ Next.js 15.2.1
+web:build: 
+web:build:    Creating an optimized production build ...
+web:build: (node:18460) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+web:build: (Use `node --trace-deprecation ...` to show where the warning was created)
+web:build:  ✓ Compiled successfully
+web:build:    Skipping linting
+web:build:    Checking validity of types ...
+web:build:    Collecting page data ...
+web:build:    Generating static pages (0/24) ...
+web:build:    Generating static pages (6/24) 
+web:build:    Generating static pages (12/24) 
+web:build:    Generating static pages (18/24) 
+web:build:  ✓ Generating static pages (24/24)
+web:build:    Finalizing page optimization ...
+web:build:    Collecting build traces ...
+web:build: 
+web:build: Route (app)                                 Size  First Load JS
+web:build: ┌ ○ /                                      174 B         104 kB
+web:build: ├ ○ /_not-found                            975 B         102 kB
+web:build: ├ ○ /ai-studio                           5.46 kB         121 kB
+web:build: ├ ○ /analytics                           3.42 kB         113 kB
+web:build: ├ ƒ /api/auth/[...nextauth]                138 B         101 kB
+web:build: ├ ○ /brand-kit                           3.42 kB         119 kB
+web:build: ├ ○ /calendar                            4.58 kB         118 kB
+web:build: ├ ○ /campaigns                           2.98 kB         116 kB
+web:build: ├ ○ /content                             5.89 kB         121 kB
+web:build: ├ ○ /content/new                         2.67 kB         116 kB
+web:build: ├ ○ /dashboard                           2.15 kB         112 kB
+web:build: ├ ○ /finance                             2.55 kB         118 kB
+web:build: ├ ○ /landing-pages                       4.05 kB         119 kB
+web:build: ├ ○ /learning-center                     6.36 kB         120 kB
+web:build: ├ ○ /login                               1.92 kB         124 kB
+web:build: ├ ○ /notifications                       2.25 kB         115 kB
+web:build: ├ ○ /podcast-studio                      3.41 kB         119 kB
+web:build: ├ ○ /reports                               138 B         101 kB
+web:build: ├ ○ /settings                            2.61 kB         118 kB
+web:build: ├ ○ /settings/billing                    2.87 kB         116 kB
+web:build: ├ ○ /social-accounts                     2.68 kB         116 kB
+web:build: └ ○ /video-studio                        3.28 kB         119 kB
+web:build: + First Load JS shared by all             101 kB
+web:build:   ├ chunks/315-08c192ec487b1852.js       45.6 kB
+web:build:   ├ chunks/87c73c54-f17ff34b3790f3b8.js  53.3 kB
+web:build:   └ other shared chunks (total)          1.98 kB
+web:build: 
+web:build: 
+web:build: ƒ Middleware                               59 kB
+web:build: 
+web:build: ○  (Static)   prerendered as static content
+web:build: ƒ  (Dynamic)  server-rendered on demand
+web:build: 
+
+ Tasks:    2 successful, 2 total
+Cached:    1 cached, 2 total
+  Time:    5m15.889s 
+

@@ -14,7 +14,8 @@ import {
   DollarSign,
   FileSpreadsheet,
   Settings,
-  BookOpen
+  BookOpen,
+  ArrowUpRight
 } from 'lucide-react';
 
 const routes = [
@@ -42,6 +43,14 @@ export function Sidebar() {
         <h1 className="text-xl font-bold">ContentCommand AI</h1>
       </div>
       <nav className="flex-1 space-y-1 px-4 py-4 overflow-y-auto">
+        <a
+          href="https://excellegacyrealtygroup.site"
+          className="flex items-center space-x-3 rounded-lg px-3 py-2 text-blue-400 hover:bg-gray-800 hover:text-white font-medium"
+        >
+          <ArrowUpRight className="h-5 w-5 rotate-180" />
+          <span>Main Dashboard</span>
+        </a>
+        <div className="border-t border-gray-700 my-2" />
         {routes.map((route) => (
           <Link
             key={route.href}
