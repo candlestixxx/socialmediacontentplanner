@@ -27,6 +27,22 @@ export default function DashboardPage() {
 
   return (
     <div className="p-8 space-y-8 max-w-6xl mx-auto">
+      {/* Project Goal */}
+      <div className="rounded-xl border border-purple-200 bg-purple-50/60 p-4">
+        <div className="flex items-start gap-3">
+          <div className="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center shrink-0 text-white text-sm font-bold">📝</div>
+          <div>
+            <h2 className="text-sm font-bold text-gray-900">Content Planner — Social Media &amp; Campaigns</h2>
+            <p className="text-xs text-gray-600 mt-1 leading-relaxed">
+              Social media content creation, scheduling, brand kits, and campaign analytics.
+              Create posts, manage campaigns across platforms, configure brand voice, and track
+              engagement — all from one workspace. Part of the
+              <a href="https://excellegacyrealtygroup.site" className="text-purple-600 underline"> Excel Legacy Realty Group</a> platform.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div>
         <h1 className="text-3xl font-bold">Workspace Dashboard</h1>
         <p className="mt-2 text-gray-600">Your high-level performance across all social accounts.</p>
