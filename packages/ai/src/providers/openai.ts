@@ -2,7 +2,7 @@ import { OpenAI } from 'openai';
 import { AIProvider } from './types';
 
 // DeepSeek is OpenAI-compatible; prefer it for all LLM calls, fall back to OpenAI.
-const LLM_MODEL = process.env.DEEPSEEK_API_KEY ? (process.env.DEEPSEEK_MODEL || 'deepseek-chat') : 'gpt-4o';
+const LLM_MODEL = process.env.DEEPSEEK_API_KEY ? (process.env.DEEPSEEK_MODEL || 'deepseek-v4-flash') : 'gpt-4o';
 const LLM_BASE_URL = process.env.DEEPSEEK_API_KEY ? 'https://api.deepseek.com/v1' : undefined;
 
 export class OpenAIProvider implements AIProvider {
