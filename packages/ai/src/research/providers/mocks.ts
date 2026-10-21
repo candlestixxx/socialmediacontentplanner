@@ -1,3 +1,8 @@
+/**
+ * TEST-ONLY fixtures. These fabricate research items and must never be used
+ * in production code paths — production uses './live' (Tavily/NewsAPI/RSS/URL).
+ * Imported directly by tests for deterministic ResearchService contract tests.
+ */
 import {
   SearchProvider,
   NewsProvider,

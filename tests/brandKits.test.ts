@@ -1,5 +1,8 @@
 import request from 'supertest';
 import { app } from '../packages/api/src/index';
+import { setTestAuthEnv, authHeaders } from './auth-mock';
+
+beforeAll(() => setTestAuthEnv());
 import { PrismaClient } from '@contentcommand/database';
 
 const prisma = new PrismaClient();
@@ -16,7 +19,7 @@ describe('Brand Kits API', () => {
       voiceRules: 'Strictly testing'
     };
 
-    const res = await request(app).post('/brand-kits').send(payload);
+    const res = await request(app).post('/brand-kits').set(authHeaders()).send(payload);
     expect(res.status).toBe(200);
     expect(res.body.id).toBeDefined();
     expect(res.body.name).toBe('SuperTest Brand');
@@ -26,7 +29,7 @@ describe('Brand Kits API', () => {
   });
 
   it('GET /brand-kits should return the created brand kit', async () => {
-    const res = await request(app).get('/brand-kits?workspaceId=test-ws-id');
+    const res = await request(app).get('/brand-kits?workspaceId=test-ws-id').set(authHeaders());
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
     expect(res.body.length).toBeGreaterThan(0);

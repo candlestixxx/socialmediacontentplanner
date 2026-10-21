@@ -1,6 +1,13 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { AIProvider } from './types';
 
+/**
+ * Google Gemini provider.
+ *
+ * No mock fallbacks: methods throw when no key is configured. Structured
+ * generation uses Gemini's JSON response mode (responseMimeType +
+ * responseSchema).
+ */
 export class GeminiProvider implements AIProvider {
   name = 'GEMINI';
   private client: GoogleGenerativeAI | null = null;
@@ -14,8 +21,7 @@ export class GeminiProvider implements AIProvider {
 
   async generate(prompt: string, systemPrompt?: string): Promise<string> {
     if (!this.client) {
-      console.warn('[GeminiProvider] No API key found. Returning mock response.');
-      return Promise.resolve(`Mocked Gemini generation for: ${prompt}`);
+      throw new Error('Gemini unavailable: set GEMINI_API_KEY to enable AI generation.');
     }
 
     try {
@@ -36,8 +42,27 @@ export class GeminiProvider implements AIProvider {
     }
   }
 
-  async generateStructuredResponse<T>(_prompt: string, _schema: any, _systemPrompt?: string): Promise<T> {
-    console.warn('[gemini] Mocking structured response.');
-    return {} as T;
+  async generateStructuredResponse<T>(prompt: string, schema: any, systemPrompt?: string): Promise<T> {
+    if (!this.client) {
+      throw new Error('Gemini unavailable: set GEMINI_API_KEY to enable structured generation.');
+    }
+
+    try {
+      const modelConfig: any = {
+        model: 'gemini-1.5-flash',
+        generationConfig: {
+          responseMimeType: 'application/json',
+          ...(schema?._def ? { responseSchema: schema._def } : {}),
+        },
+      };
+      if (systemPrompt) modelConfig.systemInstruction = systemPrompt;
+
+      const model = this.client.getGenerativeModel(modelConfig);
+      const result = await model.generateContent(prompt);
+      return JSON.parse(result.response.text()) as T;
+    } catch (error) {
+      console.error('[GeminiProvider] Structured generation failed:', error);
+      throw error;
+    }
   }
 }

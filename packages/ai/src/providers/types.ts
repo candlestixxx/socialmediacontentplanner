@@ -1,3 +1,3 @@
 export interface AIProvider {
-  generateStructuredResponse<T>(prompt: string, schema: any): Promise<T>;
+  generateStructuredResponse<T>(prompt: string, schema: any, systemPrompt?: string): Promise<T>;
 }

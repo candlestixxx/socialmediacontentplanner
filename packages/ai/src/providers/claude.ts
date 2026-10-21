@@ -14,8 +14,7 @@ export class ClaudeProvider implements AIProvider {
 
   async generate(prompt: string, systemPrompt?: string): Promise<string> {
     if (!this.client) {
-      console.warn('[ClaudeProvider] No API key found. Returning mock response.');
-      return Promise.resolve(`Mocked Claude generation for: ${prompt}`);
+      throw new Error('Claude unavailable: set ANTHROPIC_API_KEY to enable AI generation.');
     }
 
     try {
@@ -37,8 +36,29 @@ export class ClaudeProvider implements AIProvider {
     }
   }
 
-  async generateStructuredResponse<T>(_prompt: string, _schema: any, _systemPrompt?: string): Promise<T> {
-    console.warn('[claude] Mocking structured response.');
-    return {} as T;
+  async generateStructuredResponse<T>(prompt: string, schema: any, systemPrompt?: string): Promise<T> {
+    if (!this.client) {
+      throw new Error('Claude unavailable: set ANTHROPIC_API_KEY to enable structured generation.');
+    }
+
+    // Claude has no native JSON schema mode; prompt for JSON and parse.
+    const jsonPrompt =
+      prompt +
+      '\n\nReturn ONLY a valid JSON object matching this JSON Schema:\n' +
+      JSON.stringify(schema?._def ?? schema ?? {});
+
+    const response = await this.client.messages.create({
+      model: 'claude-3-5-sonnet-20240620',
+      max_tokens: 4096,
+      system: systemPrompt,
+      messages: [{ role: 'user', content: jsonPrompt }],
+    });
+
+    const contentBlock = response.content.find(block => block.type === 'text');
+    const raw = contentBlock?.type === 'text' ? contentBlock.text : '{}';
+    const start = raw.indexOf('{');
+    const end = raw.lastIndexOf('}');
+    if (start === -1 || end === -1) throw new Error('Claude returned no JSON object');
+    return JSON.parse(raw.substring(start, end + 1)) as T;
   }
 }

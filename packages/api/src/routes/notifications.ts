@@ -1,44 +1,77 @@
 import { Router } from 'express';
+import { prisma } from '@contentcommand/database';
 
 const router = Router();
 
-// Mock store for notifications
-let mockNotifications = [
-  { id: 'notif_1', message: 'Your campaign "Summer Sale" ends in 2 days.', read: false, createdAt: new Date(Date.now() - 3600000).toISOString() },
-  { id: 'notif_2', message: 'Best posting time recommendation: Try posting at 6 PM on Thursdays.', read: false, createdAt: new Date(Date.now() - 7200000).toISOString() },
-  { id: 'notif_3', message: 'Post successfully published to Facebook.', read: true, createdAt: new Date(Date.now() - 86400000).toISOString() },
-];
+// Notifications are persisted via the real Notification model. (The previous
+// in-memory store seeded fabricated notifications — "campaign ends in 2 days",
+// "post published to Facebook" — that looked like real activity but weren't.)
 
-// GET /notifications
-router.get('/', (_req, res) => {
-  return res.json(mockNotifications);
+// GET /notifications?workspaceId=...
+router.get('/', async (req, res) => {
+  try {
+    const workspaceId = String(req.query.workspaceId || '');
+    if (!workspaceId) return res.status(400).json({ error: 'workspaceId is required' });
+
+    const notifications = await prisma.notification.findMany({
+      where: { workspaceId },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+    return res.json(notifications);
+  } catch (e: any) {
+    console.error('[Notifications] list failed:', e);
+    return res.status(500).json({ error: 'Failed to list notifications.' });
+  }
 });
 
 // POST /notifications (Internal / Webhook use)
-router.post('/', (req, res) => {
-  const { message } = req.body;
-  const newNotif = {
-    id: `notif_${Date.now()}`,
-    message,
-    read: false,
-    createdAt: new Date().toISOString()
-  };
-  mockNotifications.unshift(newNotif);
-  return res.status(201).json(newNotif);
+router.post('/', async (req, res) => {
+  try {
+    const { message, workspaceId } = req.body;
+    if (!message || !workspaceId) {
+      return res.status(400).json({ error: 'message and workspaceId are required' });
+    }
+    const newNotif = await prisma.notification.create({
+      data: { message, workspaceId },
+    });
+    return res.status(201).json(newNotif);
+  } catch (e: any) {
+    console.error('[Notifications] create failed:', e);
+    return res.status(500).json({ error: 'Failed to create notification.' });
+  }
 });
 
 // PATCH /notifications/:id/read
-router.patch('/:id/read', (req, res) => {
-  const notif = mockNotifications.find(n => n.id === req.params.id);
-  if (!notif) return res.status(404).json({ error: 'Notification not found' });
-  notif.read = true;
-  return res.json(notif);
+router.patch('/:id/read', async (req, res) => {
+  try {
+    const notif = await prisma.notification.update({
+      where: { id: req.params.id },
+      data: { read: true },
+    });
+    return res.json(notif);
+  } catch (e: any) {
+    if (e?.code === 'P2025') return res.status(404).json({ error: 'Notification not found' });
+    console.error('[Notifications] mark-read failed:', e);
+    return res.status(500).json({ error: 'Failed to mark notification read.' });
+  }
 });
 
-// PATCH /notifications/read-all
-router.patch('/read-all', (_req, res) => {
-  mockNotifications.forEach(n => n.read = true);
-  return res.json({ success: true });
+// PATCH /notifications/read-all?workspaceId=...
+router.patch('/read-all', async (req, res) => {
+  try {
+    const workspaceId = String(req.query.workspaceId || req.body?.workspaceId || '');
+    if (!workspaceId) return res.status(400).json({ error: 'workspaceId is required' });
+
+    await prisma.notification.updateMany({
+      where: { workspaceId, read: false },
+      data: { read: true },
+    });
+    return res.json({ success: true });
+  } catch (e: any) {
+    console.error('[Notifications] read-all failed:', e);
+    return res.status(500).json({ error: 'Failed to mark all notifications read.' });
+  }
 });
 
 export const notificationsRouter = router;

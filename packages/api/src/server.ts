@@ -28,22 +28,35 @@ wss.on('connection', (ws) => {
   });
 });
 
-// Broadcast mock live queue/publishing states every 5 seconds
-setInterval(() => {
+// Broadcast real publishing queue state to connected clients.
+// Previously this pushed random fake numbers every 5s — operators saw live
+// dashboards with fabricated activity. Now each tick queries actual drafts.
+import { prisma } from '@contentcommand/database';
+
+setInterval(async () => {
   if (clients.size === 0) return;
 
-  const mockPayload = JSON.stringify({
-    type: 'publishing_status',
-    data: {
-      activeJobs: Math.floor(Math.random() * 5),
-      queueSize: Math.floor(Math.random() * 10),
-      lastUpdate: new Date().toISOString()
-    }
-  });
+  try {
+    const [queued, published] = await Promise.all([
+      prisma.post.count({ where: { status: 'SCHEDULED' as any } }).catch(() => 0),
+      prisma.post.count({ where: { status: 'PUBLISHED' as any } }).catch(() => 0),
+    ]);
 
-  clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(mockPayload);
-    }
-  });
+    const payload = JSON.stringify({
+      type: 'publishing_status',
+      data: {
+        queueSize: queued,
+        publishedToday: published,
+        lastUpdate: new Date().toISOString(),
+      },
+    });
+
+    clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(payload);
+      }
+    });
+  } catch (e) {
+    console.error('[WebSocket] publishing_status broadcast failed:', e);
+  }
 }, 5000);

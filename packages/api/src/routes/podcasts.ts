@@ -5,14 +5,20 @@ import { prisma } from '@contentcommand/database';
 const router = Router();
 const aiProvider = new OpenAIProvider();
 
-// Mock store for podcast projects
-let mockPodcasts: any[] = [
-  { id: 'pod_1', title: 'The Future of AI', outline: 'Segment 1: News\nSegment 2: Interview...', createdAt: new Date().toISOString() }
-];
-
-// GET /podcasts
-router.get('/', (_req, res) => {
-  return res.json(mockPodcasts);
+// GET /podcasts — real persisted projects (most recent first)
+router.get('/', async (req, res) => {
+  try {
+    const { workspaceId } = req.query;
+    const projects = await prisma.podcastProject.findMany({
+      where: workspaceId ? { workspaceId: String(workspaceId) } : undefined,
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+    return res.json(projects);
+  } catch (e: any) {
+    console.error('[Podcast] list failed:', e);
+    return res.status(500).json({ error: 'Failed to list podcast projects.' });
+  }
 });
 
 // POST /podcasts/generate
@@ -54,15 +60,15 @@ Format cleanly so a host can read it directly.`;
 
     const generatedOutline = await aiProvider.generate(userPrompt, systemPrompt);
 
-    const newProject = {
-      id: `pod_${Date.now()}`,
-      workspaceId,
-      title: 'Podcast Ep 1',
-      outline: generatedOutline,
-      createdAt: new Date().toISOString()
-    };
+    // Persist to the real PodcastProject table (was an in-memory mock store).
+    const newProject = await prisma.podcastProject.create({
+      data: {
+        workspaceId,
+        title: topic, // the generated outline contains the polished episode title
+        outline: generatedOutline,
+      },
+    });
 
-    mockPodcasts.unshift(newProject);
     return res.status(200).json({ project: newProject, outline: generatedOutline, usedBrandVoice: !!brandVoice });
   } catch (error: any) {
     console.error('[Podcast Router Error]', error);

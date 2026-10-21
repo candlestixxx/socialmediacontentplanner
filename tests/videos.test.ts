@@ -1,7 +1,14 @@
 import request from 'supertest';
 import { app } from '../packages/api/src/index';
+import { setLLMResponses } from './llm-mock';
+import { setTestAuthEnv, authHeaders } from './auth-mock';
+
+// Mock the openai SDK at module boundary (hoisted by ts-jest).
+jest.mock('openai', () => require('./llm-mock').openaiMockFactory());
 
 describe('Video Projects API', () => {
+  beforeAll(() => { setTestAuthEnv(); setLLMResponses({}); });
+
   it('POST /video-projects/generate should generate and return a script', async () => {
     const payload = {
       workspaceId: 'test-ws-id',
@@ -12,6 +19,7 @@ describe('Video Projects API', () => {
 
     const res = await request(app)
       .post('/video-projects/generate')
+      .set(authHeaders())
       .send(payload);
 
     expect(res.status).toBe(200);
@@ -30,7 +38,7 @@ describe('Video Projects API', () => {
   });
 
   it('POST /video-projects/generate should return 400 for missing fields', async () => {
-    const res = await request(app).post('/video-projects/generate').send({ topic: 'No Tone' });
+    const res = await request(app).post('/video-projects/generate').set(authHeaders()).send({ topic: 'No Tone' });
     expect(res.status).toBe(400);
   });
 });
