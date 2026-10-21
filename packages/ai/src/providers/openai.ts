@@ -1,15 +1,19 @@
 import { OpenAI } from 'openai';
 import { AIProvider } from './types';
 
+// DeepSeek is OpenAI-compatible; prefer it for all LLM calls, fall back to OpenAI.
+const LLM_MODEL = process.env.DEEPSEEK_API_KEY ? (process.env.DEEPSEEK_MODEL || 'deepseek-chat') : 'gpt-4o';
+const LLM_BASE_URL = process.env.DEEPSEEK_API_KEY ? 'https://api.deepseek.com/v1' : undefined;
+
 export class OpenAIProvider implements AIProvider {
   name = 'OPENAI';
   private client: OpenAI | null = null;
 
   constructor(apiKey?: string) {
     // If not provided, it falls back to process.env['OPENAI_API_KEY'] inside the SDK
-    const key = apiKey || process.env['OPENAI_API_KEY'];
+    const key = apiKey || process.env['DEEPSEEK_API_KEY'] || process.env['OPENAI_API_KEY'];
     if (key) {
-      this.client = new OpenAI({ apiKey: key });
+      this.client = new OpenAI({ apiKey: key, ...(LLM_BASE_URL ? { baseURL: LLM_BASE_URL } : {}) });
     }
   }
 
@@ -39,7 +43,7 @@ export class OpenAIProvider implements AIProvider {
       messages.push({ role: 'user', content: prompt });
 
       const response = await this.client.chat.completions.create({
-        model: 'gpt-4o',
+        model: LLM_MODEL,
         messages,
         temperature: 0.7,
       });
