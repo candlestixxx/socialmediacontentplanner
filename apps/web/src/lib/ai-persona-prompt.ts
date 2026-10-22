@@ -1,4 +1,5 @@
 import { type AIGenerationRequest, type AIGenerationResponse } from '../../types/api';
+import { apiUrl } from '@/lib/api-base';
 
 /**
  * Calls the backend API server to generate AI content, rather than exposing the OpenAI key on the client.
@@ -7,7 +8,7 @@ export const generateAIContent = async (request: AIGenerationRequest): Promise<A
   try {
     const token = localStorage.getItem('legacy_auth_token');
 
-    const response = await fetch('/api/generate', {
+    const response = await fetch(apiUrl('/api/generate'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

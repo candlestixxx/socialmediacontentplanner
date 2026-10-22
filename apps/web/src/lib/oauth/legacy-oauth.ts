@@ -1,3 +1,4 @@
+import { apiUrl } from '@/lib/api-base';
 export type SocialPlatform = 'facebook' | 'instagram' | 'linkedin' | 'twitter';
 
 export interface OAuthConnectionState {
@@ -23,7 +24,7 @@ export const oauthService = {
    */
   getConnections: async (): Promise<OAuthConnectionState> => {
     try {
-      const response = await fetch('/api/oauth/status', {
+      const response = await fetch(apiUrl('/api/oauth/status'), {
         headers: getHeaders()
       });
       if (!response.ok) {
@@ -46,7 +47,7 @@ export const oauthService = {
    */
   connectPlatform: async (platform: SocialPlatform): Promise<boolean> => {
     try {
-      const response = await fetch('/api/oauth/connect', {
+      const response = await fetch(apiUrl('/api/oauth/connect'), {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ platform })
@@ -67,7 +68,7 @@ export const oauthService = {
    */
   disconnectPlatform: async (platform: SocialPlatform): Promise<boolean> => {
     try {
-      const response = await fetch('/api/oauth/disconnect', {
+      const response = await fetch(apiUrl('/api/oauth/disconnect'), {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ platform })
