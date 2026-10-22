@@ -20,10 +20,17 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
-    GithubProvider({
-      clientId: process.env['GITHUB_ID'] || "MOCK_GITHUB_ID",
-      clientSecret: process.env['GITHUB_SECRET'] || "MOCK_GITHUB_SECRET",
-    }),
+    // Register GitHub OAuth only when real credentials are configured. No mock
+    // client id/secret fallback — a placeholder provider would silently fail
+    // against the real GitHub OAuth endpoint.
+    ...(process.env['GITHUB_ID'] && process.env['GITHUB_SECRET']
+      ? [
+          GithubProvider({
+            clientId: process.env['GITHUB_ID'],
+            clientSecret: process.env['GITHUB_SECRET'],
+          }),
+        ]
+      : []),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -36,7 +43,14 @@ export const authOptions: NextAuthOptions = {
         // Lookup the actual user in the DB (for v3.2 we simulate this if DB is empty to prevent crashes during local testing without seed data)
         let user = await prisma.user.findUnique({ where: { email: credentials.email } });
 
-        if (!user && credentials.email === "test@example.com" && credentials.password === "password") {
+        // Demo login is a LOCAL-ONLY convenience so the app can boot without seed
+        // data. It is hard-disabled in production and requires an explicit opt-in
+        // via ALLOW_DEMO_LOGIN=true. Never leave a fixed credential live in prod.
+        const demoLoginEnabled =
+          process.env['NODE_ENV'] !== 'production' &&
+          process.env['ALLOW_DEMO_LOGIN'] === 'true';
+
+        if (!user && demoLoginEnabled && credentials.email === "test@example.com" && credentials.password === "password") {
           // If the demo user doesn't exist in the DB, create it to ensure JWT payload resolves correctly
           user = await prisma.user.create({
             data: {
