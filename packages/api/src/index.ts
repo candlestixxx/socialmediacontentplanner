@@ -8,7 +8,7 @@ import { brandKitsRouter } from './routes/brand-kits';
 import { landingPagesRouter } from './routes/landing-pages';
 import { billingRouter } from './routes/billing';
 import { notificationsRouter } from './routes/notifications';
-import { socialRouter } from './routes/social';
+import { socialRouter, socialOAuthRouter } from './routes/social';
 import { aiRouter } from './routes/ai';
 import { analyticsRouter } from './routes/analytics';
 import { workspaceRouter } from './routes/workspace';
@@ -24,7 +24,11 @@ app.get('/health', (_req, res) => {
   return res.status(200).json({ status: 'ok' });
 });
 
-// Protect all functional routes with Auth middleware placeholder
+// PUBLIC OAuth handshake (PKCE-secured) — the provider redirects the user's
+// browser here without a Bearer token, so these cannot sit behind requireAuth.
+app.use('/social', socialOAuthRouter);
+
+// Protect all functional routes with Auth middleware
 app.use(requireAuth);
 
 app.use('/campaigns', campaignsRouter);

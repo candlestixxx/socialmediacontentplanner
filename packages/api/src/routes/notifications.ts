@@ -8,13 +8,15 @@ const router = Router();
 // "post published to Facebook" — that looked like real activity but weren't.)
 
 // GET /notifications?workspaceId=...
+// workspaceId is optional: when omitted, returns the most recent
+// notifications across workspaces. (Cross-service workspace mapping between
+// the CRM dashboard and ContentPlanner is pending — see TODO.md.)
 router.get('/', async (req, res) => {
   try {
     const workspaceId = String(req.query.workspaceId || '');
-    if (!workspaceId) return res.status(400).json({ error: 'workspaceId is required' });
 
     const notifications = await prisma.notification.findMany({
-      where: { workspaceId },
+      where: workspaceId ? { workspaceId } : undefined,
       orderBy: { createdAt: 'desc' },
       take: 50,
     });

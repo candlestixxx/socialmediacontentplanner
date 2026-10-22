@@ -2,6 +2,12 @@ import { Router } from 'express';
 import { generatePKCE } from '@contentcommand/social';
 import { prisma } from '@contentcommand/database';
 
+// OAuth handshake endpoints (auth-url/callback) must be PUBLIC: the OAuth
+// provider redirects the user's browser to the callback without a Bearer
+// token — they rely on the PKCE state for security (standard OAuth).
+export const socialOAuthRouter = Router();
+
+// Account listing stays behind requireAuth (mounted separately in index.ts).
 const router = Router();
 
 // PKCE state → codeVerifier store. In-memory is fine for a single instance;
@@ -32,7 +38,7 @@ const OAUTH_CLIENTS: Record<string, { clientId?: string; clientSecret?: string; 
 };
 
 // GET /social/auth-url?provider=twitter&workspaceId=...
-router.get('/auth-url', (req, res) => {
+socialOAuthRouter.get('/auth-url', (req, res) => {
   const provider = String(req.query['provider'] || '').toLowerCase();
   const workspaceId = String(req.query['workspaceId'] || '');
   if (!provider) return res.status(400).json({ error: 'Provider is required' });
@@ -73,7 +79,7 @@ router.get('/auth-url', (req, res) => {
 });
 
 // GET /social/callback — real authorization-code → token exchange
-router.get('/callback', async (req, res) => {
+socialOAuthRouter.get('/callback', async (req, res) => {
   const { code, state, error } = req.query;
 
   if (error) {
@@ -147,13 +153,13 @@ router.get('/callback', async (req, res) => {
 });
 
 // GET /social/accounts?workspaceId=... — real persisted accounts
+// workspaceId optional (cross-service workspace mapping pending — see TODO)
 router.get('/accounts', async (req, res) => {
   try {
     const workspaceId = String(req.query['workspaceId'] || '');
-    if (!workspaceId) return res.status(400).json({ error: 'workspaceId is required' });
 
     const accounts = await prisma.socialAccount.findMany({
-      where: { workspaceId },
+      where: workspaceId ? { workspaceId } : undefined,
       orderBy: { createdAt: 'desc' },
     });
     // Never expose access tokens in list responses.
