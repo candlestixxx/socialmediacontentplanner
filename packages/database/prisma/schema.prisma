@@ -5,6 +5,11 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  // Package engines for local dev (native/windows) AND the Linux production
+  // target — without this, Windows builds only ship query_engine-windows.dll
+  // and the deployed client fails with PrismaClientInitializationError
+  // ("could not locate the Query Engine for debian-openssl-3.0.x").
+  binaryTargets = ["native", "windows", "debian-openssl-3.0.x"]
 }
 
 enum Platform {
