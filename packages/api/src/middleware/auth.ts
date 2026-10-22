@@ -62,6 +62,10 @@ export const requireAuth = (req: Request, res: Response, next: NextFunction) => 
     id: String(subject),
     role: typeof payload.role === 'string' ? payload.role : 'MEMBER',
   };
+  // Workspace scoping: the CRM proxy signs the caller's active workspace into
+  // the service JWT. Routes use this as the default scope so dashboard panels
+  // see only their workspace's data (cross-service workspace mapping).
+  (req as any).workspaceId = typeof payload.workspaceId === 'string' ? payload.workspaceId : undefined;
   return next();
 };
 

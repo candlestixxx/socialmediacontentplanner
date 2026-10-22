@@ -156,7 +156,8 @@ socialOAuthRouter.get('/callback', async (req, res) => {
 // workspaceId optional (cross-service workspace mapping pending — see TODO)
 router.get('/accounts', async (req, res) => {
   try {
-    const workspaceId = String(req.query['workspaceId'] || '');
+    // Scope: explicit query param > service-JWT workspace claim (CRM proxy)
+    const workspaceId = String(req.query['workspaceId'] || (req as any).workspaceId || '');
 
     const accounts = await prisma.socialAccount.findMany({
       where: workspaceId ? { workspaceId } : undefined,

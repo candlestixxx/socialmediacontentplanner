@@ -3,6 +3,24 @@ import { prisma } from '@contentcommand/database';
 
 const router = Router();
 
+// POST /workspace/sync — upsert a workspace (called by the CRM proxy so the
+// caller's active CRM workspace exists here before data is scoped to it).
+router.post('/sync', async (req, res) => {
+  try {
+    const { id, name, businessType } = req.body;
+    if (!id || !name) return res.status(400).json({ error: 'id and name are required' });
+
+    const ws = await prisma.workspace.upsert({
+      where: { id },
+      create: { id, name, businessType: businessType || 'real_estate' },
+      update: { name },
+    });
+    return res.json({ id: ws.id, name: ws.name, businessType: ws.businessType });
+  } catch (error: any) {
+    return res.status(500).json({ error: error.message });
+  }
+});
+
 // GET /workspace — get current workspace settings
 router.get('/', async (req, res) => {
   try {

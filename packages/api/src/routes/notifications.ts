@@ -13,7 +13,8 @@ const router = Router();
 // the CRM dashboard and ContentPlanner is pending — see TODO.md.)
 router.get('/', async (req, res) => {
   try {
-    const workspaceId = String(req.query.workspaceId || '');
+    // Scope: explicit query param > service-JWT workspace claim (CRM proxy)
+    const workspaceId = String(req.query.workspaceId || (req as any).workspaceId || '');
 
     const notifications = await prisma.notification.findMany({
       where: workspaceId ? { workspaceId } : undefined,
